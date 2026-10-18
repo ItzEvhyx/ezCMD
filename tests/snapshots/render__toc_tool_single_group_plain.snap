@@ -1,23 +1,14 @@
 ---
 source: tests/render.rs
-assertion_line: 168
 expression: output
 ---
-Git  (-git)
-Also matches: rebase, submodule, worktree, reflog, git-advanced
+SQLite  (-sqlite)
+Also matches: sqlite3
 
-  -Setup & Config
-  -Initializing a Repo
-  -Cloning a Repo
-  -Daily Workflow
-  -Branching
-  -Remotes
-  -Undo & Rollback
-  -Stash
-  -Tags
-  -History & Diff
-  -Cleanup & Maintenance
-  -Finding a Bad Commit (bisect)
+  -Open & Query
+  -Inspect (Dot Commands)
+  -Import & Export
+  -Backup
 
-View a section:  ezcmd --help -git -<section>
+View a section:  ezcmd --help -sqlite -<section>
 The section name can be shortened or misspelled. It is fuzzy-matched.

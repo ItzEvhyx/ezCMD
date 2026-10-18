@@ -3,7 +3,7 @@ source: tests/render.rs
 expression: output
 ---
 Version Control
-  -git         Git                            12 sections
+  -git         Git                            21 sections
 
 JavaScript & Web
   -npm         Node.js & npm                  15 sections

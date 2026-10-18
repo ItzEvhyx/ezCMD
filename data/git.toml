@@ -298,3 +298,283 @@ aliases = ["git bisect", "find bug", "binary search commit", "find bad commit", 
   [[section.command]]
   cmd  = "git bisect reset"
   note = "Concludes bisect session and returns to original branch"
+
+[[group]]
+title = "Rewrite History"
+
+[[group.section]]
+title = "Rebase & Edit History"
+aliases = ["git rebase branch", "edit git commit history", "autosquash git fixup commits"]
+
+[[group.section.command]]
+note = "Replays your commits on top of another branch"
+cmd = "git rebase <branch>"
+
+[[group.section.command]]
+note = "Edits the last n commits interactively"
+cmd = "git rebase -i HEAD~<n>"
+
+[[group.section.command]]
+note = "Continues after fixing conflicts"
+cmd = "git rebase --continue"
+
+[[group.section.command]]
+note = "Cancels the rebase"
+cmd = "git rebase --abort"
+
+[[group.section.command]]
+note = "Skips the current commit"
+cmd = "git rebase --skip"
+
+[[group.section.command]]
+note = "Creates a fix for an earlier commit"
+cmd = "git commit --fixup <commit>"
+
+[[group.section.command]]
+note = "Applies fixup commits automatically"
+cmd = "git rebase -i --autosquash <base>"
+
+[[group.section.command]]
+note = "Pulls and rebases your commits"
+cmd = "git pull --rebase"
+
+[[group.section]]
+title = "Amend & Fix Commits"
+aliases = ["amend git commit", "fix last git commit", "force push rewritten history"]
+
+[[group.section.command]]
+note = "Edits the last commit"
+cmd = "git commit --amend"
+
+[[group.section.command]]
+note = "Adds staged changes to the last commit"
+cmd = "git commit --amend --no-edit"
+
+[[group.section.command]]
+note = "Rewrites the last commit message"
+cmd = "git commit --amend -m \"<message>\""
+
+[[group.section.command]]
+note = "Creates a commit with no changes"
+cmd = "git commit --allow-empty -m \"<message>\""
+
+[[group.section.command]]
+note = "Undoes commits and keeps the changes staged"
+cmd = "git reset --soft HEAD~<n>"
+
+[[group.section.command]]
+note = "Safely force-pushes after rewriting history"
+cmd = "git push --force-with-lease"
+
+[[group]]
+title = "Repositories & Branches"
+
+[[group.section]]
+title = "Submodules"
+aliases = ["add git submodule", "update git submodules", "initialize recursive git submodules"]
+
+[[group.section.command]]
+note = "Adds a repository inside this one"
+cmd = "git submodule add <url> <path>"
+
+[[group.section.command]]
+note = "Clones a repo with its submodules"
+cmd = "git clone --recurse-submodules <url>"
+
+[[group.section.command]]
+note = "Fetches submodules after a plain clone"
+cmd = "git submodule update --init --recursive"
+
+[[group.section.command]]
+note = "Updates submodules to their latest commit"
+cmd = "git submodule update --remote"
+
+[[group.section.command]]
+note = "Shows each submodule's commit"
+cmd = "git submodule status"
+
+[[group.section.command]]
+note = "Unregisters a submodule"
+cmd = "git submodule deinit -f <path>"
+
+[[group.section]]
+title = "Worktrees"
+aliases = ["create git worktree", "list git worktrees", "prune deleted git worktrees"]
+
+[[group.section.command]]
+note = "Checks out a branch in a new folder"
+cmd = "git worktree add <path> <branch>"
+
+[[group.section.command]]
+note = "Creates a branch in a new folder"
+cmd = "git worktree add -b <new-branch> <path>"
+
+[[group.section.command]]
+note = "Lists all worktrees"
+cmd = "git worktree list"
+
+[[group.section.command]]
+note = "Removes a worktree"
+cmd = "git worktree remove <path>"
+
+[[group.section.command]]
+note = "Cleans up deleted worktrees"
+cmd = "git worktree prune"
+
+[[group.section]]
+title = "Branches, Tracking & Cleanup"
+aliases = ["prune git remote branches", "set git branch upstream", "track remote git branch"]
+
+[[group.section.command]]
+note = "Updates every remote and drops deleted branches"
+cmd = "git fetch --all --prune"
+
+[[group.section.command]]
+note = "Shows each branch's upstream"
+cmd = "git branch -vv"
+
+[[group.section.command]]
+note = "Lists remote branches"
+cmd = "git branch -r"
+
+[[group.section.command]]
+note = "Creates a local branch tracking a remote one"
+cmd = "git checkout --track origin/<branch>"
+
+[[group.section.command]]
+note = "Pushes a new branch and sets its upstream"
+cmd = "git push -u origin <branch>"
+
+[[group.section.command]]
+note = "Lists branches already merged"
+cmd = "git branch --merged"
+
+[[group.section.command]]
+note = "Deletes stale remote-tracking branches"
+cmd = "git remote prune origin"
+
+[[group]]
+title = "Recovery & Search"
+
+[[group.section]]
+title = "Recover Lost Work"
+aliases = ["recover lost git commit", "git reflog recovery", "restore deleted git branch"]
+
+[[group.section.command]]
+note = "Lists where HEAD has been"
+cmd = "git reflog"
+
+[[group.section.command]]
+note = "Moves the branch back to a commit"
+cmd = "git reset --hard <commit>"
+
+[[group.section.command]]
+note = "Creates a branch at a lost commit"
+cmd = "git branch <name> <commit>"
+
+[[group.section.command]]
+note = "Applies a single commit to this branch"
+cmd = "git cherry-pick <commit>"
+
+[[group.section.command]]
+note = "Restores a file from an old commit"
+cmd = "git restore --source=<commit> <file>"
+
+[[group.section.command]]
+note = "Finds unreachable commits"
+cmd = "git fsck --lost-found"
+
+[[group.section]]
+title = "Search History"
+aliases = ["search git commit history", "find git commit by message", "git log file history"]
+
+[[group.section.command]]
+note = "Finds commits that added or removed text"
+cmd = "git log -S\"<text>\""
+
+[[group.section.command]]
+note = "Finds commits by message"
+cmd = "git log --grep=\"<text>\""
+
+[[group.section.command]]
+note = "Shows commits by one author"
+cmd = "git log --author=\"<name>\""
+
+[[group.section.command]]
+note = "Shows the history of one file"
+cmd = "git log -- <file>"
+
+[[group.section.command]]
+note = "Shows a file's history across renames"
+cmd = "git log --follow -- <file>"
+
+[[group.section.command]]
+note = "Shows who changed specific lines"
+cmd = "git blame -L <start>,<end> <file>"
+
+[[group.section.command]]
+note = "Counts commits per author"
+cmd = "git shortlog -sn"
+
+[[group]]
+title = "Configuration"
+
+[[group.section]]
+title = "Git Config Tweaks"
+aliases = ["configure git pull rebase", "set git default branch", "set git commit editor"]
+
+[[group.section.command]]
+note = "Sets main as the default branch name"
+cmd = "git config --global init.defaultBranch main"
+
+[[group.section.command]]
+note = "Makes git pull rebase by default"
+cmd = "git config --global pull.rebase true"
+
+[[group.section.command]]
+note = "Sets the upstream automatically on first push"
+cmd = "git config --global push.autoSetupRemote true"
+
+[[group.section.command]]
+note = "Sets your commit message editor"
+cmd = "git config --global core.editor \"<editor>\""
+
+[[group.section.command]]
+note = "Saves credentials to a file"
+cmd = "git config --global credential.helper store"
+
+[[group.section.command]]
+note = "Creates a git shortcut"
+cmd = "git config --global alias.<name> \"<command>\""
+
+[[group.section.command]]
+note = "Normalizes line endings on commit"
+cmd = "git config --global core.autocrlf input"
+
+[[group.section.command]]
+note = "Opens your global config file"
+cmd = "git config --global --edit"
+
+[[group.section]]
+title = "Ignore Files & Untrack"
+aliases = ["untrack git ignored file", "apply gitignore to tracked files", "find git ignore rule"]
+
+[[group.section.command]]
+note = "Stops tracking a file but keeps it on disk"
+cmd = "git rm --cached <file>"
+
+[[group.section.command]]
+note = "Untracks everything so .gitignore can apply"
+cmd = "git rm -r --cached ."
+
+[[group.section.command]]
+note = "Shows which rule ignores a file"
+cmd = "git check-ignore -v <file>"
+
+[[group.section.command]]
+note = "Shows ignored files in the status"
+cmd = "git status --ignored"
+
+[[group.section.command]]
+note = "Deletes untracked and ignored files for good"
+cmd = "git clean -fdx"

@@ -174,8 +174,8 @@ fn test_snapshot_toc_overview_plain() {
 #[test]
 fn test_snapshot_toc_tool_single_group_plain() {
     let tool = all_tools()
-        .find(|tool| tool.slug == "git")
-        .expect("git tool");
+        .find(|tool| tool.slug == "sqlite")
+        .expect("sqlite tool");
     let ctx = RenderCtx {
         color: false,
         plain: false,
@@ -185,8 +185,8 @@ fn test_snapshot_toc_tool_single_group_plain() {
     toc_tool(&mut buf, tool, Os::Linux, &ctx).expect("render tool toc");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("toc_tool_single_group_plain", output);
-    assert!(!output.contains("git init"));
-    assert!(!output.contains("Git\n"));
+    assert!(!output.contains("sqlite3 "));
+    assert!(!output.contains("Everything SQLite\n"));
 }
 
 #[test]

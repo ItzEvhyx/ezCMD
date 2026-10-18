@@ -2128,3 +2128,57 @@ query = "snap refresh packages"
 tool = "flatpak"
 expect = "Snap"
 os = "linux"
+
+[[q]]
+kind = "tool"
+query = "autosquash git fixup commits"
+tool = "git"
+expect = "Rebase & Edit History"
+
+[[q]]
+kind = "tool"
+query = "amend git commit"
+tool = "git"
+expect = "Amend & Fix Commits"
+
+[[q]]
+kind = "tool"
+query = "initialize recursive git submodules"
+tool = "git"
+expect = "Submodules"
+
+[[q]]
+kind = "tool"
+query = "prune deleted git worktrees"
+tool = "git"
+expect = "Worktrees"
+
+[[q]]
+kind = "tool"
+query = "set git branch upstream"
+tool = "git"
+expect = "Branches, Tracking & Cleanup"
+
+[[q]]
+kind = "tool"
+query = "recover lost git commit"
+tool = "git"
+expect = "Recover Lost Work"
+
+[[q]]
+kind = "tool"
+query = "find git commit by message"
+tool = "git"
+expect = "Search History"
+
+[[q]]
+kind = "tool"
+query = "configure git pull rebase"
+tool = "git"
+expect = "Git Config Tweaks"
+
+[[q]]
+kind = "tool"
+query = "untrack git ignored file"
+tool = "git"
+expect = "Ignore Files & Untrack"

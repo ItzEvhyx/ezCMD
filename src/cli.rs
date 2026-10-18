@@ -272,6 +272,10 @@ fn parse_help<S: AsRef<str>>(args: &[S], mut plain: bool) -> Result<Invocation, 
             }
             if let Some(selected_tool) = find_tool_name(selector) {
                 if let Some(first) = tool {
+                    if first == selected_tool {
+                        push_section_token(&mut section_tokens, selector)?;
+                        continue;
+                    }
                     return Err(CliError::TwoTools {
                         first: first.to_string(),
                         second: selected_tool.to_string(),
@@ -486,6 +490,13 @@ mod tests {
     fn test_help_tool_alias_resolves_to_canonical_slug() {
         let inv = parse(&["--help", "-rebase"]).expect("parse tool alias");
         assert_eq!(inv.action, help(None, Some("git"), None, false));
+    }
+
+    #[test]
+    fn test_help_same_tool_alias_can_select_a_section() {
+        let inv = parse(&["--help", "-git", "-worktree"])
+            .expect("parse same-tool alias as section selector");
+        assert_eq!(inv.action, help(None, Some("git"), Some("worktree"), false));
     }
 
     #[test]

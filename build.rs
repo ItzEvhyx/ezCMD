@@ -93,25 +93,17 @@ fn to_spec(source: String, raw: &RawToolFile) -> Result<ToolSpec, String> {
         .category
         .clone()
         .ok_or_else(|| format!("{source}: non-draft tool is missing category"))?;
-    if !raw.group.is_empty() && !raw.section.is_empty() {
-        return Err(format!(
-            "{source}: use groups or top-level sections, not both"
-        ));
-    }
-    let groups = if raw.group.is_empty() {
-        vec![GroupSpec {
+    let mut groups = Vec::new();
+    if !raw.section.is_empty() {
+        groups.push(GroupSpec {
             title: name.clone(),
             sections: raw.section.iter().map(section_spec).collect(),
-        }]
-    } else {
-        raw.group
-            .iter()
-            .map(|group| GroupSpec {
-                title: group.title.clone(),
-                sections: group.section.iter().map(section_spec).collect(),
-            })
-            .collect()
-    };
+        });
+    }
+    groups.extend(raw.group.iter().map(|group| GroupSpec {
+        title: group.title.clone(),
+        sections: group.section.iter().map(section_spec).collect(),
+    }));
     Ok(ToolSpec {
         source,
         slug: raw.tool.clone(),
@@ -222,7 +214,7 @@ fn generate_content_rs(
             out.push_str("                notes: ");
             emit_strings(&raw.notes, "                ", &mut out);
             out.push_str(",\n                groups: &[\n");
-            if raw.group.is_empty() {
+            if !raw.section.is_empty() {
                 out.push_str("                    Group {\n");
                 out.push_str(&format!(
                     "                        title: {:?},\n",
@@ -234,20 +226,19 @@ fn generate_content_rs(
                     out.push_str(",\n");
                 }
                 out.push_str("                        ],\n                    },\n");
-            } else {
-                for group in &raw.group {
-                    out.push_str("                    Group {\n");
-                    out.push_str(&format!(
-                        "                        title: {:?},\n",
-                        group.title
-                    ));
-                    out.push_str("                        sections: &[\n");
-                    for section in &group.section {
-                        emit_section(section, "                            ", &mut out);
-                        out.push_str(",\n");
-                    }
-                    out.push_str("                        ],\n                    },\n");
+            }
+            for group in &raw.group {
+                out.push_str("                    Group {\n");
+                out.push_str(&format!(
+                    "                        title: {:?},\n",
+                    group.title
+                ));
+                out.push_str("                        sections: &[\n");
+                for section in &group.section {
+                    emit_section(section, "                            ", &mut out);
+                    out.push_str(",\n");
                 }
+                out.push_str("                        ],\n                    },\n");
             }
             out.push_str("                ],\n            },\n");
         }

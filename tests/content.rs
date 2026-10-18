@@ -195,6 +195,19 @@ fn test_package_managers_v8h_tools_are_complete() {
 }
 
 #[test]
+fn test_version_control_v8i_git_is_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Version Control")
+        .expect("Version Control category present");
+    assert_eq!(category.tools.len(), 1);
+    let git = &category.tools[0];
+    assert_eq!(git.slug, "git");
+    assert_eq!(git.sections().count(), 21);
+    assert_eq!(git.groups.len(), 5);
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")
