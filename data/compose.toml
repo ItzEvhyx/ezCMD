@@ -3,14 +3,14 @@ name = "Docker Compose"
 category = "Containers & DevOps"
 order = 2
 aliases = ["docker-compose"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Compose"
 
 [[group.section]]
 title = "Start & Stop"
-aliases = []
+aliases = ["docker compose up", "start compose services", "stop compose services"]
 
 [[group.section.command]]
 note = "Starts the services"
@@ -42,7 +42,7 @@ cmd = "docker compose restart <service>"
 
 [[group.section]]
 title = "Build & Update"
-aliases = []
+aliases = ["compose build", "update compose images", "rebuild compose services"]
 
 [[group.section.command]]
 note = "Builds the service images"
@@ -66,7 +66,7 @@ cmd = "docker compose up -d --force-recreate"
 
 [[group.section]]
 title = "Logs & Status"
-aliases = []
+aliases = ["compose logs", "compose status", "follow compose logs"]
 
 [[group.section.command]]
 note = "Lists the project's containers"
@@ -94,7 +94,7 @@ cmd = "docker compose images"
 
 [[group.section]]
 title = "Run Commands in Services"
-aliases = []
+aliases = ["compose exec", "run compose command", "shell in compose service"]
 
 [[group.section.command]]
 note = "Opens a shell in a running service"
@@ -110,7 +110,7 @@ cmd = "docker compose run --rm <service> <command>"
 
 [[group.section]]
 title = "Files, Profiles & Scaling"
-aliases = []
+aliases = ["compose profile", "scale compose service", "compose file override"]
 
 [[group.section.command]]
 note = "Uses a specific compose file"

@@ -3,14 +3,14 @@ name = "Docker"
 category = "Containers & DevOps"
 order = 1
 aliases = ["container", "containers", "dockerfile"]
-draft = true
+draft = false
 
 [[group]]
 title = "Containers"
 
 [[group.section]]
 title = "Check Docker & Log In"
-aliases = []
+aliases = ["docker version", "docker login", "check docker setup"]
 
 [[group.section.command]]
 note = "Prints the Docker version"
@@ -34,7 +34,7 @@ cmd = "docker system df"
 
 [[group.section]]
 title = "Run a Container"
-aliases = []
+aliases = ["start container", "run docker image", "launch container"]
 
 [[group.section.command]]
 note = "Runs a container from an image"
@@ -70,7 +70,7 @@ cmd = "docker run --env-file <file> <image>"
 
 [[group.section]]
 title = "Manage Containers"
-aliases = []
+aliases = ["list docker containers", "stop container", "remove container"]
 
 [[group.section.command]]
 note = "Lists running containers"
@@ -106,7 +106,7 @@ cmd = "docker rename <old> <new>"
 
 [[group.section]]
 title = "Inspect & Debug"
-aliases = []
+aliases = ["docker logs", "inspect container", "debug docker container"]
 
 [[group.section.command]]
 note = "Shows a container's logs"
@@ -145,7 +145,7 @@ title = "Images & Registries"
 
 [[group.section]]
 title = "Build Images"
-aliases = []
+aliases = ["build docker image", "docker build", "create container image"]
 
 [[group.section.command]]
 note = "Builds an image from the current folder"
@@ -173,7 +173,7 @@ cmd = "docker buildx build --platform linux/amd64,linux/arm64 -t <name> ."
 
 [[group.section]]
 title = "Images & Tags"
-aliases = []
+aliases = ["list docker images", "tag docker image", "push container image"]
 
 [[group.section.command]]
 note = "Lists local images"
@@ -212,7 +212,7 @@ title = "Storage, Networks & Cleanup"
 
 [[group.section]]
 title = "Volumes"
-aliases = []
+aliases = ["docker volume", "create docker volume", "remove docker volume"]
 
 [[group.section.command]]
 note = "Lists volumes"
@@ -236,7 +236,7 @@ cmd = "docker volume prune"
 
 [[group.section]]
 title = "Networks"
-aliases = []
+aliases = ["docker network", "create docker network", "connect container network"]
 
 [[group.section.command]]
 note = "Lists networks"
@@ -264,7 +264,7 @@ cmd = "docker run --network <name> <image>"
 
 [[group.section]]
 title = "Clean Up Space"
-aliases = []
+aliases = ["docker cleanup", "prune docker", "free docker disk space"]
 
 [[group.section.command]]
 note = "Removes all stopped containers"

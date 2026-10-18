@@ -66,6 +66,33 @@ fn test_mobile_development_v8b_tools_are_complete() {
 }
 
 #[test]
+fn test_containers_devops_v8c_tools_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Containers & DevOps")
+        .expect("Containers & DevOps category present");
+    let expected = [
+        "docker",
+        "compose",
+        "kubectl",
+        "gh",
+        "ssh",
+        "terraform",
+        "nginx",
+    ];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        41
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

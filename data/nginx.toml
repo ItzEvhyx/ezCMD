@@ -5,14 +5,14 @@ order = 7
 aliases = ["certbot", "reverse-proxy", "https"]
 platforms = ["linux", "macos"]
 notes = ["Linux commands use systemd and Debian-style paths. On macOS, Nginx comes from Homebrew, so services and file paths differ"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Nginx"
 
 [[group.section]]
 title = "Test & Reload"
-aliases = []
+aliases = ["test nginx config", "reload nginx", "restart nginx service"]
 
 [[group.section.command]]
 note = "Tests the configuration for errors"
@@ -44,7 +44,7 @@ cmd = "nginx -V"
 
 [[group.section]]
 title = "Sites & Logs"
-aliases = []
+aliases = ["nginx site config", "nginx error log", "enable nginx site"]
 
 [[group.section.command]]
 note = "Enables a site (Debian and Ubuntu)"
@@ -76,7 +76,7 @@ macos = "ls $(brew --prefix)/etc/nginx/servers"
 
 [[group.section]]
 title = "HTTPS with Certbot"
-aliases = []
+aliases = ["certbot nginx", "enable https nginx", "renew ssl certificate"]
 
 [[group.section.command]]
 note = "Installs Certbot"

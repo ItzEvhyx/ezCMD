@@ -4,14 +4,14 @@ category = "Containers & DevOps"
 order = 5
 aliases = ["scp", "rsync", "remote-server"]
 notes = ["rsync is not installed on Windows by default. Use WSL or Git Bash there"]
-draft = true
+draft = false
 
 [[group]]
 title = "Remote Access"
 
 [[group.section]]
 title = "Connect to a Server"
-aliases = []
+aliases = ["ssh connect", "remote server login", "connect with ssh"]
 
 [[group.section.command]]
 note = "Connects to a server"
@@ -35,7 +35,7 @@ cmd = "ssh -v <user>@<host>"
 
 [[group.section]]
 title = "SSH Keys"
-aliases = []
+aliases = ["create ssh key", "copy ssh public key", "fix ssh permissions"]
 
 [[group.section.command]]
 note = "Creates a new Ed25519 key pair"
@@ -68,7 +68,7 @@ unix = "chmod 600 ~/.ssh/id_ed25519"
 
 [[group.section]]
 title = "SSH Agent"
-aliases = []
+aliases = ["start ssh agent", "add ssh key", "list ssh agent keys"]
 
 [[group.section.command]]
 note = "Starts the SSH agent"
@@ -91,7 +91,7 @@ title = "Copying & Tunnels"
 
 [[group.section]]
 title = "Copy Files (scp)"
-aliases = []
+aliases = ["scp copy file", "copy file over ssh", "upload file ssh"]
 
 [[group.section.command]]
 note = "Uploads a file to a server"
@@ -115,7 +115,7 @@ cmd = "scp -i <key-file> <file> <user>@<host>:<remote-path>"
 
 [[group.section]]
 title = "Sync Folders (rsync)"
-aliases = []
+aliases = ["rsync folder", "sync files ssh", "copy directory rsync"]
 
 [[group.section.command]]
 note = "Syncs a folder to a server"
@@ -143,7 +143,7 @@ cmd = "rsync -e \"ssh -p <port>\" <source>/ <user>@<host>:<dest>/"
 
 [[group.section]]
 title = "Tunnels & Jump Hosts"
-aliases = []
+aliases = ["ssh tunnel", "ssh port forward", "ssh jump host"]
 
 [[group.section.command]]
 note = "Forwards a local port to the server"

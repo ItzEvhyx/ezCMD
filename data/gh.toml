@@ -3,14 +3,14 @@ name = "GitHub CLI (gh)"
 category = "Containers & DevOps"
 order = 4
 aliases = ["github", "github-cli", "actions"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything gh"
 
 [[group.section]]
 title = "Log In & Set Up"
-aliases = []
+aliases = ["github cli login", "gh auth login", "setup github cli"]
 
 [[group.section.command]]
 note = "Logs in to GitHub"
@@ -30,7 +30,7 @@ cmd = "gh config set editor <editor>"
 
 [[group.section]]
 title = "Repositories"
-aliases = []
+aliases = ["gh repo", "create github repository", "clone github repository"]
 
 [[group.section.command]]
 note = "Creates a public repo on GitHub"
@@ -58,7 +58,7 @@ cmd = "gh repo list"
 
 [[group.section]]
 title = "Pull Requests"
-aliases = []
+aliases = ["gh pull request", "create github pr", "review pull request"]
 
 [[group.section.command]]
 note = "Creates a pull request interactively"
@@ -94,7 +94,7 @@ cmd = "gh pr status"
 
 [[group.section]]
 title = "Issues"
-aliases = []
+aliases = ["gh issue", "create github issue", "list github issues"]
 
 [[group.section.command]]
 note = "Creates an issue interactively"
@@ -118,7 +118,7 @@ cmd = "gh issue comment <number> --body \"<text>\""
 
 [[group.section]]
 title = "Releases"
-aliases = []
+aliases = ["gh release", "create github release", "download github release"]
 
 [[group.section.command]]
 note = "Creates a release with generated notes"
@@ -142,7 +142,7 @@ cmd = "gh release delete <tag>"
 
 [[group.section]]
 title = "Workflow Runs (Actions)"
-aliases = []
+aliases = ["github actions", "gh workflow", "view workflow run"]
 
 [[group.section.command]]
 note = "Lists recent workflow runs"
@@ -170,7 +170,7 @@ cmd = "gh workflow run <workflow>"
 
 [[group.section]]
 title = "Secrets & API"
-aliases = []
+aliases = ["gh secret", "github api request", "set github secret"]
 
 [[group.section.command]]
 note = "Sets a repository secret"

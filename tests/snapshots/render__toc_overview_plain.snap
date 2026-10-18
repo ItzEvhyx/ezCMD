@@ -24,5 +24,14 @@ Mobile Development
   -adb         Android (ADB & SDK)            7 sections
   -gradle      Gradle                         4 sections
 
+Containers & DevOps
+  -docker      Docker                         9 sections
+  -compose     Docker Compose                 5 sections
+  -kubectl     Kubernetes (kubectl)           6 sections
+  -gh          GitHub CLI (gh)                7 sections
+  -ssh         SSH, SCP & rsync               6 sections
+  -terraform   Terraform                      5 sections
+  -nginx       Nginx & Certbot                3 sections
+
 Linux & System Tools
   -shell       Shell Basics (CMD & Terminal)  10 sections

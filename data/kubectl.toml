@@ -3,14 +3,14 @@ name = "Kubernetes (kubectl)"
 category = "Containers & DevOps"
 order = 3
 aliases = ["k8s", "kubernetes", "k"]
-draft = true
+draft = false
 
 [[group]]
 title = "Cluster & Resources"
 
 [[group.section]]
 title = "Contexts & Namespaces"
-aliases = []
+aliases = ["kubectl context", "switch kubernetes namespace", "set kube context"]
 
 [[group.section.command]]
 note = "Lists your cluster contexts"
@@ -42,7 +42,7 @@ cmd = "kubectl cluster-info"
 
 [[group.section]]
 title = "View Resources"
-aliases = []
+aliases = ["kubectl get pods", "list kubernetes resources", "view cluster resources"]
 
 [[group.section.command]]
 note = "Lists pods in the current namespace"
@@ -86,7 +86,7 @@ cmd = "kubectl get events --sort-by=.metadata.creationTimestamp"
 
 [[group.section]]
 title = "Inspect & Debug"
-aliases = []
+aliases = ["kubectl logs", "describe kubernetes pod", "debug kubernetes pod"]
 
 [[group.section.command]]
 note = "Shows pod details and events"
@@ -129,7 +129,7 @@ title = "Deploy & Configure"
 
 [[group.section]]
 title = "Apply & Delete"
-aliases = []
+aliases = ["kubectl apply", "deploy kubernetes manifest", "delete kubernetes resource"]
 
 [[group.section.command]]
 note = "Creates or updates resources from a file"
@@ -161,7 +161,7 @@ cmd = "kubectl expose deployment <name> --port=<port>"
 
 [[group.section]]
 title = "Deployments & Rollouts"
-aliases = []
+aliases = ["kubectl rollout", "restart kubernetes deployment", "scale kubernetes deployment"]
 
 [[group.section.command]]
 note = "Watches a rollout's progress"
@@ -189,7 +189,7 @@ cmd = "kubectl set image deployment/<name> <container>=<image>"
 
 [[group.section]]
 title = "ConfigMaps & Secrets"
-aliases = []
+aliases = ["kubectl configmap", "create kubernetes secret", "view kubernetes secret"]
 
 [[group.section.command]]
 note = "Creates a ConfigMap"

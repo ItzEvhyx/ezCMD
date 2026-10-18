@@ -693,3 +693,220 @@ query = "xcode clear cache"
 tool = "xcode"
 expect = "Clear Caches"
 os = "macos"
+
+# Containers & DevOps (V8c): five focused cases for every enabled tool.
+
+[[q]]
+kind = "tool"
+query = "docker login"
+tool = "docker"
+expect = "Check Docker & Log In"
+
+[[q]]
+kind = "tool"
+query = "docker run container"
+tool = "docker"
+expect = "Run a Container"
+
+[[q]]
+kind = "tool"
+query = "docker stop container"
+tool = "docker"
+expect = "Manage Containers"
+
+[[q]]
+kind = "tool"
+query = "docker inspect container"
+tool = "docker"
+expect = "Inspect & Debug"
+
+[[q]]
+kind = "tool"
+query = "docker build image"
+tool = "docker"
+expect = "Build Images"
+
+[[q]]
+kind = "tool"
+query = "compose start services"
+tool = "compose"
+expect = "Start & Stop"
+
+[[q]]
+kind = "tool"
+query = "compose build"
+tool = "compose"
+expect = "Build & Update"
+
+[[q]]
+kind = "tool"
+query = "compose logs"
+tool = "compose"
+expect = "Logs & Status"
+
+[[q]]
+kind = "tool"
+query = "compose exec"
+tool = "compose"
+expect = "Run Commands in Services"
+
+[[q]]
+kind = "tool"
+query = "compose scale service"
+tool = "compose"
+expect = "Files, Profiles & Scaling"
+
+[[q]]
+kind = "tool"
+query = "kubectl context"
+tool = "kubectl"
+expect = "Contexts & Namespaces"
+
+[[q]]
+kind = "tool"
+query = "kubectl get pods"
+tool = "kubectl"
+expect = "View Resources"
+
+[[q]]
+kind = "tool"
+query = "kubectl logs"
+tool = "kubectl"
+expect = "Inspect & Debug"
+
+[[q]]
+kind = "tool"
+query = "kubectl apply"
+tool = "kubectl"
+expect = "Apply & Delete"
+
+[[q]]
+kind = "tool"
+query = "kubectl rollout"
+tool = "kubectl"
+expect = "Deployments & Rollouts"
+
+[[q]]
+kind = "tool"
+query = "gh login"
+tool = "gh"
+expect = "Log In & Set Up"
+
+[[q]]
+kind = "tool"
+query = "gh repo"
+tool = "gh"
+expect = "Repositories"
+
+[[q]]
+kind = "tool"
+query = "gh pull request"
+tool = "gh"
+expect = "Pull Requests"
+
+[[q]]
+kind = "tool"
+query = "gh issue"
+tool = "gh"
+expect = "Issues"
+
+[[q]]
+kind = "tool"
+query = "gh release"
+tool = "gh"
+expect = "Releases"
+
+[[q]]
+kind = "tool"
+query = "ssh connect"
+tool = "ssh"
+expect = "Connect to a Server"
+
+[[q]]
+kind = "tool"
+query = "ssh key"
+tool = "ssh"
+expect = "SSH Keys"
+
+[[q]]
+kind = "tool"
+query = "ssh agent"
+tool = "ssh"
+expect = "SSH Agent"
+
+[[q]]
+kind = "tool"
+query = "ssh copy file"
+tool = "ssh"
+expect = "Copy Files (scp)"
+
+[[q]]
+kind = "tool"
+query = "ssh tunnel"
+tool = "ssh"
+expect = "Tunnels & Jump Hosts"
+
+[[q]]
+kind = "tool"
+query = "terraform init"
+tool = "terraform"
+expect = "Set Up & Format"
+
+[[q]]
+kind = "tool"
+query = "terraform plan"
+tool = "terraform"
+expect = "Plan & Apply"
+
+[[q]]
+kind = "tool"
+query = "terraform state"
+tool = "terraform"
+expect = "State & Imports"
+
+[[q]]
+kind = "tool"
+query = "terraform workspace"
+tool = "terraform"
+expect = "Workspaces"
+
+[[q]]
+kind = "tool"
+query = "terraform debug"
+tool = "terraform"
+expect = "Debugging"
+
+[[q]]
+kind = "tool"
+query = "nginx test config"
+tool = "nginx"
+expect = "Test & Reload"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nginx reload"
+tool = "nginx"
+expect = "Test & Reload"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nginx site config"
+tool = "nginx"
+expect = "Sites & Logs"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nginx error log"
+tool = "nginx"
+expect = "Sites & Logs"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nginx renew ssl"
+tool = "nginx"
+expect = "HTTPS with Certbot"
+os = "unix"

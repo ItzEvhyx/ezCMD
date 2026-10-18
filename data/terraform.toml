@@ -3,14 +3,14 @@ name = "Terraform"
 category = "Containers & DevOps"
 order = 6
 aliases = ["tf", "iac"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Terraform"
 
 [[group.section]]
 title = "Set Up & Format"
-aliases = []
+aliases = ["terraform init", "format terraform", "setup terraform project"]
 
 [[group.section.command]]
 note = "Prints the Terraform version"
@@ -34,7 +34,7 @@ cmd = "terraform validate"
 
 [[group.section]]
 title = "Plan & Apply"
-aliases = []
+aliases = ["terraform plan", "terraform apply", "deploy terraform infrastructure"]
 
 [[group.section.command]]
 note = "Previews the changes"
@@ -70,7 +70,7 @@ cmd = "terraform destroy"
 
 [[group.section]]
 title = "State & Imports"
-aliases = []
+aliases = ["terraform state", "terraform import", "move terraform resource"]
 
 [[group.section.command]]
 note = "Lists resources in the state"
@@ -98,7 +98,7 @@ cmd = "terraform show"
 
 [[group.section]]
 title = "Workspaces"
-aliases = []
+aliases = ["terraform workspace", "switch terraform environment", "create terraform workspace"]
 
 [[group.section.command]]
 note = "Lists workspaces"
@@ -122,7 +122,7 @@ cmd = "terraform workspace delete <name>"
 
 [[group.section]]
 title = "Debugging"
-aliases = []
+aliases = ["terraform debug", "terraform validate", "troubleshoot terraform"]
 
 [[group.section.command]]
 note = "Prints a dependency graph"
