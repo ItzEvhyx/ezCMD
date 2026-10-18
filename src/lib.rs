@@ -1,5 +1,6 @@
 pub mod cli;
 pub mod content;
+pub mod content_validation;
 pub mod matcher;
 pub mod model;
 pub mod os;

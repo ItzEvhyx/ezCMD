@@ -1,0 +1,11 @@
+order = [
+  "Version Control",
+  "JavaScript & Web",
+  "Mobile Development",
+  "Containers & DevOps",
+  "Cloud & Backend Services",
+  "Languages & Package Tools",
+  "Databases",
+  "Linux & System Tools",
+  "Package Managers",
+]

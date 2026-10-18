@@ -57,21 +57,23 @@ pub fn choose<R: BufRead, W: Write>(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::content::TOOLS;
+    use crate::content::all_tools;
     use std::io::Cursor;
 
     fn dummy_hits() -> Vec<Hit<'static>> {
-        let sec1 = &TOOLS[0].sections[0];
-        let sec2 = &TOOLS[0].sections[1];
+        let tool = all_tools().next().expect("seed tool");
+        let mut sections = tool.sections();
+        let sec1 = sections.next().expect("first section");
+        let sec2 = sections.next().expect("second section");
         vec![
             Hit {
-                tool: &TOOLS[0],
+                tool,
                 section: sec1,
                 score: 0.9,
                 section_idx: 0,
             },
             Hit {
-                tool: &TOOLS[0],
+                tool,
                 section: sec2,
                 score: 0.85,
                 section_idx: 1,

@@ -1,8 +1,26 @@
 use crate::os::Os;
 
 #[derive(Debug, PartialEq, Eq)]
-pub struct Tool {
+pub struct Category {
     pub name: &'static str,
+    pub tools: &'static [Tool],
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct Tool {
+    pub slug: &'static str,
+    pub name: &'static str,
+    pub category: &'static str,
+    pub aliases: &'static [&'static str],
+    pub flag_aliases: &'static [&'static str],
+    pub platforms: &'static [Os],
+    pub notes: &'static [&'static str],
+    pub groups: &'static [Group],
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct Group {
+    pub title: &'static str,
     pub sections: &'static [Section],
 }
 
@@ -35,9 +53,34 @@ impl Command {
 }
 
 impl Section {
+    pub fn visible_commands(&self, os: Os) -> impl Iterator<Item = &Command> {
+        self.commands
+            .iter()
+            .filter(move |command| command.resolve(os).is_some())
+    }
+
     /// True if at least one command resolves for `os`.
     pub fn available_on(&self, os: Os) -> bool {
-        self.commands.iter().any(|c| c.resolve(os).is_some())
+        self.visible_commands(os).next().is_some()
+    }
+}
+
+impl Tool {
+    pub fn sections(&self) -> impl Iterator<Item = &Section> {
+        self.groups.iter().flat_map(|group| group.sections.iter())
+    }
+
+    pub fn available_on(&self, os: Os) -> bool {
+        (self.platforms.is_empty() || self.platforms.contains(&os))
+            && self.sections().any(|section| section.available_on(os))
+    }
+
+    pub fn matches_flag(&self, name: &str) -> bool {
+        self.slug.eq_ignore_ascii_case(name)
+            || self
+                .flag_aliases
+                .iter()
+                .any(|alias| alias.eq_ignore_ascii_case(name))
     }
 }
 
@@ -123,5 +166,42 @@ mod tests {
         assert!(sec.available_on(Os::Windows));
         assert!(!sec.available_on(Os::Linux));
         assert!(!sec.available_on(Os::Macos));
+    }
+
+    #[test]
+    fn test_tool_availability_and_flag_aliases() {
+        static COMMANDS: [Command; 1] = [Command {
+            note: "mac only",
+            cmd: None,
+            unix: None,
+            windows: None,
+            linux: None,
+            macos: Some("mac-tool"),
+        }];
+        static SECTIONS: [Section; 1] = [Section {
+            title: "Mac task",
+            aliases: &["mac task", "apple task", "darwin task"],
+            commands: &COMMANDS,
+        }];
+        static GROUPS: [Group; 1] = [Group {
+            title: "Everything",
+            sections: &SECTIONS,
+        }];
+        let tool = Tool {
+            slug: "pods",
+            name: "CocoaPods",
+            category: "Mobile Development",
+            aliases: &["cocoapods"],
+            flag_aliases: &["cocoapods"],
+            platforms: &[Os::Macos],
+            notes: &[],
+            groups: &GROUPS,
+        };
+
+        assert!(tool.matches_flag("pods"));
+        assert!(tool.matches_flag("COCOAPODS"));
+        assert!(!tool.matches_flag("pod"));
+        assert!(tool.available_on(Os::Macos));
+        assert!(!tool.available_on(Os::Linux));
     }
 }

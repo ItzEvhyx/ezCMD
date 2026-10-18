@@ -1,4 +1,4 @@
-use crate::content::TOOLS;
+use crate::content::all_tools;
 use crate::os::Os;
 use std::fmt;
 
@@ -38,7 +38,10 @@ impl fmt::Display for CliError {
         match self {
             CliError::UnknownFlag(flag) => write!(f, "unknown flag: {flag}"),
             CliError::UnknownSelector(sel) => {
-                let tool_list = TOOLS.iter().map(|t| t.name).collect::<Vec<_>>().join(", ");
+                let tool_list = all_tools()
+                    .map(|tool| tool.slug)
+                    .collect::<Vec<_>>()
+                    .join(", ");
                 write!(
                     f,
                     "unknown selector \"-{sel}\". Available tools: {tool_list}. Available OS: windows, linux, macos"
@@ -58,10 +61,9 @@ impl fmt::Display for CliError {
 impl std::error::Error for CliError {}
 
 fn find_tool_name(candidate: &str) -> Option<&'static str> {
-    TOOLS
-        .iter()
-        .find(|t| t.name.eq_ignore_ascii_case(candidate))
-        .map(|t| t.name)
+    all_tools()
+        .find(|tool| tool.matches_flag(candidate))
+        .map(|tool| tool.slug)
 }
 
 /// Parse command-line arguments (excluding program name).

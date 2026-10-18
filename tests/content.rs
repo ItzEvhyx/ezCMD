@@ -1,54 +1,49 @@
-use ezcmd::content::TOOLS;
+use ezcmd::content::{all_tools, CATEGORIES};
 use ezcmd::os::Os;
 use std::collections::HashSet;
 
 #[test]
-fn test_tools_exist_and_sorted() {
-    assert!(!TOOLS.is_empty(), "TOOLS must not be empty");
-    for w in TOOLS.windows(2) {
-        assert!(
-            w[0].name < w[1].name,
-            "TOOLS must be sorted by name: {} vs {}",
-            w[0].name,
-            w[1].name
-        );
-    }
+fn test_categories_and_tools_exist() {
+    assert!(!CATEGORIES.is_empty(), "CATEGORIES must not be empty");
+    assert_eq!(CATEGORIES[0].name, "Version Control");
+    assert!(all_tools().count() >= 2, "seed tools must be present");
 }
 
 #[test]
 fn test_seed_tools_present() {
-    let names: Vec<&str> = TOOLS.iter().map(|t| t.name).collect();
+    let names: Vec<&str> = all_tools().map(|tool| tool.slug).collect();
     assert!(names.contains(&"git"), "git tool missing");
     assert!(names.contains(&"shell"), "shell tool missing");
 }
 
 #[test]
 fn test_minimum_section_counts() {
-    let git = TOOLS.iter().find(|t| t.name == "git").expect("git found");
+    let git = all_tools()
+        .find(|tool| tool.slug == "git")
+        .expect("git found");
     assert!(
-        git.sections.len() >= 12,
+        git.sections().count() >= 12,
         "git must have >= 12 sections, found {}",
-        git.sections.len()
+        git.sections().count()
     );
 
-    let shell = TOOLS
-        .iter()
-        .find(|t| t.name == "shell")
+    let shell = all_tools()
+        .find(|tool| tool.slug == "shell")
         .expect("shell found");
     assert!(
-        shell.sections.len() >= 9,
+        shell.sections().count() >= 9,
         "shell must have >= 9 sections, found {}",
-        shell.sections.len()
+        shell.sections().count()
     );
 }
 
 #[test]
 fn test_section_rules() {
-    for tool in TOOLS {
+    for tool in all_tools() {
         let mut seen_titles = HashSet::new();
         let mut seen_aliases = HashSet::new();
 
-        for sec in tool.sections {
+        for sec in tool.sections() {
             assert!(
                 seen_titles.insert(sec.title),
                 "duplicate section title: {}",
@@ -71,7 +66,7 @@ fn test_section_rules() {
                     seen_aliases.insert(alias),
                     "duplicate alias {} in tool {}",
                     alias,
-                    tool.name
+                    tool.slug
                 );
             }
 
@@ -111,10 +106,11 @@ fn test_section_rules() {
 
 #[test]
 fn test_initializing_repo_section() {
-    let git = TOOLS.iter().find(|t| t.name == "git").expect("git found");
+    let git = all_tools()
+        .find(|tool| tool.slug == "git")
+        .expect("git found");
     let init_sec = git
-        .sections
-        .iter()
+        .sections()
         .find(|s| s.title == "Initializing a Repo")
         .expect("Initializing a Repo section found");
 

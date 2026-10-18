@@ -1,15 +1,13 @@
-use ezcmd::content::TOOLS;
+use ezcmd::content::all_tools;
 use ezcmd::model::{Command, Section};
 use ezcmd::os::Os;
 use ezcmd::render::{render_section, RenderCtx};
 
 fn get_section<'a>(tool_name: &str, title: &str) -> &'a Section {
-    let tool = TOOLS
-        .iter()
-        .find(|t| t.name == tool_name)
+    let tool = all_tools()
+        .find(|tool| tool.slug == tool_name)
         .unwrap_or_else(|| panic!("tool {tool_name} not found"));
-    tool.sections
-        .iter()
+    tool.sections()
         .find(|s| s.title == title)
         .unwrap_or_else(|| panic!("section {title} not found"))
 }

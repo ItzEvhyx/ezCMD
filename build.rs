@@ -1,11 +1,41 @@
+#[path = "src/content_validation.rs"]
+mod content_validation;
+
+use content_validation::{CommandSpec, GroupSpec, SectionSpec, ToolSpec};
 use serde::Deserialize;
-use std::collections::HashSet;
+use std::collections::{BTreeMap, HashSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 
 #[derive(Deserialize, Debug)]
+struct RawCategories {
+    #[serde(default)]
+    order: Vec<String>,
+}
+
+#[derive(Deserialize, Debug)]
 struct RawToolFile {
     tool: String,
+    name: Option<String>,
+    category: Option<String>,
+    order: Option<u32>,
+    #[serde(default)]
+    aliases: Vec<String>,
+    #[serde(default)]
+    platforms: Vec<String>,
+    #[serde(default)]
+    notes: Vec<String>,
+    #[serde(default)]
+    draft: bool,
+    #[serde(default)]
+    group: Vec<RawGroup>,
+    #[serde(default)]
+    section: Vec<RawSection>,
+}
+
+#[derive(Deserialize, Debug)]
+struct RawGroup {
+    title: String,
     #[serde(default)]
     section: Vec<RawSection>,
 }
@@ -19,7 +49,7 @@ struct RawSection {
     command: Vec<RawCommand>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 struct RawCommand {
     note: String,
     cmd: Option<String>,
@@ -29,282 +59,306 @@ struct RawCommand {
     macos: Option<String>,
 }
 
-fn is_balanced_brackets(s: &str) -> bool {
-    let mut in_placeholder = false;
-    let chars: Vec<char> = s.chars().collect();
-    for (i, &c) in chars.iter().enumerate() {
-        if c == '<' {
-            if in_placeholder {
-                return false; // nested <
-            }
-            in_placeholder = true;
-        } else if c == '>' {
-            if in_placeholder {
-                in_placeholder = false;
+#[derive(Debug)]
+struct ParsedTool {
+    raw: RawToolFile,
+    spec: ToolSpec,
+}
+
+fn section_spec(section: &RawSection) -> SectionSpec {
+    SectionSpec {
+        title: section.title.clone(),
+        aliases: section.aliases.clone(),
+        commands: section
+            .command
+            .iter()
+            .map(|command| CommandSpec {
+                note: command.note.clone(),
+                cmd: command.cmd.clone(),
+                unix: command.unix.clone(),
+                windows: command.windows.clone(),
+                linux: command.linux.clone(),
+                macos: command.macos.clone(),
+            })
+            .collect(),
+    }
+}
+
+fn to_spec(source: String, raw: &RawToolFile) -> Result<ToolSpec, String> {
+    let name = raw
+        .name
+        .clone()
+        .ok_or_else(|| format!("{source}: non-draft tool is missing name"))?;
+    let category = raw
+        .category
+        .clone()
+        .ok_or_else(|| format!("{source}: non-draft tool is missing category"))?;
+    if !raw.group.is_empty() && !raw.section.is_empty() {
+        return Err(format!(
+            "{source}: use groups or top-level sections, not both"
+        ));
+    }
+    let groups = if raw.group.is_empty() {
+        vec![GroupSpec {
+            title: name.clone(),
+            sections: raw.section.iter().map(section_spec).collect(),
+        }]
+    } else {
+        raw.group
+            .iter()
+            .map(|group| GroupSpec {
+                title: group.title.clone(),
+                sections: group.section.iter().map(section_spec).collect(),
+            })
+            .collect()
+    };
+    Ok(ToolSpec {
+        source,
+        slug: raw.tool.clone(),
+        name,
+        category,
+        aliases: raw.aliases.clone(),
+        platforms: raw.platforms.clone(),
+        notes: raw.notes.clone(),
+        groups,
+    })
+}
+
+fn emit_option_str(option: &Option<String>) -> String {
+    option
+        .as_ref()
+        .map(|value| format!("Some({value:?})"))
+        .unwrap_or_else(|| "None".to_string())
+}
+
+fn emit_os_list(platforms: &[String]) -> String {
+    let variants = platforms.iter().map(|platform| match platform.as_str() {
+        "windows" => "crate::os::Os::Windows",
+        "linux" => "crate::os::Os::Linux",
+        "macos" => "crate::os::Os::Macos",
+        _ => unreachable!("platforms are validated before generation"),
+    });
+    format!("&[{}]", variants.collect::<Vec<_>>().join(", "))
+}
+
+fn emit_strings(values: &[String], indent: &str, out: &mut String) {
+    if values.is_empty() {
+        out.push_str("&[]");
+        return;
+    }
+    out.push_str("&[\n");
+    for value in values {
+        out.push_str(&format!("{indent}    {value:?},\n"));
+    }
+    out.push_str(indent);
+    out.push(']');
+}
+
+fn emit_section(section: &RawSection, indent: &str, out: &mut String) {
+    out.push_str(&format!("{indent}Section {{\n"));
+    out.push_str(&format!("{indent}    title: {:?},\n", section.title));
+    out.push_str(&format!("{indent}    aliases: "));
+    emit_strings(&section.aliases, &format!("{indent}    "), out);
+    out.push_str(",\n");
+    out.push_str(&format!("{indent}    commands: &[\n"));
+    for command in &section.command {
+        out.push_str(&format!("{indent}        Command {{\n"));
+        out.push_str(&format!("{indent}            note: {:?},\n", command.note));
+        for (field, value) in [
+            ("cmd", &command.cmd),
+            ("unix", &command.unix),
+            ("windows", &command.windows),
+            ("linux", &command.linux),
+            ("macos", &command.macos),
+        ] {
+            out.push_str(&format!(
+                "{indent}            {field}: {},\n",
+                emit_option_str(value)
+            ));
+        }
+        out.push_str(&format!("{indent}        }},\n"));
+    }
+    out.push_str(&format!("{indent}    ],\n{indent}}}"));
+}
+
+fn generate_content_rs(
+    categories: &[(String, Vec<ParsedTool>)],
+    shadowed: &[(String, String)],
+) -> String {
+    let shadowed: HashSet<(&str, &str)> = shadowed
+        .iter()
+        .map(|(slug, alias)| (slug.as_str(), alias.as_str()))
+        .collect();
+    let mut out = String::from("// Generated by build.rs - DO NOT EDIT\n\n");
+    out.push_str("pub static CATEGORIES: &[Category] = &[\n");
+    for (category_name, tools) in categories {
+        out.push_str("    Category {\n");
+        out.push_str(&format!(
+            "        name: {category_name:?},\n        tools: &[\n"
+        ));
+        for parsed in tools {
+            let raw = &parsed.raw;
+            out.push_str("            Tool {\n");
+            out.push_str(&format!("                slug: {:?},\n", raw.tool));
+            out.push_str(&format!("                name: {:?},\n", parsed.spec.name));
+            out.push_str(&format!(
+                "                category: {:?},\n",
+                parsed.spec.category
+            ));
+            out.push_str("                aliases: ");
+            emit_strings(&raw.aliases, "                ", &mut out);
+            out.push_str(",\n                flag_aliases: ");
+            let flag_aliases: Vec<String> = raw
+                .aliases
+                .iter()
+                .filter(|alias| !shadowed.contains(&(raw.tool.as_str(), alias.as_str())))
+                .cloned()
+                .collect();
+            emit_strings(&flag_aliases, "                ", &mut out);
+            out.push_str(&format!(
+                ",\n                platforms: {},\n",
+                emit_os_list(&raw.platforms)
+            ));
+            out.push_str("                notes: ");
+            emit_strings(&raw.notes, "                ", &mut out);
+            out.push_str(",\n                groups: &[\n");
+            if raw.group.is_empty() {
+                out.push_str("                    Group {\n");
+                out.push_str(&format!(
+                    "                        title: {:?},\n",
+                    parsed.spec.name
+                ));
+                out.push_str("                        sections: &[\n");
+                for section in &raw.section {
+                    emit_section(section, "                            ", &mut out);
+                    out.push_str(",\n");
+                }
+                out.push_str("                        ],\n                    },\n");
             } else {
-                // > outside a placeholder. Allow shell redirection operator e.g. ` > ` or ` 2> `
-                let is_redirect = (i > 0
-                    && (chars[i - 1].is_whitespace() || chars[i - 1].is_ascii_digit()))
-                    && (i + 1 == chars.len() || chars[i + 1].is_whitespace());
-                if !is_redirect {
-                    return false;
+                for group in &raw.group {
+                    out.push_str("                    Group {\n");
+                    out.push_str(&format!(
+                        "                        title: {:?},\n",
+                        group.title
+                    ));
+                    out.push_str("                        sections: &[\n");
+                    for section in &group.section {
+                        emit_section(section, "                            ", &mut out);
+                        out.push_str(",\n");
+                    }
+                    out.push_str("                        ],\n                    },\n");
                 }
             }
+            out.push_str("                ],\n            },\n");
         }
+        out.push_str("        ],\n    },\n");
     }
-    !in_placeholder
-}
-
-fn validate_tool_file(
-    path_display: &str,
-    raw: &RawToolFile,
-    seen_tools: &mut HashSet<String>,
-) -> Result<(), String> {
-    let tool_name = raw.tool.trim();
-    if tool_name.is_empty() {
-        return Err(format!("{path_display}: tool name cannot be empty"));
-    }
-    if raw.tool != raw.tool.to_lowercase() {
-        return Err(format!(
-            "{path_display}: tool \"{}\" must be lowercase",
-            raw.tool
-        ));
-    }
-    if raw.tool.contains(char::is_whitespace) {
-        return Err(format!(
-            "{path_display}: tool \"{}\" cannot contain whitespace",
-            raw.tool
-        ));
-    }
-    if matches!(raw.tool.as_str(), "windows" | "linux" | "macos") {
-        return Err(format!(
-            "{path_display}: tool name \"{}\" conflicts with OS name",
-            raw.tool
-        ));
-    }
-    if !seen_tools.insert(raw.tool.clone()) {
-        return Err(format!(
-            "{path_display}: duplicate tool name \"{}\"",
-            raw.tool
-        ));
-    }
-
-    let mut seen_titles = HashSet::new();
-    let mut seen_aliases = HashSet::new();
-
-    for sec in &raw.section {
-        let title = sec.title.trim();
-        if title.is_empty() {
-            return Err(format!("{path_display}: section title cannot be empty"));
-        }
-        if !seen_titles.insert(sec.title.clone()) {
-            return Err(format!(
-                "{path_display}: section \"{}\": duplicate section title",
-                sec.title
-            ));
-        }
-
-        if sec.aliases.len() < 3 {
-            return Err(format!(
-                "{path_display}: section \"{}\": must have at least 3 aliases, found {}",
-                sec.title,
-                sec.aliases.len()
-            ));
-        }
-
-        for alias in &sec.aliases {
-            if alias.trim().is_empty() {
-                return Err(format!(
-                    "{path_display}: section \"{}\": alias cannot be empty",
-                    sec.title
-                ));
-            }
-            if alias != &alias.to_lowercase() {
-                return Err(format!(
-                    "{path_display}: section \"{}\": alias \"{}\" must be lowercase",
-                    sec.title, alias
-                ));
-            }
-            if !seen_aliases.insert(alias.clone()) {
-                return Err(format!(
-                    "{path_display}: section \"{}\": duplicate alias \"{}\"",
-                    sec.title, alias
-                ));
-            }
-        }
-
-        if sec.command.is_empty() {
-            return Err(format!(
-                "{path_display}: section \"{}\": must have at least 1 command",
-                sec.title
-            ));
-        }
-
-        for cmd in &sec.command {
-            if cmd.note.trim().is_empty() {
-                return Err(format!(
-                    "{path_display}: section \"{}\": command note cannot be empty",
-                    sec.title
-                ));
-            }
-            if cmd.note.chars().count() > 60 {
-                return Err(format!(
-                    "{path_display}: section \"{}\": command note exceeds 60 characters: \"{}\"",
-                    sec.title, cmd.note
-                ));
-            }
-            if cmd.note.ends_with('.') {
-                return Err(format!(
-                    "{path_display}: section \"{}\": command note must not end with a period: \"{}\"",
-                    sec.title, cmd.note
-                ));
-            }
-
-            let cmd_strings = [
-                ("cmd", &cmd.cmd),
-                ("unix", &cmd.unix),
-                ("windows", &cmd.windows),
-                ("linux", &cmd.linux),
-                ("macos", &cmd.macos),
-            ];
-
-            let has_any_cmd = cmd_strings.iter().any(|(_, opt)| opt.is_some());
-            if !has_any_cmd {
-                return Err(format!(
-                    "{path_display}: section \"{}\": command must specify at least one of cmd, unix, windows, linux, macos",
-                    sec.title
-                ));
-            }
-
-            for (_, opt) in &cmd_strings {
-                if let Some(s) = opt {
-                    if s.contains(['\n', '\r', '\t']) {
-                        return Err(format!(
-                            "{path_display}: section \"{}\": command \"{}\" contains newline or tab",
-                            sec.title, s
-                        ));
-                    }
-                    if !is_balanced_brackets(s) {
-                        return Err(format!(
-                            "{path_display}: section \"{}\": command \"{}\" has unbalanced < >",
-                            sec.title, s
-                        ));
-                    }
-                }
-            }
-        }
-    }
-
-    Ok(())
-}
-
-fn emit_option_str(opt: &Option<String>) -> String {
-    match opt {
-        Some(s) => format!("Some({:?})", s),
-        None => "None".to_string(),
-    }
-}
-
-fn generate_content_rs(tools: &[RawToolFile]) -> String {
-    let mut out = String::new();
-    out.push_str("// Generated by build.rs - DO NOT EDIT\n\n");
-    out.push_str("pub static TOOLS: &[Tool] = &[\n");
-
-    for tool in tools {
-        out.push_str("    Tool {\n");
-        out.push_str(&format!("        name: {:?},\n", tool.tool));
-        out.push_str("        sections: &[\n");
-        for sec in &tool.section {
-            out.push_str("            Section {\n");
-            out.push_str(&format!("                title: {:?},\n", sec.title));
-            out.push_str("                aliases: &[\n");
-            for alias in &sec.aliases {
-                out.push_str(&format!("                    {:?},\n", alias));
-            }
-            out.push_str("                ],\n");
-            out.push_str("                commands: &[\n");
-            for cmd in &sec.command {
-                out.push_str("                    Command {\n");
-                out.push_str(&format!("                        note: {:?},\n", cmd.note));
-                out.push_str(&format!(
-                    "                        cmd: {},\n",
-                    emit_option_str(&cmd.cmd)
-                ));
-                out.push_str(&format!(
-                    "                        unix: {},\n",
-                    emit_option_str(&cmd.unix)
-                ));
-                out.push_str(&format!(
-                    "                        windows: {},\n",
-                    emit_option_str(&cmd.windows)
-                ));
-                out.push_str(&format!(
-                    "                        linux: {},\n",
-                    emit_option_str(&cmd.linux)
-                ));
-                out.push_str(&format!(
-                    "                        macos: {},\n",
-                    emit_option_str(&cmd.macos)
-                ));
-                out.push_str("                    },\n");
-            }
-            out.push_str("                ],\n");
-            out.push_str("            },\n");
-        }
-        out.push_str("        ],\n");
-        out.push_str("    },\n");
-    }
-
     out.push_str("];\n");
     out
+}
+
+fn category_rank(order: &[String], category: &str) -> (usize, String) {
+    match order.iter().position(|entry| entry == category) {
+        Some(index) => (index, String::new()),
+        None => (usize::MAX, category.to_string()),
+    }
 }
 
 fn main() {
     println!("cargo:rerun-if-changed=data");
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=src/content_validation.rs");
 
     let data_dir = Path::new("data");
-    if !data_dir.exists() {
-        panic!("data directory does not exist");
+    let categories_path = data_dir.join("categories.toml");
+    let categories: RawCategories = toml::from_str(
+        &fs::read_to_string(&categories_path).expect("failed to read data/categories.toml"),
+    )
+    .expect("data/categories.toml: failed to parse TOML");
+
+    let mut files: Vec<PathBuf> = fs::read_dir(data_dir)
+        .expect("failed to read data directory")
+        .filter_map(Result::ok)
+        .map(|entry| entry.path())
+        .filter(|path| {
+            path.extension()
+                .is_some_and(|extension| extension == "toml")
+        })
+        .filter(|path| {
+            path.file_name()
+                .is_some_and(|name| name != "categories.toml")
+        })
+        .collect();
+    files.sort();
+
+    let mut parsed = Vec::new();
+    for path in files {
+        println!("cargo:rerun-if-changed={}", path.display());
+        let source = path.display().to_string();
+        let raw: RawToolFile = toml::from_str(
+            &fs::read_to_string(&path).unwrap_or_else(|error| panic!("{source}: {error}")),
+        )
+        .unwrap_or_else(|error| panic!("{source}: failed to parse TOML: {error}"));
+        if raw.draft {
+            println!("cargo:warning={source}: draft tool {:?} skipped", raw.tool);
+            continue;
+        }
+        let spec = to_spec(source.clone(), &raw).unwrap_or_else(|error| panic!("{error}"));
+        content_validation::validate_tool(&spec).unwrap_or_else(|error| panic!("{error}"));
+        for alias in content_validation::duplicate_section_aliases(&spec) {
+            println!(
+                "cargo:warning={source}: duplicate section alias {:?}",
+                alias
+            );
+        }
+        parsed.push(ParsedTool { raw, spec });
     }
 
-    let mut toml_files: Vec<PathBuf> = Vec::new();
-    let entries = fs::read_dir(data_dir).expect("failed to read data directory");
-    for entry in entries {
-        let entry = entry.expect("failed to read dir entry");
-        let path = entry.path();
-        if path.is_file() && path.extension().is_some_and(|ext| ext == "toml") {
-            println!("cargo:rerun-if-changed={}", path.display());
-            toml_files.push(path);
+    let specs: Vec<ToolSpec> = parsed.iter().map(|tool| tool.spec.clone()).collect();
+    content_validation::validate_namespace(&specs).unwrap_or_else(|error| panic!("{error}"));
+    let shadowed = content_validation::shadowed_aliases(&specs);
+    if !shadowed.is_empty() {
+        println!("cargo:warning=shadowed tool aliases: {:?}", shadowed);
+    }
+
+    let known_categories: HashSet<&str> = categories.order.iter().map(String::as_str).collect();
+    for tool in &parsed {
+        if !known_categories.contains(tool.spec.category.as_str()) {
+            println!(
+                "cargo:warning=unlisted category {:?} sorts after categories.toml",
+                tool.spec.category
+            );
         }
     }
-
-    // Sort files for deterministic processing
-    toml_files.sort();
-
-    let mut parsed_tools: Vec<RawToolFile> = Vec::new();
-    let mut seen_tools = HashSet::new();
-
-    for path in toml_files {
-        let path_str = path.to_string_lossy();
-        let content = fs::read_to_string(&path)
-            .unwrap_or_else(|e| panic!("failed to read {}: {}", path_str, e));
-        let raw_tool: RawToolFile = toml::from_str(&content)
-            .unwrap_or_else(|e| panic!("{}: failed to parse TOML: {}", path_str, e));
-
-        if let Err(msg) = validate_tool_file(&path_str, &raw_tool, &mut seen_tools) {
-            panic!("{}", msg);
-        }
-
-        parsed_tools.push(raw_tool);
+    parsed.sort_by(|left, right| {
+        category_rank(&categories.order, &left.spec.category)
+            .cmp(&category_rank(&categories.order, &right.spec.category))
+            .then_with(|| left.spec.category.cmp(&right.spec.category))
+            .then_with(|| {
+                left.raw
+                    .order
+                    .unwrap_or(u32::MAX)
+                    .cmp(&right.raw.order.unwrap_or(u32::MAX))
+            })
+            .then_with(|| left.spec.name.cmp(&right.spec.name))
+    });
+    let mut grouped: BTreeMap<(usize, String, String), Vec<ParsedTool>> = BTreeMap::new();
+    for tool in parsed {
+        let (rank, fallback) = category_rank(&categories.order, &tool.spec.category);
+        grouped
+            .entry((rank, fallback, tool.spec.category.clone()))
+            .or_default()
+            .push(tool);
     }
-
-    // Tools are sorted by name; sections keep file order
-    parsed_tools.sort_by(|a, b| a.tool.cmp(&b.tool));
-
-    let generated_code = generate_content_rs(&parsed_tools);
-
+    let ordered_categories: Vec<(String, Vec<ParsedTool>)> = grouped
+        .into_values()
+        .map(|tools| {
+            let name = tools[0].spec.category.clone();
+            (name, tools)
+        })
+        .collect();
+    let generated = generate_content_rs(&ordered_categories, &shadowed);
     let out_dir = std::env::var("OUT_DIR").expect("OUT_DIR not set");
-    let dest_path = Path::new(&out_dir).join("content.rs");
-    fs::write(&dest_path, generated_code).expect("failed to write generated content.rs");
+    fs::write(Path::new(&out_dir).join("content.rs"), generated)
+        .expect("failed to write generated content.rs");
 }

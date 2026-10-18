@@ -1,4 +1,7 @@
 tool = "git"
+name = "Git"
+category = "Version Control"
+aliases = ["rebase", "submodule", "worktree", "reflog", "git-advanced"]
 
 [[section]]
 title   = "Setup & Config"

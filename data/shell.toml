@@ -1,4 +1,6 @@
 tool = "shell"
+name = "Shell Basics (CMD & Terminal)"
+category = "Linux & System Tools"
 
 [[section]]
 title   = "Navigating Directories"
@@ -216,4 +218,6 @@ aliases = [
   note = "Uninstalls ezcmd from your system"
   cmd  = "ezcmd --uninstall"
 
-
+  [[section.command]]
+  note = "Uninstalls ezcmd without a confirmation prompt"
+  cmd  = "ezcmd --uninstall -y"

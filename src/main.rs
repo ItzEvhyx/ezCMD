@@ -1,5 +1,5 @@
 use ezcmd::cli::{self, Action};
-use ezcmd::content::TOOLS;
+use ezcmd::content::all_tools;
 use ezcmd::matcher::{self, SearchResult};
 use ezcmd::os::Os;
 use ezcmd::prompt;
@@ -90,7 +90,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
         }
         Action::Query(query) => {
             let os = Os::current();
-            let search_res = matcher::search(TOOLS, os, &query, None);
+            let search_res = matcher::search(all_tools(), os, &query, None);
 
             match search_res {
                 SearchResult::Single(hit) => {
@@ -150,7 +150,8 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
 
             // If a specific section query is requested: `--help -<tool> -<section>`
             if let Some(sec_query) = opt_section {
-                let search_res = matcher::search(TOOLS, target_os, &sec_query, opt_tool.as_deref());
+                let search_res =
+                    matcher::search(all_tools(), target_os, &sec_query, opt_tool.as_deref());
 
                 match search_res {
                     SearchResult::Single(hit) => {
@@ -210,19 +211,17 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                 writeln!(out)?;
 
                 let target_tools: Vec<_> = if let Some(ref tool_name) = opt_tool {
-                    TOOLS
-                        .iter()
-                        .filter(|t| t.name.eq_ignore_ascii_case(tool_name))
+                    all_tools()
+                        .filter(|tool| tool.slug.eq_ignore_ascii_case(tool_name))
                         .collect()
                 } else {
-                    TOOLS.iter().collect()
+                    all_tools().collect()
                 };
 
                 let mut first_tool = true;
                 for tool in target_tools {
                     let available_sections: Vec<_> = tool
-                        .sections
-                        .iter()
+                        .sections()
                         .filter(|s| s.available_on(target_os))
                         .collect();
 
@@ -240,11 +239,11 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                                 out,
                                 "{}TOOL: {}{}\n",
                                 term::CYAN_BOLD,
-                                tool.name,
+                                tool.slug,
                                 term::RESET
                             )?;
                         } else {
-                            writeln!(out, "TOOL: {}\n", tool.name)?;
+                            writeln!(out, "TOOL: {}\n", tool.slug)?;
                         }
                     }
 

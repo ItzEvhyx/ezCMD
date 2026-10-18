@@ -135,7 +135,7 @@ fn field_score(query_tokens: &[String], field_tokens: &[String]) -> f32 {
 
 /// Search sections across tools for the given OS.
 pub fn search<'a>(
-    tools: &'a [Tool],
+    tools: impl IntoIterator<Item = &'a Tool>,
     os: Os,
     query: &str,
     only_tool: Option<&str>,
@@ -149,12 +149,12 @@ pub fn search<'a>(
 
     for tool in tools {
         if let Some(target) = only_tool {
-            if !tool.name.eq_ignore_ascii_case(target) {
+            if !tool.slug.eq_ignore_ascii_case(target) {
                 continue;
             }
         }
 
-        for (section_idx, section) in tool.sections.iter().enumerate() {
+        for (section_idx, section) in tool.sections().enumerate() {
             if !section.available_on(os) {
                 continue;
             }
@@ -216,7 +216,7 @@ pub fn search<'a>(
         b.score
             .partial_cmp(&a.score)
             .unwrap_or(std::cmp::Ordering::Equal)
-            .then_with(|| a.tool.name.cmp(b.tool.name))
+            .then_with(|| a.tool.slug.cmp(b.tool.slug))
             .then_with(|| a.section_idx.cmp(&b.section_idx))
     });
 
