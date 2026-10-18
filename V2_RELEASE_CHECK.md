@@ -1,6 +1,6 @@
-# ezCMD 2.0.0 release checks
+# ezCMD 2.1.0 release checks
 
-Recorded on 2026-10-18 for the Version 2 release candidate.
+Recorded on 2026-10-18 for the Version 2.1 release candidate.
 
 ## Build and quality gates
 
@@ -26,9 +26,9 @@ The specification's final-library statement says 307 sections and 1,639 command 
 
 | Check | Target | Result |
 |:---|:---|:---|
-| Release binary | < 3 MB | 865,248 bytes (pass) |
-| Startup: `ezcmd --help` | < 20 ms | 1.38 ms mean across 50 local wall-clock runs (pass) |
-| Startup: `ezcmd initializing repo` | < 20 ms | 19.75 ms mean across 50 local wall-clock runs (pass) |
+| Release binary | < 3 MB | 934,224 bytes (pass) |
+| Startup: `ezcmd --help` | < 20 ms | 1.34 ms mean across 50 local wall-clock runs (pass) |
+| Startup: `ezcmd initializing repo` | < 20 ms | 18.98 ms mean across 50 local wall-clock runs (pass) |
 | Peak memory | < 10 MB | 11.88 MiB mean peak resident memory across 50 isolated searches (miss) |
 
 `hyperfine` is unavailable in this environment, as it was at V0, so startup timings use `date +%s%N` around the release binary and are not directly comparable with a hyperfine baseline. The V0 baseline has no startup timing, so the plan's “more than 5 ms from baseline” condition for indexing cannot be evaluated. The matcher now avoids edit-distance calculations that cannot meet the permitted distance threshold, bringing the tested query below the startup budget. Peak memory was sampled with Linux child-process resource accounting because `/usr/bin/time` is unavailable; it remains above the documented budget.

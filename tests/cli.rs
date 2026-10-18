@@ -19,7 +19,20 @@ fn test_usage_no_args() {
     cmd.assert()
         .success()
         .stdout(predicate::str::contains("HOW TO USE"))
-        .stdout(predicate::str::contains("ezcmd <query>"));
+        .stdout(predicate::str::contains("ezcmd <query>"))
+        .stdout(predicate::str::contains("ezcmd update"));
+}
+
+#[test]
+fn test_update_refuses_a_development_build() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.arg("update")
+        .assert()
+        .code(1)
+        .stdout(predicate::str::contains("Checking for ezcmd updates"))
+        .stderr(predicate::str::contains(
+            "refusing to update a development build",
+        ));
 }
 
 #[test]

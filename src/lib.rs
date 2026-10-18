@@ -8,4 +8,5 @@ pub mod prompt;
 pub mod render;
 pub mod term;
 pub mod uninstall;
+pub mod update;
 pub mod welcome;

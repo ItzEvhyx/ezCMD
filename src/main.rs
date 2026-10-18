@@ -54,6 +54,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
             writeln!(out, "ezcmd {}", env!("CARGO_PKG_VERSION"))?;
             Ok(0)
         }
+        Action::Update => ezcmd::update::run(out),
         Action::Query(query) => {
             let os = Os::current();
             let search_res = matcher::search(

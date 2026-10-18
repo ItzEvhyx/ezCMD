@@ -13,7 +13,7 @@
   <p>
     <a href="https://github.com/ItzEvhyx/ezCMD/releases"><img src="https://img.shields.io/github/v/release/ItzEvhyx/ezCMD?color=00d2ff&style=for-the-badge&logo=github" alt="Release"></a>
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-7928CA?style=for-the-badge&logo=linux" alt="Platform">
-    <img src="https://img.shields.io/badge/Startup-%3C%2015ms-00e676?style=for-the-badge&logo=speedtest" alt="Startup">
+    <img src="https://img.shields.io/badge/Startup-%3C%2020ms-00e676?style=for-the-badge&logo=speedtest" alt="Startup">
     <img src="https://img.shields.io/badge/Size-%3C%201.2MB-00b0ff?style=for-the-badge" alt="Size">
     <img src="https://img.shields.io/badge/Rust-1.70%2B-dea584?style=for-the-badge&logo=rust" alt="Rust">
   </p>
@@ -72,8 +72,9 @@ $ ezcmd initializing repo
 | <img src="https://api.iconify.design/lucide/library.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Browsable Command Library** | Browse categories, tool tables of contents, and focused sections without dumping every command at once. |
 | <img src="https://api.iconify.design/lucide/tags.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Tool Aliases** | Reach tools by their short flag or a non-shadowed alternate name, such as `-rebase` for Git. |
 | <img src="https://api.iconify.design/lucide/monitor.svg?color=%2300b0ff" width="22" height="22" alt=""> | **OS-Aware Resolution** | Automatically detects whether you are on Linux, macOS, or Windows CMD and presents commands that work for your operating system. |
-| <img src="https://api.iconify.design/lucide/package.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Fully Offline & Self-Contained** | Cheatsheet data is compiled directly into the binary at build time. Zero network requests, zero telemetry, zero background daemons. |
-| <img src="https://api.iconify.design/lucide/zap.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Blazing Performance** | Launches, matches, formats, and terminates in **under 15 milliseconds** with less than 1.2 MB footprint. |
+| <img src="https://api.iconify.design/lucide/package.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Offline by Default** | Cheatsheet data is compiled directly into the binary. Lookups make zero network requests, collect no telemetry, and run no background daemons. |
+| <img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Verified Self-Update** | `ezcmd update` fetches only a user-requested GitHub Release, verifies its SHA-256 file, and replaces the installed global binary. |
+| <img src="https://api.iconify.design/lucide/zap.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Fast Search** | Launches, matches, formats, and terminates in **under 20 milliseconds** with less than 1.2 MB footprint. |
 | <img src="https://api.iconify.design/lucide/square.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Fully Enclosed Box Frame** | Retro-modern ASCII borders enclose every output neatly on all sides. |
 | <img src="https://api.iconify.design/lucide/flag.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Welcome Banner & Quickstart** | Beautiful gradient ASCII art greeting on first install with a built-in how-to guide. |
 | <img src="https://api.iconify.design/lucide/trash-2.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Built-in Uninstaller** | Clean removal with `ezcmd --uninstall`, no leftover files. |
@@ -221,7 +222,7 @@ setx PATH "%PATH%;%USERPROFILE%\.local\bin"
 
 ```bash
 ezcmd --version
-# → ezcmd 2.0.0
+# → ezcmd 2.1.0
 ```
 
 ---
@@ -240,6 +241,7 @@ ezcmd --version
 | `ezcmd --help -<os>` | Browse as Linux, macOS, or Windows |
 | `ezcmd --plain <query>` | Raw plain output (no ANSI, no box frames) |
 | `ezcmd --install` | Install ezcmd to PATH + show welcome |
+| `ezcmd update` / `ezcmd --update` | Download and install the latest published release |
 | `ezcmd --welcome` | Display ASCII welcome banner & quickstart |
 | `ezcmd --uninstall` | Uninstall ezcmd completely from system |
 | `ezcmd --version` | Print installed ezcmd version |
@@ -271,6 +273,18 @@ ezcmd --help -windows -winget
 ### Tool aliases
 
 Each tool has a canonical flag such as `-docker` and may have alternate names shown in its `Also matches` line. Non-shadowed aliases can be used as tool flags, so `ezcmd --help -rebase` opens Git. If an alias is also meaningful as a section search, select the tool first: `ezcmd --help -git -worktree`.
+
+### Updating ezcmd
+
+After installing version 2.1.0 or later, update the globally installed binary with:
+
+```bash
+ezcmd update
+```
+
+The updater checks the latest GitHub Release, selects the archive for your OS and CPU, verifies its published SHA-256 checksum, and replaces the installed executable. It only uses the network when you explicitly run this command—ordinary searches remain offline. Linux and macOS require `curl` and `tar`; Windows requires the built-in `curl.exe` and PowerShell. On Windows, the replacement finishes immediately after `ezcmd update` exits because Windows locks a running `.exe`.
+
+Users who installed v1 or v2.0.0 need to run the normal installer one final time to receive v2.1.0. Later releases can then be installed globally with `ezcmd update`.
 
 ### Handling Ambiguous Queries
 
@@ -327,6 +341,8 @@ Every tagged push (`v*`) triggers a [GitHub Actions workflow](.github/workflows/
 2. Packages as `.tar.gz` (Unix) or `.zip` (Windows)
 3. Generates SHA-256 checksums
 4. Creates a GitHub Release with all artifacts
+
+Published release archives are also the update channel for `ezcmd update`. Tag a new semantic version such as `v2.1.1`, let the workflow finish, then existing 2.1.0+ installations can update themselves globally with that command.
 
 ---
 

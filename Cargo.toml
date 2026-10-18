@@ -1,11 +1,12 @@
 [package]
 name = "ezcmd"
-version = "2.0.0"
+version = "2.1.0"
 edition = "2021"
 
 [dependencies]
 strsim = "0.11"
 terminal_size = "0.4"
+sha2 = "0.10"
 
 [target.'cfg(windows)'.dependencies]
 enable-ansi-support = "0.2"

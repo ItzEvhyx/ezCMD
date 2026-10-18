@@ -91,6 +91,7 @@ pub fn usage_guide<W: Write>(out: &mut W, ctx: &RenderCtx) -> io::Result<()> {
             "Browse as another OS",
             Some("ezcmd --help -windows"),
         ),
+        ("ezcmd update", "Install the latest release", None),
     ];
     for (command, description, example) in rows {
         if ctx.width >= 80 {

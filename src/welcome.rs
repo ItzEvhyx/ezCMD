@@ -145,7 +145,7 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         )?;
         writeln!(
             w,
-            "  {}Fast, offline terminal cheatsheet with zero telemetry — commands in < 15ms.{}\n",
+            "  {}Fast, offline terminal cheatsheet with zero telemetry — commands in < 20ms.{}\n",
             term::DIM,
             term::RESET
         )?;
@@ -183,6 +183,11 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         writeln!(
             w,
             "  {}|{}  {}ezcmd --uninstall{}        {}---{} Uninstall ezcmd from your system         {}|{}",
+            C_CYAN, term::RESET, term::CMD_COLOR, term::RESET, term::DIM, term::RESET, C_CYAN, term::RESET
+        )?;
+        writeln!(
+            w,
+            "  {}|{}  {}ezcmd update{}             {}---{} Install the latest published release       {}|{}",
             C_CYAN, term::RESET, term::CMD_COLOR, term::RESET, term::DIM, term::RESET, C_CYAN, term::RESET
         )?;
         writeln!(
@@ -252,7 +257,7 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         )?;
         writeln!(
             w,
-            "  Fast, offline terminal cheatsheet with zero telemetry — commands in < 15ms.\n"
+            "  Fast, offline terminal cheatsheet with zero telemetry — commands in < 20ms.\n"
         )?;
 
         writeln!(
@@ -278,6 +283,10 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         writeln!(
             w,
             "  |  ezcmd --uninstall        --- Uninstall ezcmd from your system         |"
+        )?;
+        writeln!(
+            w,
+            "  |  ezcmd update             --- Install the latest published release       |"
         )?;
         writeln!(
             w,

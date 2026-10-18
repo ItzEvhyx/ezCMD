@@ -44,6 +44,7 @@ pub enum Action {
     Uninstall { yes: bool }, // --uninstall
     Welcome,                 // --welcome
     Install,                 // --install
+    Update,                  // update / --update
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -147,6 +148,17 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
         });
     }
 
+    // Check for --update before bare `--`.
+    let has_update = args[..pre_dash_limit]
+        .iter()
+        .any(|a| a.as_ref() == "--update");
+    if has_update {
+        return Ok(Invocation {
+            plain,
+            action: Action::Update,
+        });
+    }
+
     // Check for --help before bare `--`
     let has_help = args[..pre_dash_limit]
         .iter()
@@ -208,6 +220,15 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
         return Ok(Invocation {
             plain,
             action: Action::Usage,
+        });
+    }
+
+    // `ezcmd update` is deliberately a command rather than a fuzzy query so
+    // users can update an installed binary without remembering a flag.
+    if query_parts.len() == 1 && query_parts[0].eq_ignore_ascii_case("update") {
+        return Ok(Invocation {
+            plain,
+            action: Action::Update,
         });
     }
 
@@ -362,6 +383,16 @@ mod tests {
         let inv = parse(&["initializing", "repo"]).expect("parse query");
         assert!(!inv.plain);
         assert_eq!(inv.action, Action::Query("initializing repo".into()));
+    }
+
+    #[test]
+    fn test_update_command_and_flag() {
+        let inv = parse(&["update"]).expect("parse update command");
+        assert_eq!(inv.action, Action::Update);
+
+        let inv = parse(&["--plain", "--update"]).expect("parse update flag");
+        assert!(inv.plain);
+        assert_eq!(inv.action, Action::Update);
     }
 
     #[test]

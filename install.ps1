@@ -30,7 +30,7 @@ if ($ScriptDir -and (Test-Path "$ScriptDir\target\release\ezcmd.exe")) {
         # ignore api error/rate limit
     }
     if (-not $ZipUrl) {
-        $ZipUrl = "https://github.com/$Repo/releases/download/v2.0.0/ezcmd-v2.0.0-$AssetTarget.zip"
+        $ZipUrl = "https://github.com/$Repo/releases/download/v2.1.0/ezcmd-v2.1.0-$AssetTarget.zip"
     }
 
     $TempZip = "$env:TEMP\ezcmd.zip"
