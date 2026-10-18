@@ -1,0 +1,152 @@
+tool = "postgres"
+name = "PostgreSQL (psql)"
+category = "Databases"
+order = 1
+aliases = ["psql", "postgresql", "pg_dump"]
+draft = true
+
+[[group]]
+title = "Connect & Query"
+
+[[group.section]]
+title = "Connect"
+aliases = []
+
+[[group.section.command]]
+note = "Connects to a database"
+cmd = "psql -U <user> -d <database>"
+
+[[group.section.command]]
+note = "Connects to a remote server"
+cmd = "psql -h <host> -p <port> -U <user> -d <database>"
+
+[[group.section.command]]
+note = "Connects using a connection string"
+cmd = "psql \"<connection-string>\""
+
+[[group.section.command]]
+note = "Runs one SQL command and exits"
+cmd = "psql -c \"<sql>\""
+
+[[group.section.command]]
+note = "Runs the SQL in a file"
+cmd = "psql -f <file.sql>"
+
+[[group.section.command]]
+note = "Checks whether the server is accepting connections"
+cmd = "pg_isready"
+
+[[group.section]]
+title = "Inside psql"
+aliases = []
+
+[[group.section.command]]
+note = "Lists databases"
+cmd = "\\l"
+
+[[group.section.command]]
+note = "Switches to a database"
+cmd = "\\c <database>"
+
+[[group.section.command]]
+note = "Lists tables"
+cmd = "\\dt"
+
+[[group.section.command]]
+note = "Describes a table"
+cmd = "\\d <table>"
+
+[[group.section.command]]
+note = "Lists schemas"
+cmd = "\\dn"
+
+[[group.section.command]]
+note = "Lists users and roles"
+cmd = "\\du"
+
+[[group.section.command]]
+note = "Toggles expanded output"
+cmd = "\\x"
+
+[[group.section.command]]
+note = "Toggles query timing"
+cmd = "\\timing"
+
+[[group.section.command]]
+note = "Quits psql"
+cmd = "\\q"
+
+[[group]]
+title = "Admin & Backup"
+
+[[group.section]]
+title = "Users & Databases"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a database"
+cmd = "CREATE DATABASE <name>;"
+
+[[group.section.command]]
+note = "Creates a user"
+cmd = "CREATE USER <user> WITH PASSWORD '<password>';"
+
+[[group.section.command]]
+note = "Gives a user full access to a database"
+cmd = "GRANT ALL PRIVILEGES ON DATABASE <db> TO <user>;"
+
+[[group.section.command]]
+note = "Changes a user's password"
+cmd = "ALTER USER <user> WITH PASSWORD '<password>';"
+
+[[group.section.command]]
+note = "Changes a database's owner"
+cmd = "ALTER DATABASE <db> OWNER TO <user>;"
+
+[[group.section.command]]
+note = "Deletes a database"
+cmd = "DROP DATABASE <name>;"
+
+[[group.section]]
+title = "Command-Line Tools"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a database from the shell"
+cmd = "createdb <name>"
+
+[[group.section.command]]
+note = "Deletes a database from the shell"
+cmd = "dropdb <name>"
+
+[[group.section.command]]
+note = "Creates a user with prompts"
+cmd = "createuser --interactive"
+
+[[group.section.command]]
+note = "Prints the psql version"
+cmd = "psql --version"
+
+[[group.section]]
+title = "Backup & Restore"
+aliases = []
+
+[[group.section.command]]
+note = "Exports a database to a SQL file"
+cmd = "pg_dump -U <user> <database> > <backup.sql>"
+
+[[group.section.command]]
+note = "Exports in compressed custom format"
+cmd = "pg_dump -Fc -U <user> <database> -f <backup.dump>"
+
+[[group.section.command]]
+note = "Restores from a SQL file"
+cmd = "psql -U <user> <database> < <backup.sql>"
+
+[[group.section.command]]
+note = "Restores from a custom-format dump"
+cmd = "pg_restore -U <user> -d <database> <backup.dump>"
+
+[[group.section.command]]
+note = "Exports every database"
+cmd = "pg_dumpall > <all.sql>"

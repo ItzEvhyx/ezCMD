@@ -1,0 +1,93 @@
+tool = "vite"
+name = "React & Vite"
+category = "JavaScript & Web"
+order = 6
+aliases = ["react", "vitest"]
+draft = true
+
+[[group]]
+title = "Everything Vite"
+
+[[group.section]]
+title = "Create a Project"
+aliases = []
+
+[[group.section.command]]
+note = "Scaffolds a project with prompts"
+cmd = "npm create vite@latest"
+
+[[group.section.command]]
+note = "Creates a React project"
+cmd = "npm create vite@latest <name> -- --template react"
+
+[[group.section.command]]
+note = "Creates a React and TypeScript project"
+cmd = "npm create vite@latest <name> -- --template react-ts"
+
+[[group.section.command]]
+note = "Scaffolds a project using pnpm"
+cmd = "pnpm create vite"
+
+[[group.section.command]]
+note = "Scaffolds a project using Yarn"
+cmd = "yarn create vite"
+
+[[group.section.command]]
+note = "Scaffolds a project using Bun"
+cmd = "bun create vite"
+
+[[group.section]]
+title = "Dev, Build & Preview"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the Vite dev server"
+cmd = "npm run dev"
+
+[[group.section.command]]
+note = "Builds for production"
+cmd = "npm run build"
+
+[[group.section.command]]
+note = "Serves the production build locally"
+cmd = "npm run preview"
+
+[[group.section.command]]
+note = "Exposes the dev server on your network"
+cmd = "npx vite --host"
+
+[[group.section.command]]
+note = "Starts the dev server on a chosen port"
+cmd = "npx vite --port <port>"
+
+[[group.section.command]]
+note = "Builds using a specific env mode"
+cmd = "npx vite build --mode <mode>"
+
+[[group.section]]
+title = "Testing (Vitest)"
+aliases = []
+
+[[group.section.command]]
+note = "Installs Vitest"
+cmd = "npm install -D vitest"
+
+[[group.section.command]]
+note = "Runs tests in watch mode"
+cmd = "npx vitest"
+
+[[group.section.command]]
+note = "Runs tests once"
+cmd = "npx vitest run"
+
+[[group.section.command]]
+note = "Installs the coverage provider"
+cmd = "npm install -D @vitest/coverage-v8"
+
+[[group.section.command]]
+note = "Runs tests with a coverage report"
+cmd = "npx vitest run --coverage"
+
+[[group.section.command]]
+note = "Runs tests in one file"
+cmd = "npx vitest <file>"

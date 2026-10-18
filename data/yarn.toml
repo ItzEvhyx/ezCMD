@@ -1,0 +1,113 @@
+tool = "yarn"
+name = "Yarn"
+category = "JavaScript & Web"
+order = 3
+aliases = ["yarnpkg"]
+notes = ["Classic (v1) and Berry (v2+) differ. Lines are labeled where they do"]
+draft = true
+
+[[group]]
+title = "Packages"
+
+[[group.section]]
+title = "Install & Add Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Installs everything in package.json"
+cmd = "yarn"
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "yarn add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "yarn add -D <pkg>"
+
+[[group.section.command]]
+note = "Classic: fails if the lockfile changes"
+cmd = "yarn install --frozen-lockfile"
+
+[[group.section.command]]
+note = "Berry: fails if the lockfile changes"
+cmd = "yarn install --immutable"
+
+[[group.section]]
+title = "Update & Remove Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "yarn remove <pkg>"
+
+[[group.section.command]]
+note = "Classic: updates packages"
+cmd = "yarn upgrade"
+
+[[group.section.command]]
+note = "Berry: upgrades a package"
+cmd = "yarn up <pkg>"
+
+[[group.section.command]]
+note = "Classic: lists packages with newer versions"
+cmd = "yarn outdated"
+
+[[group.section.command]]
+note = "Shows why a package is installed"
+cmd = "yarn why <pkg>"
+
+[[group]]
+title = "Running & Maintenance"
+
+[[group.section]]
+title = "Scripts & Workspaces"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a script from package.json"
+cmd = "yarn <script>"
+
+[[group.section.command]]
+note = "Lists the available scripts"
+cmd = "yarn run"
+
+[[group.section.command]]
+note = "Runs a command in one workspace"
+cmd = "yarn workspace <name> <command>"
+
+[[group.section.command]]
+note = "Berry: runs a script in every workspace"
+cmd = "yarn workspaces foreach -A run <script>"
+
+[[group.section.command]]
+note = "Berry: runs a package without installing"
+cmd = "yarn dlx <pkg>"
+
+[[group.section.command]]
+note = "Classic: scaffolds a project from a template"
+cmd = "yarn create next-app"
+
+[[group.section.command]]
+note = "Berry: scaffolds a project from a template"
+cmd = "yarn dlx create-next-app"
+
+[[group.section]]
+title = "Global Packages & Cache"
+aliases = []
+
+[[group.section.command]]
+note = "Classic: installs a package globally"
+cmd = "yarn global add <pkg>"
+
+[[group.section.command]]
+note = "Clears the Yarn cache"
+cmd = "yarn cache clean"
+
+[[group.section.command]]
+note = "Berry: upgrades Yarn itself"
+cmd = "yarn set version stable"
+
+[[group.section.command]]
+note = "Prints the Yarn version"
+cmd = "yarn --version"

@@ -1,0 +1,74 @@
+tool = "winget"
+name = "winget"
+category = "Package Managers"
+order = 5
+aliases = ["windows-package-manager"]
+platforms = ["windows"]
+draft = true
+
+[[group]]
+title = "Everything winget"
+
+[[group.section]]
+title = "Install & Remove"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "winget install <pkg>"
+
+[[group.section.command]]
+note = "Installs by exact package ID"
+cmd = "winget install --id <id>"
+
+[[group.section.command]]
+note = "Installs a specific version"
+cmd = "winget install <pkg> --version <version>"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "winget uninstall <pkg>"
+
+[[group.section]]
+title = "Update"
+aliases = []
+
+[[group.section.command]]
+note = "Lists packages with updates"
+cmd = "winget upgrade"
+
+[[group.section.command]]
+note = "Upgrades one package"
+cmd = "winget upgrade <pkg>"
+
+[[group.section.command]]
+note = "Upgrades everything"
+cmd = "winget upgrade --all"
+
+[[group.section.command]]
+note = "Refreshes the package sources"
+cmd = "winget source update"
+
+[[group.section]]
+title = "Search & Inspect"
+aliases = []
+
+[[group.section.command]]
+note = "Searches for packages"
+cmd = "winget search <term>"
+
+[[group.section.command]]
+note = "Shows a package's details"
+cmd = "winget show <pkg>"
+
+[[group.section.command]]
+note = "Lists installed programs"
+cmd = "winget list"
+
+[[group.section.command]]
+note = "Saves your installed packages to a file"
+cmd = "winget export -o <file.json>"
+
+[[group.section.command]]
+note = "Installs packages from a saved file"
+cmd = "winget import -i <file.json>"

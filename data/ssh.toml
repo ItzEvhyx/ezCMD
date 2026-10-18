@@ -1,0 +1,166 @@
+tool = "ssh"
+name = "SSH, SCP & rsync"
+category = "Containers & DevOps"
+order = 5
+aliases = ["scp", "rsync", "remote-server"]
+notes = ["rsync is not installed on Windows by default. Use WSL or Git Bash there"]
+draft = true
+
+[[group]]
+title = "Remote Access"
+
+[[group.section]]
+title = "Connect to a Server"
+aliases = []
+
+[[group.section.command]]
+note = "Connects to a server"
+cmd = "ssh <user>@<host>"
+
+[[group.section.command]]
+note = "Connects on a custom port"
+cmd = "ssh -p <port> <user>@<host>"
+
+[[group.section.command]]
+note = "Connects using a specific key"
+cmd = "ssh -i <key-file> <user>@<host>"
+
+[[group.section.command]]
+note = "Runs one command and disconnects"
+cmd = "ssh <user>@<host> \"<command>\""
+
+[[group.section.command]]
+note = "Shows detailed output for debugging"
+cmd = "ssh -v <user>@<host>"
+
+[[group.section]]
+title = "SSH Keys"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Ed25519 key pair"
+cmd = "ssh-keygen -t ed25519 -C \"<email>\""
+
+[[group.section.command]]
+note = "Creates a 4096-bit RSA key pair"
+cmd = "ssh-keygen -t rsa -b 4096 -C \"<email>\""
+
+[[group.section.command]]
+note = "Installs your public key on a server"
+unix = "ssh-copy-id <user>@<host>"
+
+[[group.section.command]]
+note = "Prints your public key"
+unix = "cat ~/.ssh/id_ed25519.pub"
+windows = "type %USERPROFILE%\\.ssh\\id_ed25519.pub"
+
+[[group.section.command]]
+note = "Tests your GitHub SSH connection"
+cmd = "ssh -T git@github.com"
+
+[[group.section.command]]
+note = "Removes a host from known_hosts"
+cmd = "ssh-keygen -R <host>"
+
+[[group.section.command]]
+note = "Fixes private key permissions"
+unix = "chmod 600 ~/.ssh/id_ed25519"
+
+[[group.section]]
+title = "SSH Agent"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the SSH agent"
+unix = "eval \"$(ssh-agent -s)\""
+
+[[group.section.command]]
+note = "Adds a key to the agent"
+cmd = "ssh-add <key-file>"
+
+[[group.section.command]]
+note = "Lists keys in the agent"
+cmd = "ssh-add -l"
+
+[[group.section.command]]
+note = "Removes all keys from the agent"
+cmd = "ssh-add -D"
+
+[[group]]
+title = "Copying & Tunnels"
+
+[[group.section]]
+title = "Copy Files (scp)"
+aliases = []
+
+[[group.section.command]]
+note = "Uploads a file to a server"
+cmd = "scp <file> <user>@<host>:<remote-path>"
+
+[[group.section.command]]
+note = "Downloads a file from a server"
+cmd = "scp <user>@<host>:<remote-file> <local-path>"
+
+[[group.section.command]]
+note = "Uploads a folder"
+cmd = "scp -r <folder> <user>@<host>:<remote-path>"
+
+[[group.section.command]]
+note = "Uploads using a custom port"
+cmd = "scp -P <port> <file> <user>@<host>:<remote-path>"
+
+[[group.section.command]]
+note = "Uploads using a specific key"
+cmd = "scp -i <key-file> <file> <user>@<host>:<remote-path>"
+
+[[group.section]]
+title = "Sync Folders (rsync)"
+aliases = []
+
+[[group.section.command]]
+note = "Syncs a folder to a server"
+cmd = "rsync -avz <source>/ <user>@<host>:<dest>/"
+
+[[group.section.command]]
+note = "Syncs and shows progress"
+cmd = "rsync -avz --progress <source>/ <dest>/"
+
+[[group.section.command]]
+note = "Syncs and deletes extra files at the destination"
+cmd = "rsync -avz --delete <source>/ <dest>/"
+
+[[group.section.command]]
+note = "Previews a sync without changing anything"
+cmd = "rsync -avzn <source>/ <dest>/"
+
+[[group.section.command]]
+note = "Syncs while skipping matching files"
+cmd = "rsync -avz --exclude '<pattern>' <source>/ <dest>/"
+
+[[group.section.command]]
+note = "Syncs over a custom SSH port"
+cmd = "rsync -e \"ssh -p <port>\" <source>/ <user>@<host>:<dest>/"
+
+[[group.section]]
+title = "Tunnels & Jump Hosts"
+aliases = []
+
+[[group.section.command]]
+note = "Forwards a local port to the server"
+cmd = "ssh -L <local-port>:localhost:<remote-port> <user>@<host>"
+
+[[group.section.command]]
+note = "Exposes a local port on the server"
+cmd = "ssh -R <remote-port>:localhost:<local-port> <user>@<host>"
+
+[[group.section.command]]
+note = "Starts a SOCKS proxy through the server"
+cmd = "ssh -D <port> <user>@<host>"
+
+[[group.section.command]]
+note = "Runs a tunnel in the background"
+cmd = "ssh -N -f -L <local-port>:localhost:<remote-port> <user>@<host>"
+
+[[group.section.command]]
+note = "Connects through a jump host"
+cmd = "ssh -J <jump-host> <user>@<host>"

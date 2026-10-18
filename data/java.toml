@@ -1,0 +1,65 @@
+tool = "java"
+name = "Java"
+category = "Languages & Package Tools"
+order = 8
+aliases = ["javac", "jar", "jshell", "jdk"]
+draft = true
+
+[[group]]
+title = "Everything Java"
+
+[[group.section]]
+title = "Compile & Run"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Java runtime version"
+cmd = "java -version"
+
+[[group.section.command]]
+note = "Prints the compiler version"
+cmd = "javac -version"
+
+[[group.section.command]]
+note = "Compiles a Java file"
+cmd = "javac <File.java>"
+
+[[group.section.command]]
+note = "Runs a compiled class"
+cmd = "java <ClassName>"
+
+[[group.section.command]]
+note = "Compiles and runs a single source file"
+cmd = "java <File.java>"
+
+[[group.section.command]]
+note = "Runs a JAR file"
+cmd = "java -jar <app.jar>"
+
+[[group.section.command]]
+note = "Opens an interactive Java prompt"
+cmd = "jshell"
+
+[[group.section]]
+title = "Packaging & Classpath"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a JAR file"
+cmd = "jar cf <app.jar> <files>"
+
+[[group.section.command]]
+note = "Lists the contents of a JAR"
+cmd = "jar tf <app.jar>"
+
+[[group.section.command]]
+note = "Runs a class with a classpath"
+cmd = "java -cp <classpath> <ClassName>"
+
+[[group.section.command]]
+note = "Compiles into an output folder"
+cmd = "javac -d <out-dir> <files>"
+
+[[group.section.command]]
+note = "Runs with a maximum memory size"
+cmd = "java -Xmx<size> -jar <app.jar>"

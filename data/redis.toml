@@ -1,0 +1,127 @@
+tool = "redis"
+name = "Redis"
+category = "Databases"
+order = 5
+aliases = ["redis-cli", "cache"]
+platforms = ["linux", "macos"]
+notes = ["Redis has no official native Windows build. On Windows, run it through WSL or Docker"]
+draft = true
+
+[[group]]
+title = "Everything Redis"
+
+[[group.section]]
+title = "Connect & Basics"
+aliases = []
+
+[[group.section.command]]
+note = "Connects to a local server"
+cmd = "redis-cli"
+
+[[group.section.command]]
+note = "Connects to a remote server"
+cmd = "redis-cli -h <host> -p <port>"
+
+[[group.section.command]]
+note = "Connects with a password"
+cmd = "redis-cli -a <password>"
+
+[[group.section.command]]
+note = "Checks that the server responds"
+cmd = "PING"
+
+[[group.section.command]]
+note = "Switches to a numbered database"
+cmd = "SELECT <db>"
+
+[[group.section]]
+title = "Keys & Expiry"
+aliases = []
+
+[[group.section.command]]
+note = "Stores a value"
+cmd = "SET <key> <value>"
+
+[[group.section.command]]
+note = "Reads a value"
+cmd = "GET <key>"
+
+[[group.section.command]]
+note = "Deletes a key"
+cmd = "DEL <key>"
+
+[[group.section.command]]
+note = "Checks whether a key exists"
+cmd = "EXISTS <key>"
+
+[[group.section.command]]
+note = "Sets a key to expire"
+cmd = "EXPIRE <key> <seconds>"
+
+[[group.section.command]]
+note = "Shows the seconds before a key expires"
+cmd = "TTL <key>"
+
+[[group.section.command]]
+note = "Finds keys matching a pattern"
+cmd = "SCAN 0 MATCH <pattern>"
+
+[[group.section.command]]
+note = "Shows a key's data type"
+cmd = "TYPE <key>"
+
+[[group.section]]
+title = "Data Types"
+aliases = []
+
+[[group.section.command]]
+note = "Adds 1 to a number"
+cmd = "INCR <key>"
+
+[[group.section.command]]
+note = "Sets a field in a hash"
+cmd = "HSET <key> <field> <value>"
+
+[[group.section.command]]
+note = "Reads all fields of a hash"
+cmd = "HGETALL <key>"
+
+[[group.section.command]]
+note = "Adds a value to the start of a list"
+cmd = "LPUSH <key> <value>"
+
+[[group.section.command]]
+note = "Reads a whole list"
+cmd = "LRANGE <key> 0 -1"
+
+[[group.section.command]]
+note = "Adds a member to a set"
+cmd = "SADD <key> <member>"
+
+[[group.section.command]]
+note = "Lists the members of a set"
+cmd = "SMEMBERS <key>"
+
+[[group.section]]
+title = "Admin & Debug"
+aliases = []
+
+[[group.section.command]]
+note = "Shows server information"
+cmd = "INFO"
+
+[[group.section.command]]
+note = "Counts the keys in the database"
+cmd = "DBSIZE"
+
+[[group.section.command]]
+note = "Streams every command the server receives"
+cmd = "MONITOR"
+
+[[group.section.command]]
+note = "Deletes every key in the database"
+cmd = "FLUSHDB"
+
+[[group.section.command]]
+note = "Deletes every key in every database"
+cmd = "FLUSHALL"

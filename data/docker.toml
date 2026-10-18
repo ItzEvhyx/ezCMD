@@ -1,0 +1,295 @@
+tool = "docker"
+name = "Docker"
+category = "Containers & DevOps"
+order = 1
+aliases = ["container", "containers", "dockerfile"]
+draft = true
+
+[[group]]
+title = "Containers"
+
+[[group.section]]
+title = "Check Docker & Log In"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Docker version"
+cmd = "docker --version"
+
+[[group.section.command]]
+note = "Shows system-wide Docker information"
+cmd = "docker info"
+
+[[group.section.command]]
+note = "Logs in to a registry"
+cmd = "docker login"
+
+[[group.section.command]]
+note = "Logs out of a registry"
+cmd = "docker logout"
+
+[[group.section.command]]
+note = "Shows disk space used by Docker"
+cmd = "docker system df"
+
+[[group.section]]
+title = "Run a Container"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a container from an image"
+cmd = "docker run <image>"
+
+[[group.section.command]]
+note = "Runs the container in the background"
+cmd = "docker run -d <image>"
+
+[[group.section.command]]
+note = "Runs the container with an interactive shell"
+cmd = "docker run -it <image> sh"
+
+[[group.section.command]]
+note = "Publishes a container port on the host"
+cmd = "docker run -p <host-port>:<container-port> <image>"
+
+[[group.section.command]]
+note = "Mounts a host folder into the container"
+cmd = "docker run -v <host-path>:<container-path> <image>"
+
+[[group.section.command]]
+note = "Names the container and removes it on exit"
+cmd = "docker run --name <name> --rm <image>"
+
+[[group.section.command]]
+note = "Sets an environment variable"
+cmd = "docker run -e <KEY>=<value> <image>"
+
+[[group.section.command]]
+note = "Loads environment variables from a file"
+cmd = "docker run --env-file <file> <image>"
+
+[[group.section]]
+title = "Manage Containers"
+aliases = []
+
+[[group.section.command]]
+note = "Lists running containers"
+cmd = "docker ps"
+
+[[group.section.command]]
+note = "Lists all containers, including stopped"
+cmd = "docker ps -a"
+
+[[group.section.command]]
+note = "Stops a running container"
+cmd = "docker stop <container>"
+
+[[group.section.command]]
+note = "Starts a stopped container"
+cmd = "docker start <container>"
+
+[[group.section.command]]
+note = "Restarts a container"
+cmd = "docker restart <container>"
+
+[[group.section.command]]
+note = "Removes a stopped container"
+cmd = "docker rm <container>"
+
+[[group.section.command]]
+note = "Force-removes a container"
+cmd = "docker rm -f <container>"
+
+[[group.section.command]]
+note = "Renames a container"
+cmd = "docker rename <old> <new>"
+
+[[group.section]]
+title = "Inspect & Debug"
+aliases = []
+
+[[group.section.command]]
+note = "Shows a container's logs"
+cmd = "docker logs <container>"
+
+[[group.section.command]]
+note = "Follows a container's logs live"
+cmd = "docker logs -f <container>"
+
+[[group.section.command]]
+note = "Shows the last 100 log lines"
+cmd = "docker logs --tail 100 <container>"
+
+[[group.section.command]]
+note = "Opens a shell inside a running container"
+cmd = "docker exec -it <container> sh"
+
+[[group.section.command]]
+note = "Runs a command inside a container"
+cmd = "docker exec <container> <command>"
+
+[[group.section.command]]
+note = "Shows detailed container info as JSON"
+cmd = "docker inspect <container>"
+
+[[group.section.command]]
+note = "Shows live CPU and memory usage"
+cmd = "docker stats"
+
+[[group.section.command]]
+note = "Copies a file out of a container"
+cmd = "docker cp <container>:<path> <local-path>"
+
+[[group]]
+title = "Images & Registries"
+
+[[group.section]]
+title = "Build Images"
+aliases = []
+
+[[group.section.command]]
+note = "Builds an image from the current folder"
+cmd = "docker build -t <name> ."
+
+[[group.section.command]]
+note = "Builds an image with a tag"
+cmd = "docker build -t <name>:<tag> ."
+
+[[group.section.command]]
+note = "Builds from a specific Dockerfile"
+cmd = "docker build -f <Dockerfile> -t <name> ."
+
+[[group.section.command]]
+note = "Builds without using the cache"
+cmd = "docker build --no-cache -t <name> ."
+
+[[group.section.command]]
+note = "Passes a build argument"
+cmd = "docker build --build-arg <KEY>=<value> -t <name> ."
+
+[[group.section.command]]
+note = "Builds for multiple CPU types"
+cmd = "docker buildx build --platform linux/amd64,linux/arm64 -t <name> ."
+
+[[group.section]]
+title = "Images & Tags"
+aliases = []
+
+[[group.section.command]]
+note = "Lists local images"
+cmd = "docker images"
+
+[[group.section.command]]
+note = "Downloads an image"
+cmd = "docker pull <image>"
+
+[[group.section.command]]
+note = "Adds a new name to an image"
+cmd = "docker tag <image> <repo>/<name>:<tag>"
+
+[[group.section.command]]
+note = "Uploads an image to a registry"
+cmd = "docker push <repo>/<name>:<tag>"
+
+[[group.section.command]]
+note = "Removes an image"
+cmd = "docker rmi <image>"
+
+[[group.section.command]]
+note = "Shows an image's layers"
+cmd = "docker history <image>"
+
+[[group.section.command]]
+note = "Saves an image to a tar file"
+cmd = "docker save -o <file.tar> <image>"
+
+[[group.section.command]]
+note = "Loads an image from a tar file"
+cmd = "docker load -i <file.tar>"
+
+[[group]]
+title = "Storage, Networks & Cleanup"
+
+[[group.section]]
+title = "Volumes"
+aliases = []
+
+[[group.section.command]]
+note = "Lists volumes"
+cmd = "docker volume ls"
+
+[[group.section.command]]
+note = "Creates a volume"
+cmd = "docker volume create <name>"
+
+[[group.section.command]]
+note = "Shows volume details"
+cmd = "docker volume inspect <name>"
+
+[[group.section.command]]
+note = "Removes a volume"
+cmd = "docker volume rm <name>"
+
+[[group.section.command]]
+note = "Removes unused volumes"
+cmd = "docker volume prune"
+
+[[group.section]]
+title = "Networks"
+aliases = []
+
+[[group.section.command]]
+note = "Lists networks"
+cmd = "docker network ls"
+
+[[group.section.command]]
+note = "Creates a network"
+cmd = "docker network create <name>"
+
+[[group.section.command]]
+note = "Connects a container to a network"
+cmd = "docker network connect <network> <container>"
+
+[[group.section.command]]
+note = "Disconnects a container from a network"
+cmd = "docker network disconnect <network> <container>"
+
+[[group.section.command]]
+note = "Shows network details"
+cmd = "docker network inspect <name>"
+
+[[group.section.command]]
+note = "Runs a container on a network"
+cmd = "docker run --network <name> <image>"
+
+[[group.section]]
+title = "Clean Up Space"
+aliases = []
+
+[[group.section.command]]
+note = "Removes all stopped containers"
+cmd = "docker container prune"
+
+[[group.section.command]]
+note = "Removes dangling images"
+cmd = "docker image prune"
+
+[[group.section.command]]
+note = "Removes all unused images"
+cmd = "docker image prune -a"
+
+[[group.section.command]]
+note = "Removes unused containers, networks, and images"
+cmd = "docker system prune"
+
+[[group.section.command]]
+note = "Removes everything unused, including volumes"
+cmd = "docker system prune -a --volumes"
+
+[[group.section.command]]
+note = "Stops all running containers"
+unix = "docker stop $(docker ps -q)"
+
+[[group.section.command]]
+note = "Removes all containers"
+unix = "docker rm $(docker ps -aq)"

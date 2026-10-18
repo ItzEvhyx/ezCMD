@@ -1,0 +1,78 @@
+tool = "cron"
+name = "Cron"
+category = "Linux & System Tools"
+order = 6
+aliases = ["crontab", "scheduled-tasks", "schedule"]
+platforms = ["linux", "macos"]
+draft = true
+
+[[group]]
+title = "Everything Cron"
+
+[[group.section]]
+title = "Manage Cron Jobs"
+aliases = []
+
+[[group.section.command]]
+note = "Edits your cron jobs"
+cmd = "crontab -e"
+
+[[group.section.command]]
+note = "Lists your cron jobs"
+cmd = "crontab -l"
+
+[[group.section.command]]
+note = "Removes all your cron jobs"
+cmd = "crontab -r"
+
+[[group.section.command]]
+note = "Lists another user's cron jobs"
+cmd = "sudo crontab -u <user> -l"
+
+[[group.section]]
+title = "Schedule Formats"
+aliases = []
+
+[[group.section.command]]
+note = "Runs every minute"
+cmd = "* * * * * <command>"
+
+[[group.section.command]]
+note = "Runs at the start of every hour"
+cmd = "0 * * * * <command>"
+
+[[group.section.command]]
+note = "Runs every day at 2:00 AM"
+cmd = "0 2 * * * <command>"
+
+[[group.section.command]]
+note = "Runs at 9:00 AM on weekdays"
+cmd = "0 9 * * 1-5 <command>"
+
+[[group.section.command]]
+note = "Runs every 15 minutes"
+cmd = "*/15 * * * * <command>"
+
+[[group.section.command]]
+note = "Runs on the first day of every month"
+cmd = "0 0 1 * * <command>"
+
+[[group.section.command]]
+note = "Runs once at startup"
+cmd = "@reboot <command>"
+
+[[group.section]]
+title = "Debug Cron"
+aliases = []
+
+[[group.section.command]]
+note = "Shows cron activity (Debian and Ubuntu)"
+cmd = "grep CRON /var/log/syslog"
+
+[[group.section.command]]
+note = "Shows cron logs on systemd systems"
+cmd = "journalctl -u cron"
+
+[[group.section.command]]
+note = "Saves a job's output and errors to a log"
+cmd = "<command> >> <log-file> 2>&1"

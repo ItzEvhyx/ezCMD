@@ -1,0 +1,133 @@
+tool = "compose"
+name = "Docker Compose"
+category = "Containers & DevOps"
+order = 2
+aliases = ["docker-compose"]
+draft = true
+
+[[group]]
+title = "Everything Compose"
+
+[[group.section]]
+title = "Start & Stop"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the services"
+cmd = "docker compose up"
+
+[[group.section.command]]
+note = "Starts the services in the background"
+cmd = "docker compose up -d"
+
+[[group.section.command]]
+note = "Rebuilds images, then starts the services"
+cmd = "docker compose up --build"
+
+[[group.section.command]]
+note = "Stops and removes the containers"
+cmd = "docker compose down"
+
+[[group.section.command]]
+note = "Also removes the volumes"
+cmd = "docker compose down -v"
+
+[[group.section.command]]
+note = "Stops the services without removing them"
+cmd = "docker compose stop"
+
+[[group.section.command]]
+note = "Restarts one service"
+cmd = "docker compose restart <service>"
+
+[[group.section]]
+title = "Build & Update"
+aliases = []
+
+[[group.section.command]]
+note = "Builds the service images"
+cmd = "docker compose build"
+
+[[group.section.command]]
+note = "Builds without using the cache"
+cmd = "docker compose build --no-cache"
+
+[[group.section.command]]
+note = "Pulls the latest images"
+cmd = "docker compose pull"
+
+[[group.section.command]]
+note = "Rebuilds and restarts one service"
+cmd = "docker compose up -d --build <service>"
+
+[[group.section.command]]
+note = "Recreates the containers"
+cmd = "docker compose up -d --force-recreate"
+
+[[group.section]]
+title = "Logs & Status"
+aliases = []
+
+[[group.section.command]]
+note = "Lists the project's containers"
+cmd = "docker compose ps"
+
+[[group.section.command]]
+note = "Shows logs from all services"
+cmd = "docker compose logs"
+
+[[group.section.command]]
+note = "Follows one service's logs"
+cmd = "docker compose logs -f <service>"
+
+[[group.section.command]]
+note = "Shows running processes"
+cmd = "docker compose top"
+
+[[group.section.command]]
+note = "Validates and prints the final config"
+cmd = "docker compose config"
+
+[[group.section.command]]
+note = "Lists the images in use"
+cmd = "docker compose images"
+
+[[group.section]]
+title = "Run Commands in Services"
+aliases = []
+
+[[group.section.command]]
+note = "Opens a shell in a running service"
+cmd = "docker compose exec <service> sh"
+
+[[group.section.command]]
+note = "Runs a command in a running service"
+cmd = "docker compose exec <service> <command>"
+
+[[group.section.command]]
+note = "Runs a one-off command in a new container"
+cmd = "docker compose run --rm <service> <command>"
+
+[[group.section]]
+title = "Files, Profiles & Scaling"
+aliases = []
+
+[[group.section.command]]
+note = "Uses a specific compose file"
+cmd = "docker compose -f <file.yml> up"
+
+[[group.section.command]]
+note = "Uses a specific env file"
+cmd = "docker compose --env-file <file> up"
+
+[[group.section.command]]
+note = "Sets the project name"
+cmd = "docker compose -p <project> up"
+
+[[group.section.command]]
+note = "Starts services in a profile"
+cmd = "docker compose --profile <name> up"
+
+[[group.section.command]]
+note = "Runs several copies of a service"
+cmd = "docker compose up -d --scale <service>=<n>"

@@ -1,0 +1,113 @@
+tool = "dart"
+name = "Dart"
+category = "Mobile Development"
+order = 2
+aliases = ["dart-sdk"]
+draft = true
+
+[[group]]
+title = "Everything Dart"
+
+[[group.section]]
+title = "Create & Run"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Dart project"
+cmd = "dart create <name>"
+
+[[group.section.command]]
+note = "Creates a console app"
+cmd = "dart create -t console <name>"
+
+[[group.section.command]]
+note = "Runs the project's main file"
+cmd = "dart run"
+
+[[group.section.command]]
+note = "Runs a Dart file"
+cmd = "dart run <file.dart>"
+
+[[group.section.command]]
+note = "Prints the Dart version"
+cmd = "dart --version"
+
+[[group.section]]
+title = "Manage Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Downloads packages"
+cmd = "dart pub get"
+
+[[group.section.command]]
+note = "Adds a package"
+cmd = "dart pub add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "dart pub add dev:<pkg>"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "dart pub remove <pkg>"
+
+[[group.section.command]]
+note = "Upgrades packages"
+cmd = "dart pub upgrade"
+
+[[group.section.command]]
+note = "Lists outdated packages"
+cmd = "dart pub outdated"
+
+[[group.section.command]]
+note = "Installs a command-line package globally"
+cmd = "dart pub global activate <pkg>"
+
+[[group.section]]
+title = "Compile"
+aliases = []
+
+[[group.section.command]]
+note = "Compiles to a native executable"
+cmd = "dart compile exe <file.dart>"
+
+[[group.section.command]]
+note = "Compiles to JavaScript"
+cmd = "dart compile js <file.dart>"
+
+[[group.section.command]]
+note = "Compiles to an AOT snapshot"
+cmd = "dart compile aot-snapshot <file.dart>"
+
+[[group.section.command]]
+note = "Compiles to a kernel module"
+cmd = "dart compile kernel <file.dart>"
+
+[[group.section]]
+title = "Test, Analyze & Format"
+aliases = []
+
+[[group.section.command]]
+note = "Runs tests"
+cmd = "dart test"
+
+[[group.section.command]]
+note = "Checks the code for issues"
+cmd = "dart analyze"
+
+[[group.section.command]]
+note = "Formats the code"
+cmd = "dart format ."
+
+[[group.section.command]]
+note = "Previews automated fixes"
+cmd = "dart fix --dry-run"
+
+[[group.section.command]]
+note = "Applies automated fixes"
+cmd = "dart fix --apply"
+
+[[group.section.command]]
+note = "Generates API documentation"
+cmd = "dart doc"

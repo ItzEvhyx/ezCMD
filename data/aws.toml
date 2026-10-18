@@ -1,0 +1,121 @@
+tool = "aws"
+name = "AWS CLI"
+category = "Cloud & Backend Services"
+order = 3
+aliases = ["amazon", "s3", "ec2", "lambda"]
+draft = true
+
+[[group]]
+title = "Everything AWS"
+
+[[group.section]]
+title = "Log In & Profiles"
+aliases = []
+
+[[group.section.command]]
+note = "Sets up access keys and a default region"
+cmd = "aws configure"
+
+[[group.section.command]]
+note = "Sets up a named profile"
+cmd = "aws configure --profile <name>"
+
+[[group.section.command]]
+note = "Sets up single sign-on"
+cmd = "aws configure sso"
+
+[[group.section.command]]
+note = "Logs in with single sign-on"
+cmd = "aws sso login --profile <name>"
+
+[[group.section.command]]
+note = "Shows which account you are using"
+cmd = "aws sts get-caller-identity"
+
+[[group.section.command]]
+note = "Lists your profiles"
+cmd = "aws configure list-profiles"
+
+[[group.section.command]]
+note = "Runs a command with a profile"
+cmd = "aws --profile <name> <command>"
+
+[[group.section]]
+title = "S3 Storage"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your buckets"
+cmd = "aws s3 ls"
+
+[[group.section.command]]
+note = "Lists the contents of a bucket"
+cmd = "aws s3 ls s3://<bucket>"
+
+[[group.section.command]]
+note = "Uploads a file"
+cmd = "aws s3 cp <file> s3://<bucket>/<key>"
+
+[[group.section.command]]
+note = "Downloads a file"
+cmd = "aws s3 cp s3://<bucket>/<key> <file>"
+
+[[group.section.command]]
+note = "Syncs a folder to a bucket"
+cmd = "aws s3 sync <folder> s3://<bucket>"
+
+[[group.section.command]]
+note = "Deletes an object"
+cmd = "aws s3 rm s3://<bucket>/<key>"
+
+[[group.section.command]]
+note = "Deletes everything in a bucket"
+cmd = "aws s3 rm s3://<bucket> --recursive"
+
+[[group.section.command]]
+note = "Creates a temporary download link"
+cmd = "aws s3 presign s3://<bucket>/<key>"
+
+[[group.section]]
+title = "EC2 Servers"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your EC2 instances"
+cmd = "aws ec2 describe-instances"
+
+[[group.section.command]]
+note = "Starts an instance"
+cmd = "aws ec2 start-instances --instance-ids <id>"
+
+[[group.section.command]]
+note = "Stops an instance"
+cmd = "aws ec2 stop-instances --instance-ids <id>"
+
+[[group.section.command]]
+note = "Reboots an instance"
+cmd = "aws ec2 reboot-instances --instance-ids <id>"
+
+[[group.section.command]]
+note = "Permanently deletes an instance"
+cmd = "aws ec2 terminate-instances --instance-ids <id>"
+
+[[group.section]]
+title = "Lambda & Logs"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your Lambda functions"
+cmd = "aws lambda list-functions"
+
+[[group.section.command]]
+note = "Runs a function and saves the result"
+cmd = "aws lambda invoke --function-name <name> <out.json>"
+
+[[group.section.command]]
+note = "Lists CloudWatch log groups"
+cmd = "aws logs describe-log-groups"
+
+[[group.section.command]]
+note = "Follows a log group live"
+cmd = "aws logs tail <log-group> --follow"

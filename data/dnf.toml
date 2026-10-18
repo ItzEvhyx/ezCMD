@@ -1,0 +1,75 @@
+tool = "dnf"
+name = "dnf (Fedora & RHEL)"
+category = "Package Managers"
+order = 3
+aliases = ["fedora", "rpm", "yum"]
+platforms = ["linux"]
+notes = ["Fedora 41 and later use dnf5. Every line here also works on dnf4 (RHEL 9 and older)"]
+draft = true
+
+[[group]]
+title = "Everything dnf"
+
+[[group.section]]
+title = "Install & Remove"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "sudo dnf install <pkg>"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "sudo dnf remove <pkg>"
+
+[[group.section.command]]
+note = "Removes packages nothing needs anymore"
+cmd = "sudo dnf autoremove"
+
+[[group.section.command]]
+note = "Installs a local .rpm file"
+cmd = "sudo dnf install <file.rpm>"
+
+[[group.section]]
+title = "Update the System"
+aliases = []
+
+[[group.section.command]]
+note = "Updates all packages"
+cmd = "sudo dnf upgrade"
+
+[[group.section.command]]
+note = "Lists available updates"
+cmd = "dnf check-upgrade"
+
+[[group.section.command]]
+note = "Clears cached package data"
+cmd = "sudo dnf clean all"
+
+[[group.section.command]]
+note = "Lists past transactions"
+cmd = "dnf history"
+
+[[group.section]]
+title = "Search & Inspect"
+aliases = []
+
+[[group.section.command]]
+note = "Searches for packages"
+cmd = "dnf search <term>"
+
+[[group.section.command]]
+note = "Shows a package's details"
+cmd = "dnf info <pkg>"
+
+[[group.section.command]]
+note = "Lists installed packages"
+cmd = "dnf list --installed"
+
+[[group.section.command]]
+note = "Finds which package provides a file"
+cmd = "dnf provides <file>"
+
+[[group.section.command]]
+note = "Lists the files a package installed"
+cmd = "rpm -ql <pkg>"

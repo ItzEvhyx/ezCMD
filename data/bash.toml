@@ -1,0 +1,139 @@
+tool = "bash"
+name = "Shell Productivity (Bash)"
+category = "Linux & System Tools"
+order = 8
+aliases = ["terminal", "zsh", "history", "alias"]
+platforms = ["linux", "macos"]
+notes = ["macOS uses zsh by default, so its config file is ~/.zshrc. watch is not preinstalled on macOS. tldr is a separate install on both systems"]
+draft = true
+
+[[group]]
+title = "Everything Shell"
+
+[[group.section]]
+title = "History & Shortcuts"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your command history"
+cmd = "history"
+
+[[group.section.command]]
+note = "Repeats the last command"
+cmd = "!!"
+
+[[group.section.command]]
+note = "Repeats the last command with sudo"
+cmd = "sudo !!"
+
+[[group.section.command]]
+note = "Searches your command history"
+cmd = "Ctrl+r"
+
+[[group.section.command]]
+note = "Stops the running command"
+cmd = "Ctrl+c"
+
+[[group.section.command]]
+note = "Pauses the running command"
+cmd = "Ctrl+z"
+
+[[group.section.command]]
+note = "Clears the screen"
+cmd = "Ctrl+l"
+
+[[group.section.command]]
+note = "Jumps to the start of the line"
+cmd = "Ctrl+a"
+
+[[group.section.command]]
+note = "Jumps to the end of the line"
+cmd = "Ctrl+e"
+
+[[group.section]]
+title = "Aliases, Variables & Config"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a shortcut for a command"
+cmd = "alias <name>='<command>'"
+
+[[group.section.command]]
+note = "Sets an environment variable"
+cmd = "export <NAME>=<value>"
+
+[[group.section.command]]
+note = "Prints a variable's value"
+cmd = "echo $<NAME>"
+
+[[group.section.command]]
+note = "Reloads your Bash config"
+cmd = "source ~/.bashrc"
+
+[[group.section.command]]
+note = "Reloads your Zsh config"
+cmd = "source ~/.zshrc"
+
+[[group.section.command]]
+note = "Shows where a command lives"
+cmd = "which <command>"
+
+[[group.section.command]]
+note = "Shows how a command is interpreted"
+cmd = "type <command>"
+
+[[group.section]]
+title = "Jobs & Background Tasks"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a command in the background"
+cmd = "<command> &"
+
+[[group.section.command]]
+note = "Lists background jobs"
+cmd = "jobs"
+
+[[group.section.command]]
+note = "Brings a job to the foreground"
+cmd = "fg"
+
+[[group.section.command]]
+note = "Resumes a paused job in the background"
+cmd = "bg"
+
+[[group.section.command]]
+note = "Keeps a command running after you log out"
+cmd = "nohup <command> &"
+
+[[group.section.command]]
+note = "Detaches a job from the shell"
+cmd = "disown"
+
+[[group.section]]
+title = "Help & Timing"
+aliases = []
+
+[[group.section.command]]
+note = "Opens a command's manual"
+cmd = "man <command>"
+
+[[group.section.command]]
+note = "Shows a command's usage summary"
+cmd = "<command> --help"
+
+[[group.section.command]]
+note = "Shows short practical examples (needs install)"
+cmd = "tldr <command>"
+
+[[group.section.command]]
+note = "Installs watch, which macOS lacks"
+macos = "brew install watch"
+
+[[group.section.command]]
+note = "Reruns a command every 2 seconds"
+cmd = "watch -n 2 <command>"
+
+[[group.section.command]]
+note = "Measures how long a command takes"
+cmd = "time <command>"

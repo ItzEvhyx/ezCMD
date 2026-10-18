@@ -1,0 +1,117 @@
+tool = "gradle"
+name = "Gradle"
+category = "Mobile Development"
+order = 5
+aliases = ["gradlew", "android-build"]
+notes = ["On Windows CMD use gradlew instead of ./gradlew"]
+draft = true
+
+[[group]]
+title = "Android Builds"
+
+[[group.section]]
+title = "Build & Install Android Apps"
+aliases = []
+
+[[group.section.command]]
+note = "Builds a debug APK"
+cmd = "./gradlew assembleDebug"
+
+[[group.section.command]]
+note = "Builds a release APK"
+cmd = "./gradlew assembleRelease"
+
+[[group.section.command]]
+note = "Builds a release AAB"
+cmd = "./gradlew bundleRelease"
+
+[[group.section.command]]
+note = "Builds and installs the debug app"
+cmd = "./gradlew installDebug"
+
+[[group.section.command]]
+note = "Deletes build outputs"
+cmd = "./gradlew clean"
+
+[[group.section]]
+title = "Android Checks & Reports"
+aliases = []
+
+[[group.section.command]]
+note = "Prints SHA-1 and SHA-256 fingerprints"
+cmd = "./gradlew signingReport"
+
+[[group.section.command]]
+note = "Runs Android lint"
+cmd = "./gradlew lint"
+
+[[group.section.command]]
+note = "Runs unit tests"
+cmd = "./gradlew test"
+
+[[group.section.command]]
+note = "Runs instrumented tests on a device"
+cmd = "./gradlew connectedAndroidTest"
+
+[[group.section.command]]
+note = "Prints the app's dependency tree"
+cmd = "./gradlew app:dependencies"
+
+[[group]]
+title = "General Gradle"
+
+[[group.section]]
+title = "Build & Test"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Gradle project"
+cmd = "gradle init"
+
+[[group.section.command]]
+note = "Compiles, tests, and packages the project"
+cmd = "gradle build"
+
+[[group.section.command]]
+note = "Builds without running tests"
+cmd = "gradle build -x test"
+
+[[group.section.command]]
+note = "Runs tests"
+cmd = "gradle test"
+
+[[group.section.command]]
+note = "Runs the application"
+cmd = "gradle run"
+
+[[group.section.command]]
+note = "Deletes build outputs"
+cmd = "gradle clean"
+
+[[group.section]]
+title = "Inspect & Troubleshoot"
+aliases = []
+
+[[group.section.command]]
+note = "Lists available tasks"
+cmd = "gradle tasks"
+
+[[group.section.command]]
+note = "Prints the dependency tree"
+cmd = "gradle dependencies"
+
+[[group.section.command]]
+note = "Redownloads dependencies"
+cmd = "gradle build --refresh-dependencies"
+
+[[group.section.command]]
+note = "Shows full error stack traces"
+cmd = "gradle build --stacktrace"
+
+[[group.section.command]]
+note = "Stops all Gradle daemons"
+cmd = "gradle --stop"
+
+[[group.section.command]]
+note = "Generates the Gradle wrapper files"
+cmd = "gradle wrapper"

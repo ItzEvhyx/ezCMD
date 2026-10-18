@@ -1,0 +1,119 @@
+tool = "perms"
+name = "Permissions & Users"
+category = "Linux & System Tools"
+order = 1
+aliases = ["chmod", "chown", "sudo", "users", "groups"]
+platforms = ["linux", "macos"]
+notes = ["The Users & Groups commands are Linux-specific. macOS manages users differently"]
+draft = true
+
+[[group]]
+title = "Everything Permissions"
+
+[[group.section]]
+title = "Set File Permissions"
+aliases = []
+
+[[group.section.command]]
+note = "Makes a file executable"
+cmd = "chmod +x <file>"
+
+[[group.section.command]]
+note = "Sets rwxr-xr-x (owner full, others read and run)"
+cmd = "chmod 755 <file>"
+
+[[group.section.command]]
+note = "Sets rw-r--r-- (owner edits, others read)"
+cmd = "chmod 644 <file>"
+
+[[group.section.command]]
+note = "Sets rw------- (owner only)"
+cmd = "chmod 600 <file>"
+
+[[group.section.command]]
+note = "Applies a mode to a folder and its contents"
+cmd = "chmod -R 755 <folder>"
+
+[[group.section.command]]
+note = "Gives the owner everything and others nothing"
+cmd = "chmod u+rwx,go-rwx <file>"
+
+[[group.section]]
+title = "Change Ownership"
+aliases = []
+
+[[group.section.command]]
+note = "Changes a file's owner"
+cmd = "chown <user> <file>"
+
+[[group.section.command]]
+note = "Changes the owner and group"
+cmd = "chown <user>:<group> <file>"
+
+[[group.section.command]]
+note = "Changes ownership of a folder and its contents"
+cmd = "chown -R <user>:<group> <folder>"
+
+[[group.section.command]]
+note = "Takes ownership of a folder"
+cmd = "sudo chown -R $USER:$USER <folder>"
+
+[[group.section.command]]
+note = "Changes a file's group"
+cmd = "chgrp <group> <file>"
+
+[[group.section]]
+title = "Inspect Permissions"
+aliases = []
+
+[[group.section.command]]
+note = "Lists files with their permissions"
+cmd = "ls -l"
+
+[[group.section.command]]
+note = "Shows detailed file info"
+cmd = "stat <file>"
+
+[[group.section.command]]
+note = "Shows your user and group IDs"
+cmd = "id"
+
+[[group.section.command]]
+note = "Lists your groups"
+cmd = "groups"
+
+[[group.section.command]]
+note = "Shows the default permission mask"
+cmd = "umask"
+
+[[group.section]]
+title = "Users & Groups"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a user with a home folder"
+linux = "sudo useradd -m <user>"
+
+[[group.section.command]]
+note = "Sets a user's password"
+linux = "sudo passwd <user>"
+
+[[group.section.command]]
+note = "Adds a user to a group"
+linux = "sudo usermod -aG <group> <user>"
+
+[[group.section.command]]
+note = "Deletes a user and their home folder"
+linux = "sudo userdel -r <user>"
+
+[[group.section.command]]
+note = "Switches to another user"
+cmd = "su - <user>"
+
+[[group.section.command]]
+note = "Opens a root shell"
+cmd = "sudo -i"
+
+[[group.section.command]]
+note = "Prints your username"
+cmd = "whoami"

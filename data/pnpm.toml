@@ -1,0 +1,112 @@
+tool = "pnpm"
+name = "pnpm"
+category = "JavaScript & Web"
+order = 2
+aliases = ["pnpx"]
+draft = true
+
+[[group]]
+title = "Packages"
+
+[[group.section]]
+title = "Install & Add Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Installs everything in package.json"
+cmd = "pnpm install"
+
+[[group.section.command]]
+note = "Fails if the lockfile needs changes"
+cmd = "pnpm install --frozen-lockfile"
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "pnpm add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "pnpm add -D <pkg>"
+
+[[group.section.command]]
+note = "Installs a package globally"
+cmd = "pnpm add -g <pkg>"
+
+[[group.section]]
+title = "Update & Remove Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "pnpm remove <pkg>"
+
+[[group.section.command]]
+note = "Updates packages within allowed ranges"
+cmd = "pnpm update"
+
+[[group.section.command]]
+note = "Updates to the newest versions"
+cmd = "pnpm update --latest"
+
+[[group.section.command]]
+note = "Lists packages with newer versions"
+cmd = "pnpm outdated"
+
+[[group.section.command]]
+note = "Shows why a package is installed"
+cmd = "pnpm why <pkg>"
+
+[[group]]
+title = "Running & Maintenance"
+
+[[group.section]]
+title = "Run Scripts & Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a script from package.json"
+cmd = "pnpm run <script>"
+
+[[group.section.command]]
+note = "Runs the dev script"
+cmd = "pnpm dev"
+
+[[group.section.command]]
+note = "Runs a package without installing it"
+cmd = "pnpm dlx <pkg>"
+
+[[group.section.command]]
+note = "Scaffolds a project from a template"
+cmd = "pnpm create vite"
+
+[[group.section]]
+title = "Workspaces (Monorepos)"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a command in one workspace package"
+cmd = "pnpm --filter <pkg> <command>"
+
+[[group.section.command]]
+note = "Runs a command in every workspace package"
+cmd = "pnpm -r <command>"
+
+[[group.section.command]]
+note = "Adds a dependency to one workspace"
+cmd = "pnpm add <pkg> --filter <workspace>"
+
+[[group.section]]
+title = "Store & Cleanup"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the global store location"
+cmd = "pnpm store path"
+
+[[group.section.command]]
+note = "Removes unused packages from the store"
+cmd = "pnpm store prune"
+
+[[group.section.command]]
+note = "Refetches and relinks all packages"
+cmd = "pnpm install --force"

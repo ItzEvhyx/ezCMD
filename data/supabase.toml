@@ -1,0 +1,125 @@
+tool = "supabase"
+name = "Supabase CLI"
+category = "Cloud & Backend Services"
+order = 2
+aliases = ["supabase-cli", "postgres-backend"]
+draft = true
+
+[[group]]
+title = "Everything Supabase"
+
+[[group.section]]
+title = "Set Up & Link"
+aliases = []
+
+[[group.section.command]]
+note = "Logs in to Supabase"
+cmd = "npx supabase login"
+
+[[group.section.command]]
+note = "Creates a supabase folder in the project"
+cmd = "npx supabase init"
+
+[[group.section.command]]
+note = "Lists your projects"
+cmd = "npx supabase projects list"
+
+[[group.section.command]]
+note = "Links the folder to a hosted project"
+cmd = "npx supabase link --project-ref <ref>"
+
+[[group.section]]
+title = "Local Development"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the local stack in Docker"
+cmd = "npx supabase start"
+
+[[group.section.command]]
+note = "Stops the local stack"
+cmd = "npx supabase stop"
+
+[[group.section.command]]
+note = "Shows local URLs and keys"
+cmd = "npx supabase status"
+
+[[group.section.command]]
+note = "Rebuilds the local database from migrations"
+cmd = "npx supabase db reset"
+
+[[group.section]]
+title = "Migrations"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new migration file"
+cmd = "npx supabase migration new <name>"
+
+[[group.section.command]]
+note = "Lists applied migrations"
+cmd = "npx supabase migration list"
+
+[[group.section.command]]
+note = "Creates a migration from schema changes"
+cmd = "npx supabase db diff -f <name>"
+
+[[group.section.command]]
+note = "Applies migrations to the linked project"
+cmd = "npx supabase db push"
+
+[[group.section.command]]
+note = "Pulls the remote schema as a migration"
+cmd = "npx supabase db pull"
+
+[[group.section.command]]
+note = "Exports the linked project's schema"
+cmd = "npx supabase db dump --linked -f <file.sql>"
+
+[[group.section]]
+title = "Generate Types"
+aliases = []
+
+[[group.section.command]]
+note = "Generates types from the local database"
+cmd = "npx supabase gen types --lang typescript --local > <types.ts>"
+
+[[group.section.command]]
+note = "Generates types from the linked project"
+cmd = "npx supabase gen types --lang typescript --linked > <types.ts>"
+
+[[group.section.command]]
+note = "Generates types from any project by ID"
+cmd = "npx supabase gen types --lang typescript --project-id <ref> > <types.ts>"
+
+[[group.section]]
+title = "Edge Functions & Secrets"
+aliases = []
+
+[[group.section.command]]
+note = "Creates an edge function"
+cmd = "npx supabase functions new <name>"
+
+[[group.section.command]]
+note = "Runs edge functions locally"
+cmd = "npx supabase functions serve"
+
+[[group.section.command]]
+note = "Deploys an edge function"
+cmd = "npx supabase functions deploy <name>"
+
+[[group.section.command]]
+note = "Lists deployed functions"
+cmd = "npx supabase functions list"
+
+[[group.section.command]]
+note = "Sets a secret for functions"
+cmd = "npx supabase secrets set <KEY>=<value>"
+
+[[group.section.command]]
+note = "Lists your secrets"
+cmd = "npx supabase secrets list"
+
+[[group.section.command]]
+note = "Removes a secret"
+cmd = "npx supabase secrets unset <KEY>"

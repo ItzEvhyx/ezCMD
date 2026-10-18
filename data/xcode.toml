@@ -1,0 +1,118 @@
+tool = "xcode"
+name = "Xcode & Simulators"
+category = "Mobile Development"
+order = 7
+aliases = ["xcodebuild", "simctl", "ios-simulator"]
+platforms = ["macos"]
+draft = true
+
+[[group]]
+title = "Everything Xcode"
+
+[[group.section]]
+title = "Command Line Tools"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the Xcode command line tools"
+cmd = "xcode-select --install"
+
+[[group.section.command]]
+note = "Prints the active developer folder"
+cmd = "xcode-select -p"
+
+[[group.section.command]]
+note = "Switches the active Xcode"
+cmd = "sudo xcode-select -s <path>"
+
+[[group.section.command]]
+note = "Prints the Xcode version"
+cmd = "xcodebuild -version"
+
+[[group.section.command]]
+note = "Lists available SDKs"
+cmd = "xcodebuild -showsdks"
+
+[[group.section]]
+title = "Build & Test"
+aliases = []
+
+[[group.section.command]]
+note = "Lists schemes and targets"
+cmd = "xcodebuild -list"
+
+[[group.section.command]]
+note = "Builds a scheme"
+cmd = "xcodebuild -scheme <scheme> build"
+
+[[group.section.command]]
+note = "Runs a scheme's tests on a simulator"
+cmd = "xcodebuild -scheme <scheme> -destination 'platform=iOS Simulator,name=<device>' test"
+
+[[group.section.command]]
+note = "Builds a workspace scheme"
+cmd = "xcodebuild -workspace <name>.xcworkspace -scheme <scheme> build"
+
+[[group.section.command]]
+note = "Lists the destinations a scheme can use"
+cmd = "xcodebuild -showdestinations -scheme <scheme>"
+
+[[group.section.command]]
+note = "Cleans build products"
+cmd = "xcodebuild clean"
+
+[[group.section]]
+title = "Simulators (simctl)"
+aliases = []
+
+[[group.section.command]]
+note = "Lists simulators"
+cmd = "xcrun simctl list devices"
+
+[[group.section.command]]
+note = "Starts a simulator"
+cmd = "xcrun simctl boot <udid>"
+
+[[group.section.command]]
+note = "Shuts down all simulators"
+cmd = "xcrun simctl shutdown all"
+
+[[group.section.command]]
+note = "Resets all simulators"
+cmd = "xcrun simctl erase all"
+
+[[group.section.command]]
+note = "Installs an app on the booted simulator"
+cmd = "xcrun simctl install booted <app-path>"
+
+[[group.section.command]]
+note = "Launches an app"
+cmd = "xcrun simctl launch booted <bundle-id>"
+
+[[group.section.command]]
+note = "Opens a URL in the simulator"
+cmd = "xcrun simctl openurl booted <url>"
+
+[[group.section.command]]
+note = "Takes a simulator screenshot"
+cmd = "xcrun simctl io booted screenshot <file.png>"
+
+[[group.section.command]]
+note = "Opens the Simulator app"
+cmd = "open -a Simulator"
+
+[[group.section]]
+title = "Clear Caches"
+aliases = []
+
+[[group.section.command]]
+note = "Clears Xcode build caches"
+cmd = "rm -rf ~/Library/Developer/Xcode/DerivedData"
+
+[[group.section.command]]
+note = "Removes unusable simulators"
+cmd = "xcrun simctl delete unavailable"
+
+[[group.section.command]]
+note = "Clears the CocoaPods cache"
+cmd = "rm -rf ~/Library/Caches/CocoaPods"

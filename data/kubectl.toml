@@ -1,0 +1,208 @@
+tool = "kubectl"
+name = "Kubernetes (kubectl)"
+category = "Containers & DevOps"
+order = 3
+aliases = ["k8s", "kubernetes", "k"]
+draft = true
+
+[[group]]
+title = "Cluster & Resources"
+
+[[group.section]]
+title = "Contexts & Namespaces"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your cluster contexts"
+cmd = "kubectl config get-contexts"
+
+[[group.section.command]]
+note = "Prints the active context"
+cmd = "kubectl config current-context"
+
+[[group.section.command]]
+note = "Switches to another context"
+cmd = "kubectl config use-context <context>"
+
+[[group.section.command]]
+note = "Sets the default namespace"
+cmd = "kubectl config set-context --current --namespace=<ns>"
+
+[[group.section.command]]
+note = "Lists namespaces"
+cmd = "kubectl get namespaces"
+
+[[group.section.command]]
+note = "Creates a namespace"
+cmd = "kubectl create namespace <ns>"
+
+[[group.section.command]]
+note = "Shows cluster endpoint details"
+cmd = "kubectl cluster-info"
+
+[[group.section]]
+title = "View Resources"
+aliases = []
+
+[[group.section.command]]
+note = "Lists pods in the current namespace"
+cmd = "kubectl get pods"
+
+[[group.section.command]]
+note = "Lists pods in all namespaces"
+cmd = "kubectl get pods -A"
+
+[[group.section.command]]
+note = "Lists pods with node and IP details"
+cmd = "kubectl get pods -o wide"
+
+[[group.section.command]]
+note = "Lists the main resources in a namespace"
+cmd = "kubectl get all"
+
+[[group.section.command]]
+note = "Lists deployments"
+cmd = "kubectl get deployments"
+
+[[group.section.command]]
+note = "Lists services"
+cmd = "kubectl get services"
+
+[[group.section.command]]
+note = "Lists cluster nodes"
+cmd = "kubectl get nodes"
+
+[[group.section.command]]
+note = "Prints a resource as YAML"
+cmd = "kubectl get <resource> -o yaml"
+
+[[group.section.command]]
+note = "Filters pods by label"
+cmd = "kubectl get pods -l <key>=<value>"
+
+[[group.section.command]]
+note = "Lists recent events in order"
+cmd = "kubectl get events --sort-by=.metadata.creationTimestamp"
+
+[[group.section]]
+title = "Inspect & Debug"
+aliases = []
+
+[[group.section.command]]
+note = "Shows pod details and events"
+cmd = "kubectl describe pod <pod>"
+
+[[group.section.command]]
+note = "Shows a pod's logs"
+cmd = "kubectl logs <pod>"
+
+[[group.section.command]]
+note = "Follows a pod's logs live"
+cmd = "kubectl logs -f <pod>"
+
+[[group.section.command]]
+note = "Shows logs from one container"
+cmd = "kubectl logs <pod> -c <container>"
+
+[[group.section.command]]
+note = "Shows logs from the last crashed container"
+cmd = "kubectl logs --previous <pod>"
+
+[[group.section.command]]
+note = "Opens a shell inside a pod"
+cmd = "kubectl exec -it <pod> -- sh"
+
+[[group.section.command]]
+note = "Forwards a local port to a pod"
+cmd = "kubectl port-forward <pod> <local-port>:<pod-port>"
+
+[[group.section.command]]
+note = "Shows pod CPU and memory usage"
+cmd = "kubectl top pods"
+
+[[group.section.command]]
+note = "Shows node CPU and memory usage"
+cmd = "kubectl top nodes"
+
+[[group]]
+title = "Deploy & Configure"
+
+[[group.section]]
+title = "Apply & Delete"
+aliases = []
+
+[[group.section.command]]
+note = "Creates or updates resources from a file"
+cmd = "kubectl apply -f <file.yaml>"
+
+[[group.section.command]]
+note = "Applies every manifest in a folder"
+cmd = "kubectl apply -f <folder>/"
+
+[[group.section.command]]
+note = "Previews changes before applying"
+cmd = "kubectl diff -f <file.yaml>"
+
+[[group.section.command]]
+note = "Deletes the resources in a file"
+cmd = "kubectl delete -f <file.yaml>"
+
+[[group.section.command]]
+note = "Deletes a pod"
+cmd = "kubectl delete pod <pod>"
+
+[[group.section.command]]
+note = "Creates a deployment"
+cmd = "kubectl create deployment <name> --image=<image>"
+
+[[group.section.command]]
+note = "Creates a service for a deployment"
+cmd = "kubectl expose deployment <name> --port=<port>"
+
+[[group.section]]
+title = "Deployments & Rollouts"
+aliases = []
+
+[[group.section.command]]
+note = "Watches a rollout's progress"
+cmd = "kubectl rollout status deployment/<name>"
+
+[[group.section.command]]
+note = "Lists a deployment's revisions"
+cmd = "kubectl rollout history deployment/<name>"
+
+[[group.section.command]]
+note = "Rolls back to the previous revision"
+cmd = "kubectl rollout undo deployment/<name>"
+
+[[group.section.command]]
+note = "Restarts a deployment's pods"
+cmd = "kubectl rollout restart deployment/<name>"
+
+[[group.section.command]]
+note = "Sets the number of pods"
+cmd = "kubectl scale deployment <name> --replicas=<n>"
+
+[[group.section.command]]
+note = "Updates a deployment's image"
+cmd = "kubectl set image deployment/<name> <container>=<image>"
+
+[[group.section]]
+title = "ConfigMaps & Secrets"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a ConfigMap"
+cmd = "kubectl create configmap <name> --from-literal=<KEY>=<value>"
+
+[[group.section.command]]
+note = "Creates a secret"
+cmd = "kubectl create secret generic <name> --from-literal=<KEY>=<value>"
+
+[[group.section.command]]
+note = "Shows a secret's encoded data"
+cmd = "kubectl get secret <name> -o yaml"
+
+[[group.section.command]]
+note = "Edits a resource in your editor"
+cmd = "kubectl edit <resource> <name>"

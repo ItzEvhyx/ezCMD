@@ -1,0 +1,189 @@
+tool = "go"
+name = "Go"
+category = "Languages & Package Tools"
+order = 7
+aliases = ["golang", "go-modules"]
+draft = true
+
+[[group]]
+title = "Everything Go"
+
+[[group.section]]
+title = "Modules & Setup"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Go version"
+cmd = "go version"
+
+[[group.section.command]]
+note = "Prints the Go environment settings"
+cmd = "go env"
+
+[[group.section.command]]
+note = "Creates a new module"
+cmd = "go mod init <module>"
+
+[[group.section.command]]
+note = "Adds missing and removes unused dependencies"
+cmd = "go mod tidy"
+
+[[group.section.command]]
+note = "Downloads the module's dependencies"
+cmd = "go mod download"
+
+[[group.section.command]]
+note = "Copies dependencies into a vendor folder"
+cmd = "go mod vendor"
+
+[[group.section.command]]
+note = "Explains why a package is needed"
+cmd = "go mod why <pkg>"
+
+[[group.section]]
+title = "Run & Build"
+aliases = []
+
+[[group.section.command]]
+note = "Runs the program in this folder"
+cmd = "go run ."
+
+[[group.section.command]]
+note = "Runs a Go file"
+cmd = "go run <file.go>"
+
+[[group.section.command]]
+note = "Compiles the program"
+cmd = "go build"
+
+[[group.section.command]]
+note = "Compiles to a named file"
+cmd = "go build -o <name>"
+
+[[group.section.command]]
+note = "Builds every package"
+cmd = "go build ./..."
+
+[[group.section.command]]
+note = "Installs a command-line tool"
+cmd = "go install <pkg>@latest"
+
+[[group.section]]
+title = "Cross-Compile"
+aliases = []
+
+[[group.section.command]]
+note = "Builds for 64-bit Linux"
+unix = "GOOS=linux GOARCH=amd64 go build"
+
+[[group.section.command]]
+note = "Builds for 64-bit Windows"
+unix = "GOOS=windows GOARCH=amd64 go build"
+
+[[group.section.command]]
+note = "Builds for Apple Silicon"
+unix = "GOOS=darwin GOARCH=arm64 go build"
+
+[[group.section.command]]
+note = "Sets the target OS for this terminal"
+windows = "set GOOS=linux"
+
+[[group.section.command]]
+note = "Sets the target CPU for this terminal"
+windows = "set GOARCH=amd64"
+
+[[group.section.command]]
+note = "Lists every supported OS and CPU pair"
+cmd = "go tool dist list"
+
+[[group.section]]
+title = "Dependencies"
+aliases = []
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "go get <pkg>"
+
+[[group.section.command]]
+note = "Adds a specific version"
+cmd = "go get <pkg>@<version>"
+
+[[group.section.command]]
+note = "Updates a dependency"
+cmd = "go get -u <pkg>"
+
+[[group.section.command]]
+note = "Updates all dependencies"
+cmd = "go get -u ./..."
+
+[[group.section.command]]
+note = "Lists all modules in use"
+cmd = "go list -m all"
+
+[[group.section.command]]
+note = "Lists modules with updates available"
+cmd = "go list -m -u all"
+
+[[group.section.command]]
+note = "Replaces a module with another path"
+cmd = "go mod edit -replace=<old>=<new>"
+
+[[group.section]]
+title = "Test"
+aliases = []
+
+[[group.section.command]]
+note = "Runs tests in this package"
+cmd = "go test"
+
+[[group.section.command]]
+note = "Runs tests in every package"
+cmd = "go test ./..."
+
+[[group.section.command]]
+note = "Runs tests with detailed output"
+cmd = "go test -v ./..."
+
+[[group.section.command]]
+note = "Runs tests matching a name"
+cmd = "go test -run <name>"
+
+[[group.section.command]]
+note = "Shows test coverage"
+cmd = "go test -cover ./..."
+
+[[group.section.command]]
+note = "Detects data races"
+cmd = "go test -race ./..."
+
+[[group.section.command]]
+note = "Runs tests without using the cache"
+cmd = "go test -count=1 ./..."
+
+[[group.section.command]]
+note = "Runs benchmarks"
+cmd = "go test -bench ."
+
+[[group.section]]
+title = "Format, Vet & Clean"
+aliases = []
+
+[[group.section.command]]
+note = "Formats the code"
+cmd = "go fmt ./..."
+
+[[group.section.command]]
+note = "Reports suspicious code"
+cmd = "go vet ./..."
+
+[[group.section.command]]
+note = "Shows documentation for a package"
+cmd = "go doc <pkg>"
+
+[[group.section.command]]
+note = "Clears the build cache"
+cmd = "go clean -cache"
+
+[[group.section.command]]
+note = "Clears the module cache"
+cmd = "go clean -modcache"

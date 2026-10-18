@@ -1,0 +1,113 @@
+tool = "poetry"
+name = "Poetry"
+category = "Languages & Package Tools"
+order = 4
+aliases = ["pyproject"]
+draft = true
+
+[[group]]
+title = "Everything Poetry"
+
+[[group.section]]
+title = "Projects & Dependencies"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new project"
+cmd = "poetry new <name>"
+
+[[group.section.command]]
+note = "Creates a pyproject.toml interactively"
+cmd = "poetry init"
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "poetry add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "poetry add --group dev <pkg>"
+
+[[group.section.command]]
+note = "Removes a dependency"
+cmd = "poetry remove <pkg>"
+
+[[group.section.command]]
+note = "Installs dependencies from the lockfile"
+cmd = "poetry install"
+
+[[group.section.command]]
+note = "Updates dependencies and the lockfile"
+cmd = "poetry update"
+
+[[group.section.command]]
+note = "Updates the lockfile only"
+cmd = "poetry lock"
+
+[[group.section.command]]
+note = "Prints the dependency tree"
+cmd = "poetry show --tree"
+
+[[group.section]]
+title = "Environments & Running"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a command in the project environment"
+cmd = "poetry run <command>"
+
+[[group.section.command]]
+note = "Runs a Python file in the environment"
+cmd = "poetry run python <file.py>"
+
+[[group.section.command]]
+note = "Shows the active environment"
+cmd = "poetry env info"
+
+[[group.section.command]]
+note = "Lists the project's environments"
+cmd = "poetry env list"
+
+[[group.section.command]]
+note = "Prints the command that activates the environment"
+cmd = "poetry env activate"
+
+[[group.section.command]]
+note = "Activates the environment in this shell"
+unix = "eval $(poetry env activate)"
+
+[[group.section.command]]
+note = "Chooses which Python the project uses"
+cmd = "poetry env use <python>"
+
+[[group.section.command]]
+note = "Brings back the poetry shell command (Poetry 2+)"
+cmd = "poetry self add poetry-plugin-shell"
+
+[[group.section.command]]
+note = "Deletes an environment"
+cmd = "poetry env remove <python>"
+
+[[group.section.command]]
+note = "Creates the environment inside the project"
+cmd = "poetry config virtualenvs.in-project true"
+
+[[group.section]]
+title = "Build & Publish"
+aliases = []
+
+[[group.section.command]]
+note = "Builds the package files"
+cmd = "poetry build"
+
+[[group.section.command]]
+note = "Uploads the package to PyPI"
+cmd = "poetry publish"
+
+[[group.section.command]]
+note = "Builds, then uploads the package"
+cmd = "poetry publish --build"
+
+[[group.section.command]]
+note = "Bumps the patch version"
+cmd = "poetry version patch"

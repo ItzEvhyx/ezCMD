@@ -1,0 +1,94 @@
+tool = "brew"
+name = "Homebrew"
+category = "Package Managers"
+order = 4
+aliases = ["homebrew", "cask"]
+platforms = ["linux", "macos"]
+draft = true
+
+[[group]]
+title = "Everything Homebrew"
+
+[[group.section]]
+title = "Install & Remove"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "brew install <pkg>"
+
+[[group.section.command]]
+note = "Installs a macOS app"
+macos = "brew install --cask <app>"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "brew uninstall <pkg>"
+
+[[group.section.command]]
+note = "Removes old versions and cache files"
+cmd = "brew cleanup"
+
+[[group.section]]
+title = "Update"
+aliases = []
+
+[[group.section.command]]
+note = "Updates Homebrew's package list"
+cmd = "brew update"
+
+[[group.section.command]]
+note = "Upgrades all installed packages"
+cmd = "brew upgrade"
+
+[[group.section.command]]
+note = "Upgrades one package"
+cmd = "brew upgrade <pkg>"
+
+[[group.section.command]]
+note = "Lists packages with updates"
+cmd = "brew outdated"
+
+[[group.section.command]]
+note = "Checks your setup for problems"
+cmd = "brew doctor"
+
+[[group.section]]
+title = "Search & Inspect"
+aliases = []
+
+[[group.section.command]]
+note = "Searches for packages"
+cmd = "brew search <term>"
+
+[[group.section.command]]
+note = "Shows a package's details"
+cmd = "brew info <pkg>"
+
+[[group.section.command]]
+note = "Lists installed packages"
+cmd = "brew list"
+
+[[group.section.command]]
+note = "Shows a package's dependencies"
+cmd = "brew deps --tree <pkg>"
+
+[[group.section]]
+title = "Background Services"
+aliases = []
+
+[[group.section.command]]
+note = "Lists managed services"
+cmd = "brew services list"
+
+[[group.section.command]]
+note = "Starts a service and keeps it at login"
+cmd = "brew services start <service>"
+
+[[group.section.command]]
+note = "Stops a service"
+cmd = "brew services stop <service>"
+
+[[group.section.command]]
+note = "Restarts a service"
+cmd = "brew services restart <service>"

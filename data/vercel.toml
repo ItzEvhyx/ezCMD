@@ -1,0 +1,109 @@
+tool = "vercel"
+name = "Vercel CLI"
+category = "JavaScript & Web"
+order = 9
+aliases = ["vercel-cli"]
+draft = true
+
+[[group]]
+title = "Everything Vercel"
+
+[[group.section]]
+title = "Log In & Link"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the Vercel CLI"
+cmd = "npm install -g vercel"
+
+[[group.section.command]]
+note = "Logs in to Vercel"
+cmd = "vercel login"
+
+[[group.section.command]]
+note = "Links the folder to a Vercel project"
+cmd = "vercel link"
+
+[[group.section.command]]
+note = "Prints the logged-in account"
+cmd = "vercel whoami"
+
+[[group.section.command]]
+note = "Logs out of Vercel"
+cmd = "vercel logout"
+
+[[group.section]]
+title = "Deploy"
+aliases = []
+
+[[group.section.command]]
+note = "Deploys a preview build"
+cmd = "vercel"
+
+[[group.section.command]]
+note = "Deploys to production"
+cmd = "vercel --prod"
+
+[[group.section.command]]
+note = "Runs the project locally like Vercel"
+cmd = "vercel dev"
+
+[[group.section.command]]
+note = "Lists recent deployments"
+cmd = "vercel ls"
+
+[[group.section.command]]
+note = "Rolls production back to the previous deployment"
+cmd = "vercel rollback"
+
+[[group.section.command]]
+note = "Makes a deployment the production one"
+cmd = "vercel promote <deployment-url>"
+
+[[group.section]]
+title = "Environment Variables"
+aliases = []
+
+[[group.section.command]]
+note = "Lists environment variables"
+cmd = "vercel env ls"
+
+[[group.section.command]]
+note = "Adds an environment variable"
+cmd = "vercel env add <name>"
+
+[[group.section.command]]
+note = "Downloads variables into .env.local"
+cmd = "vercel env pull .env.local"
+
+[[group.section.command]]
+note = "Downloads project settings and variables"
+cmd = "vercel pull"
+
+[[group.section.command]]
+note = "Removes an environment variable"
+cmd = "vercel env rm <name>"
+
+[[group.section]]
+title = "Logs & Domains"
+aliases = []
+
+[[group.section.command]]
+note = "Shows runtime logs for a deployment"
+cmd = "vercel logs <deployment-url>"
+
+[[group.section.command]]
+note = "Shows deployment details"
+cmd = "vercel inspect <deployment-url>"
+
+[[group.section.command]]
+note = "Lists your domains"
+cmd = "vercel domains ls"
+
+[[group.section.command]]
+note = "Adds a domain to a project"
+cmd = "vercel domains add <domain> <project>"
+
+[[group.section.command]]
+note = "Deletes a project or deployment"
+cmd = "vercel remove <name>"

@@ -1,0 +1,62 @@
+tool = "flatpak"
+name = "Flatpak & Snap"
+category = "Package Managers"
+order = 6
+aliases = ["snap", "flathub"]
+platforms = ["linux"]
+draft = true
+
+[[group]]
+title = "Everything Flatpak"
+
+[[group.section]]
+title = "Flatpak"
+aliases = []
+
+[[group.section.command]]
+note = "Installs an app from Flathub"
+cmd = "flatpak install flathub <app-id>"
+
+[[group.section.command]]
+note = "Runs an app"
+cmd = "flatpak run <app-id>"
+
+[[group.section.command]]
+note = "Lists installed apps"
+cmd = "flatpak list"
+
+[[group.section.command]]
+note = "Updates all apps"
+cmd = "flatpak update"
+
+[[group.section.command]]
+note = "Removes an app"
+cmd = "flatpak uninstall <app-id>"
+
+[[group.section.command]]
+note = "Removes unused runtimes"
+cmd = "flatpak uninstall --unused"
+
+[[group.section]]
+title = "Snap"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a snap"
+cmd = "sudo snap install <pkg>"
+
+[[group.section.command]]
+note = "Lists installed snaps"
+cmd = "snap list"
+
+[[group.section.command]]
+note = "Updates all snaps"
+cmd = "sudo snap refresh"
+
+[[group.section.command]]
+note = "Removes a snap"
+cmd = "sudo snap remove <pkg>"
+
+[[group.section.command]]
+note = "Searches for snaps"
+cmd = "snap find <term>"

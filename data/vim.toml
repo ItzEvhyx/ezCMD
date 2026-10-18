@@ -1,0 +1,197 @@
+tool = "vim"
+name = "Vim"
+category = "Linux & System Tools"
+order = 10
+aliases = ["vi", "neovim", "nvim"]
+draft = true
+
+[[group]]
+title = "Everything Vim"
+
+[[group.section]]
+title = "Save & Quit"
+aliases = []
+
+[[group.section.command]]
+note = "Saves the file"
+cmd = ":w"
+
+[[group.section.command]]
+note = "Quits"
+cmd = ":q"
+
+[[group.section.command]]
+note = "Saves and quits"
+cmd = ":wq"
+
+[[group.section.command]]
+note = "Quits without saving"
+cmd = ":q!"
+
+[[group.section.command]]
+note = "Saves and quits if there are changes"
+cmd = ":x"
+
+[[group.section.command]]
+note = "Enters insert mode"
+cmd = "i"
+
+[[group.section.command]]
+note = "Returns to normal mode"
+cmd = "Esc"
+
+[[group.section]]
+title = "Move Around"
+aliases = []
+
+[[group.section.command]]
+note = "Moves left, down, up, right"
+cmd = "h j k l"
+
+[[group.section.command]]
+note = "Jumps to the next word"
+cmd = "w"
+
+[[group.section.command]]
+note = "Jumps to the previous word"
+cmd = "b"
+
+[[group.section.command]]
+note = "Jumps to the start of the line"
+cmd = "0"
+
+[[group.section.command]]
+note = "Jumps to the end of the line"
+cmd = "$"
+
+[[group.section.command]]
+note = "Jumps to the top of the file"
+cmd = "gg"
+
+[[group.section.command]]
+note = "Jumps to the bottom of the file"
+cmd = "G"
+
+[[group.section.command]]
+note = "Jumps to line number n"
+cmd = ":<n>"
+
+[[group.section.command]]
+note = "Jumps to the matching bracket"
+cmd = "%"
+
+[[group.section.command]]
+note = "Scrolls down a page"
+cmd = "Ctrl+f"
+
+[[group.section.command]]
+note = "Scrolls up a page"
+cmd = "Ctrl+b"
+
+[[group.section]]
+title = "Edit Text"
+aliases = []
+
+[[group.section.command]]
+note = "Deletes the current line"
+cmd = "dd"
+
+[[group.section.command]]
+note = "Copies the current line"
+cmd = "yy"
+
+[[group.section.command]]
+note = "Pastes after the cursor"
+cmd = "p"
+
+[[group.section.command]]
+note = "Undoes the last change"
+cmd = "u"
+
+[[group.section.command]]
+note = "Redoes the last undone change"
+cmd = "Ctrl+r"
+
+[[group.section.command]]
+note = "Changes the word under the cursor"
+cmd = "ciw"
+
+[[group.section.command]]
+note = "Opens a new line below and enters insert mode"
+cmd = "o"
+
+[[group.section.command]]
+note = "Appends at the end of the line"
+cmd = "A"
+
+[[group.section.command]]
+note = "Repeats the last change"
+cmd = "."
+
+[[group.section]]
+title = "Search & Replace"
+aliases = []
+
+[[group.section.command]]
+note = "Searches forward"
+cmd = "/<text>"
+
+[[group.section.command]]
+note = "Jumps to the next match"
+cmd = "n"
+
+[[group.section.command]]
+note = "Jumps to the previous match"
+cmd = "N"
+
+[[group.section.command]]
+note = "Searches for the word under the cursor"
+cmd = "*"
+
+[[group.section.command]]
+note = "Replaces every match in the file"
+cmd = ":%s/<old>/<new>/g"
+
+[[group.section.command]]
+note = "Replaces matches, asking each time"
+cmd = ":%s/<old>/<new>/gc"
+
+[[group.section.command]]
+note = "Clears search highlighting"
+cmd = ":noh"
+
+[[group.section]]
+title = "Select, Windows & Files"
+aliases = []
+
+[[group.section.command]]
+note = "Starts character selection"
+cmd = "v"
+
+[[group.section.command]]
+note = "Starts line selection"
+cmd = "V"
+
+[[group.section.command]]
+note = "Starts block selection"
+cmd = "Ctrl+v"
+
+[[group.section.command]]
+note = "Splits the window horizontally"
+cmd = ":split"
+
+[[group.section.command]]
+note = "Splits the window vertically"
+cmd = ":vsplit"
+
+[[group.section.command]]
+note = "Switches between windows"
+cmd = "Ctrl+w w"
+
+[[group.section.command]]
+note = "Opens another file"
+cmd = ":e <file>"
+
+[[group.section.command]]
+note = "Lists open buffers"
+cmd = ":ls"

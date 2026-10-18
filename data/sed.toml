@@ -1,0 +1,135 @@
+tool = "sed"
+name = "sed, awk & Text Tools"
+category = "Linux & System Tools"
+order = 3
+aliases = ["awk", "sort", "uniq", "wc", "head", "tail", "cut", "pipe"]
+platforms = ["linux", "macos"]
+notes = ["On macOS, sed -i needs an empty suffix: sed -i '' 's/<old>/<new>/g' <file>"]
+draft = true
+
+[[group]]
+title = "Everything Text"
+
+[[group.section]]
+title = "Replace Text (sed)"
+aliases = []
+
+[[group.section.command]]
+note = "Replaces the first match on each line"
+cmd = "sed 's/<old>/<new>/' <file>"
+
+[[group.section.command]]
+note = "Replaces every match"
+cmd = "sed 's/<old>/<new>/g' <file>"
+
+[[group.section.command]]
+note = "Edits the file in place"
+cmd = "sed -i 's/<old>/<new>/g' <file>"
+
+[[group.section.command]]
+note = "Edits in place and keeps a backup"
+cmd = "sed -i.bak 's/<old>/<new>/g' <file>"
+
+[[group.section.command]]
+note = "Prints lines 10 to 20"
+cmd = "sed -n '10,20p' <file>"
+
+[[group.section.command]]
+note = "Deletes lines matching a pattern"
+cmd = "sed '/<pattern>/d' <file>"
+
+[[group.section]]
+title = "Columns & Calculations (awk)"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the first column"
+cmd = "awk '{print $1}' <file>"
+
+[[group.section.command]]
+note = "Prints the second column of a CSV"
+cmd = "awk -F',' '{print $2}' <file.csv>"
+
+[[group.section.command]]
+note = "Prints lines matching a pattern"
+cmd = "awk '/<pattern>/ {print}' <file>"
+
+[[group.section.command]]
+note = "Adds up the first column"
+cmd = "awk '{sum+=$1} END {print sum}' <file>"
+
+[[group.section.command]]
+note = "Prints one line by number"
+cmd = "awk 'NR==<n>' <file>"
+
+[[group.section]]
+title = "Sort, Count & Slice"
+aliases = []
+
+[[group.section.command]]
+note = "Sorts lines alphabetically"
+cmd = "sort <file>"
+
+[[group.section.command]]
+note = "Sorts lines numerically"
+cmd = "sort -n <file>"
+
+[[group.section.command]]
+note = "Sorts and removes duplicates"
+cmd = "sort -u <file>"
+
+[[group.section.command]]
+note = "Counts repeated lines (input must be sorted)"
+cmd = "uniq -c"
+
+[[group.section.command]]
+note = "Counts lines"
+cmd = "wc -l <file>"
+
+[[group.section.command]]
+note = "Shows the first 10 lines"
+cmd = "head -n 10 <file>"
+
+[[group.section.command]]
+note = "Shows the last 20 lines"
+cmd = "tail -n 20 <file>"
+
+[[group.section.command]]
+note = "Follows a file as it grows"
+cmd = "tail -f <file>"
+
+[[group.section.command]]
+note = "Prints the first comma-separated field"
+cmd = "cut -d',' -f1 <file>"
+
+[[group.section.command]]
+note = "Shows the differences between two files"
+cmd = "diff <file1> <file2>"
+
+[[group.section]]
+title = "Pipes & Redirection"
+aliases = []
+
+[[group.section.command]]
+note = "Sends one command's output to another"
+cmd = "<command> | <command>"
+
+[[group.section.command]]
+note = "Writes output to a file, replacing it"
+cmd = "<command> > <file>"
+
+[[group.section.command]]
+note = "Appends output to a file"
+cmd = "<command> >> <file>"
+
+[[group.section.command]]
+note = "Writes error messages to a file"
+cmd = "<command> 2> <file>"
+
+[[group.section.command]]
+note = "Writes output and errors to a file"
+cmd = "<command> > <file> 2>&1"
+
+[[group.section.command]]
+note = "Counts and ranks repeated lines"
+cmd = "sort <file> | uniq -c | sort -nr"

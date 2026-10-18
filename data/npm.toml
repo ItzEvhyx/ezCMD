@@ -1,0 +1,409 @@
+tool = "npm"
+name = "Node.js & npm"
+category = "JavaScript & Web"
+order = 1
+aliases = ["node", "nodejs", "npx", "nvm"]
+notes = ["nvm is a separate install: nvm-sh on Linux and macOS, nvm-windows on Windows"]
+draft = true
+
+[[group]]
+title = "Setup & Projects"
+
+[[group.section]]
+title = "Check Versions & Run Files"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Node.js version"
+cmd = "node -v"
+
+[[group.section.command]]
+note = "Prints the npm version"
+cmd = "npm -v"
+
+[[group.section.command]]
+note = "Runs a JavaScript file"
+cmd = "node <file.js>"
+
+[[group.section.command]]
+note = "Runs a one-line script"
+cmd = "node -e \"<code>\""
+
+[[group.section.command]]
+note = "Opens the interactive Node REPL"
+cmd = "node"
+
+[[group.section]]
+title = "Create a Project"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the package.json wizard"
+cmd = "npm init"
+
+[[group.section.command]]
+note = "Creates package.json with default answers"
+cmd = "npm init -y"
+
+[[group.section.command]]
+note = "Scaffolds a new Vite project"
+cmd = "npm create vite@latest"
+
+[[group.section.command]]
+note = "Scaffolds a new Next.js app"
+cmd = "npx create-next-app@latest"
+
+[[group.section.command]]
+note = "Scaffolds a new Expo app"
+cmd = "npx create-expo-app@latest"
+
+[[group.section]]
+title = "Node Versions (nvm)"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the latest LTS Node version"
+unix = "nvm install --lts"
+windows = "nvm install lts"
+
+[[group.section.command]]
+note = "Installs a specific Node version"
+cmd = "nvm install <version>"
+
+[[group.section.command]]
+note = "Switches to an installed version"
+cmd = "nvm use <version>"
+
+[[group.section.command]]
+note = "Lists installed versions"
+unix = "nvm ls"
+windows = "nvm list"
+
+[[group.section.command]]
+note = "Sets the default version for new terminals"
+unix = "nvm alias default <version>"
+
+[[group]]
+title = "Dependencies"
+
+[[group.section]]
+title = "Install Dependencies"
+aliases = []
+
+[[group.section.command]]
+note = "Installs everything listed in package.json"
+cmd = "npm install"
+
+[[group.section.command]]
+note = "Installs exactly what package-lock.json says"
+cmd = "npm ci"
+
+[[group.section.command]]
+note = "Adds a package to dependencies"
+cmd = "npm install <pkg>"
+
+[[group.section.command]]
+note = "Adds a package to devDependencies"
+cmd = "npm install -D <pkg>"
+
+[[group.section.command]]
+note = "Installs a specific version"
+cmd = "npm install <pkg>@<version>"
+
+[[group.section.command]]
+note = "Skips devDependencies for production"
+cmd = "npm install --omit=dev"
+
+[[group.section]]
+title = "Update & Remove Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "npm uninstall <pkg>"
+
+[[group.section.command]]
+note = "Lists packages with newer versions"
+cmd = "npm outdated"
+
+[[group.section.command]]
+note = "Updates packages within allowed ranges"
+cmd = "npm update"
+
+[[group.section.command]]
+note = "Upgrades a package to its newest version"
+cmd = "npm install <pkg>@latest"
+
+[[group.section.command]]
+note = "Rewrites package.json with the latest versions"
+cmd = "npx npm-check-updates -u"
+
+[[group.section.command]]
+note = "Removes packages not listed in package.json"
+cmd = "npm prune"
+
+[[group.section]]
+title = "Global Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package globally"
+cmd = "npm install -g <pkg>"
+
+[[group.section.command]]
+note = "Removes a global package"
+cmd = "npm uninstall -g <pkg>"
+
+[[group.section.command]]
+note = "Lists globally installed packages"
+cmd = "npm list -g --depth=0"
+
+[[group.section.command]]
+note = "Prints the global packages folder"
+cmd = "npm root -g"
+
+[[group.section.command]]
+note = "Prints where global installs go"
+cmd = "npm config get prefix"
+
+[[group.section]]
+title = "Inspect Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Lists top-level installed packages"
+cmd = "npm list --depth=0"
+
+[[group.section.command]]
+note = "Shows why a package is installed"
+cmd = "npm explain <pkg>"
+
+[[group.section.command]]
+note = "Prints a package's latest version"
+cmd = "npm view <pkg> version"
+
+[[group.section.command]]
+note = "Lists every published version"
+cmd = "npm view <pkg> versions"
+
+[[group.section.command]]
+note = "Opens a package's documentation"
+cmd = "npm docs <pkg>"
+
+[[group.section.command]]
+note = "Opens a package's repository"
+cmd = "npm repo <pkg>"
+
+[[group.section]]
+title = "Link Local Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Links the current package globally"
+cmd = "npm link"
+
+[[group.section.command]]
+note = "Uses a linked package in this project"
+cmd = "npm link <pkg>"
+
+[[group.section.command]]
+note = "Removes the link"
+cmd = "npm unlink <pkg>"
+
+[[group.section.command]]
+note = "Installs a local folder as a dependency"
+cmd = "npm install <path>"
+
+[[group]]
+title = "Scripts & Running"
+
+[[group.section]]
+title = "Run Scripts"
+aliases = []
+
+[[group.section.command]]
+note = "Lists the scripts in package.json"
+cmd = "npm run"
+
+[[group.section.command]]
+note = "Runs a script from package.json"
+cmd = "npm run <script>"
+
+[[group.section.command]]
+note = "Runs the start script"
+cmd = "npm start"
+
+[[group.section.command]]
+note = "Runs the test script"
+cmd = "npm test"
+
+[[group.section.command]]
+note = "Passes extra arguments to a script"
+cmd = "npm run <script> -- <args>"
+
+[[group.section.command]]
+note = "Runs the build script"
+cmd = "npm run build"
+
+[[group.section]]
+title = "Run Packages Without Installing (npx)"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a package's command without installing"
+cmd = "npx <pkg>"
+
+[[group.section.command]]
+note = "Runs the newest version of a package"
+cmd = "npx <pkg>@latest"
+
+[[group.section.command]]
+note = "Skips the install confirmation prompt"
+cmd = "npx -y <pkg>"
+
+[[group.section.command]]
+note = "Runs a command that has a different name"
+cmd = "npx -p <pkg> <command>"
+
+[[group.section]]
+title = "Workspaces (Monorepos)"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new workspace package"
+cmd = "npm init -w <path>"
+
+[[group.section.command]]
+note = "Installs in one workspace"
+cmd = "npm install -w <workspace>"
+
+[[group.section.command]]
+note = "Runs a script in one workspace"
+cmd = "npm run <script> -w <workspace>"
+
+[[group.section.command]]
+note = "Runs a script in every workspace"
+cmd = "npm run <script> --workspaces"
+
+[[group]]
+title = "Publishing & Maintenance"
+
+[[group.section]]
+title = "Publish a Package"
+aliases = []
+
+[[group.section.command]]
+note = "Logs in to the npm registry"
+cmd = "npm login"
+
+[[group.section.command]]
+note = "Prints the logged-in user"
+cmd = "npm whoami"
+
+[[group.section.command]]
+note = "Bumps the patch version and tags it"
+cmd = "npm version patch"
+
+[[group.section.command]]
+note = "Bumps the minor version and tags it"
+cmd = "npm version minor"
+
+[[group.section.command]]
+note = "Bumps the major version and tags it"
+cmd = "npm version major"
+
+[[group.section.command]]
+note = "Creates the tarball that would be published"
+cmd = "npm pack"
+
+[[group.section.command]]
+note = "Previews what would be published"
+cmd = "npm publish --dry-run"
+
+[[group.section.command]]
+note = "Publishes the package"
+cmd = "npm publish"
+
+[[group.section.command]]
+note = "Publishes a scoped package publicly"
+cmd = "npm publish --access public"
+
+[[group.section]]
+title = "Security Audit"
+aliases = []
+
+[[group.section.command]]
+note = "Reports known vulnerabilities"
+cmd = "npm audit"
+
+[[group.section.command]]
+note = "Applies safe automatic fixes"
+cmd = "npm audit fix"
+
+[[group.section.command]]
+note = "Applies fixes that may break things"
+cmd = "npm audit fix --force"
+
+[[group.section.command]]
+note = "Audits production dependencies only"
+cmd = "npm audit --omit=dev"
+
+[[group.section.command]]
+note = "Verifies package signatures"
+cmd = "npm audit signatures"
+
+[[group.section]]
+title = "Cache & Clean Reinstall"
+aliases = []
+
+[[group.section.command]]
+note = "Checks the cache for corruption"
+cmd = "npm cache verify"
+
+[[group.section.command]]
+note = "Wipes the npm cache"
+cmd = "npm cache clean --force"
+
+[[group.section.command]]
+note = "Deletes installed packages and the lockfile"
+unix = "rm -rf node_modules package-lock.json"
+
+[[group.section.command]]
+note = "Deletes the node_modules folder"
+windows = "rmdir /s /q node_modules"
+
+[[group.section.command]]
+note = "Deletes the lockfile"
+windows = "del package-lock.json"
+
+[[group.section.command]]
+note = "Reinstalls everything from scratch"
+cmd = "npm install"
+
+[[group.section.command]]
+note = "Flattens duplicate dependencies"
+cmd = "npm dedupe"
+
+[[group.section]]
+title = "Config & Registry"
+aliases = []
+
+[[group.section.command]]
+note = "Shows your npm configuration"
+cmd = "npm config list"
+
+[[group.section.command]]
+note = "Prints the current registry URL"
+cmd = "npm config get registry"
+
+[[group.section.command]]
+note = "Switches the registry"
+cmd = "npm config set registry <url>"
+
+[[group.section.command]]
+note = "Removes a setting"
+cmd = "npm config delete <key>"
+
+[[group.section.command]]
+note = "Opens the npm config file"
+cmd = "npm config edit"

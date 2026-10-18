@@ -1,0 +1,208 @@
+tool = "adb"
+name = "Android (ADB & SDK)"
+category = "Mobile Development"
+order = 4
+aliases = ["android", "sdkmanager", "avdmanager", "emulator"]
+draft = true
+
+[[group]]
+title = "ADB"
+
+[[group.section]]
+title = "Connect to Devices"
+aliases = []
+
+[[group.section.command]]
+note = "Lists connected devices"
+cmd = "adb devices"
+
+[[group.section.command]]
+note = "Pairs with a device over wireless debugging"
+cmd = "adb pair <ip>:<port>"
+
+[[group.section.command]]
+note = "Connects to a device over Wi-Fi"
+cmd = "adb connect <ip>:<port>"
+
+[[group.section.command]]
+note = "Disconnects wireless devices"
+cmd = "adb disconnect"
+
+[[group.section.command]]
+note = "Switches a USB device to TCP/IP mode"
+cmd = "adb tcpip 5555"
+
+[[group.section.command]]
+note = "Runs a command on one specific device"
+cmd = "adb -s <serial> <command>"
+
+[[group.section.command]]
+note = "Stops the ADB server"
+cmd = "adb kill-server"
+
+[[group.section.command]]
+note = "Starts the ADB server"
+cmd = "adb start-server"
+
+[[group.section]]
+title = "Install & Manage Apps"
+aliases = []
+
+[[group.section.command]]
+note = "Installs an APK"
+cmd = "adb install <app.apk>"
+
+[[group.section.command]]
+note = "Reinstalls an APK and keeps its data"
+cmd = "adb install -r <app.apk>"
+
+[[group.section.command]]
+note = "Uninstalls an app"
+cmd = "adb uninstall <package>"
+
+[[group.section.command]]
+note = "Lists installed third-party apps"
+cmd = "adb shell pm list packages -3"
+
+[[group.section.command]]
+note = "Clears an app's data"
+cmd = "adb shell pm clear <package>"
+
+[[group.section.command]]
+note = "Force-stops an app"
+cmd = "adb shell am force-stop <package>"
+
+[[group.section.command]]
+note = "Launches an app by package name"
+cmd = "adb shell monkey -p <package> -c android.intent.category.LAUNCHER 1"
+
+[[group.section]]
+title = "Logs & Debugging"
+aliases = []
+
+[[group.section.command]]
+note = "Streams device logs"
+cmd = "adb logcat"
+
+[[group.section.command]]
+note = "Clears the log buffer"
+cmd = "adb logcat -c"
+
+[[group.section.command]]
+note = "Shows errors only"
+cmd = "adb logcat \"*:E\""
+
+[[group.section.command]]
+note = "Saves the current logs to a file"
+cmd = "adb logcat -d > <log.txt>"
+
+[[group.section.command]]
+note = "Collects a full bug report"
+cmd = "adb bugreport"
+
+[[group.section]]
+title = "Files & Screen"
+aliases = []
+
+[[group.section.command]]
+note = "Copies a file to the device"
+cmd = "adb push <local-path> <device-path>"
+
+[[group.section.command]]
+note = "Copies a file from the device"
+cmd = "adb pull <device-path> <local-path>"
+
+[[group.section.command]]
+note = "Lists files on shared storage"
+cmd = "adb shell ls /sdcard"
+
+[[group.section.command]]
+note = "Takes a screenshot on the device"
+cmd = "adb shell screencap /sdcard/screen.png"
+
+[[group.section.command]]
+note = "Records the device screen"
+cmd = "adb shell screenrecord /sdcard/demo.mp4"
+
+[[group.section]]
+title = "Device Info & Control"
+aliases = []
+
+[[group.section.command]]
+note = "Restarts the device"
+cmd = "adb reboot"
+
+[[group.section.command]]
+note = "Restarts into the bootloader"
+cmd = "adb reboot bootloader"
+
+[[group.section.command]]
+note = "Restarts into recovery"
+cmd = "adb reboot recovery"
+
+[[group.section.command]]
+note = "Prints the Android version"
+cmd = "adb shell getprop ro.build.version.release"
+
+[[group.section.command]]
+note = "Prints the screen resolution"
+cmd = "adb shell wm size"
+
+[[group.section.command]]
+note = "Shows battery information"
+cmd = "adb shell dumpsys battery"
+
+[[group]]
+title = "SDK & Emulator"
+
+[[group.section]]
+title = "SDK Manager"
+aliases = []
+
+[[group.section.command]]
+note = "Lists available SDK packages"
+cmd = "sdkmanager --list"
+
+[[group.section.command]]
+note = "Installs or updates platform tools"
+cmd = "sdkmanager \"platform-tools\""
+
+[[group.section.command]]
+note = "Installs an Android platform"
+cmd = "sdkmanager \"platforms;android-<api>\""
+
+[[group.section.command]]
+note = "Accepts all SDK licenses"
+cmd = "sdkmanager --licenses"
+
+[[group.section.command]]
+note = "Updates installed packages"
+cmd = "sdkmanager --update"
+
+[[group.section]]
+title = "Virtual Devices (AVD)"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your virtual devices"
+cmd = "emulator -list-avds"
+
+[[group.section.command]]
+note = "Starts a virtual device"
+cmd = "emulator -avd <name>"
+
+[[group.section.command]]
+note = "Starts with factory-reset data"
+cmd = "emulator -avd <name> -wipe-data"
+
+[[group.section.command]]
+note = "Cold boots the emulator"
+cmd = "emulator -avd <name> -no-snapshot-load"
+
+[[group.section.command]]
+note = "Lists virtual devices with details"
+cmd = "avdmanager list avd"
+
+[[group.section.command]]
+note = "Deletes a virtual device"
+cmd = "avdmanager delete avd -n <name>"

@@ -1,0 +1,236 @@
+tool = "expo"
+name = "React Native & Expo"
+category = "Mobile Development"
+order = 3
+aliases = ["react-native", "rn", "eas"]
+draft = true
+
+[[group]]
+title = "Expo"
+
+[[group.section]]
+title = "Create an Expo App"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Expo app"
+cmd = "npx create-expo-app@latest <name>"
+
+[[group.section.command]]
+note = "Creates a blank TypeScript app"
+cmd = "npx create-expo-app@latest <name> --template blank-typescript"
+
+[[group.section.command]]
+note = "Installs a version compatible with your SDK"
+cmd = "npx expo install <pkg>"
+
+[[group.section.command]]
+note = "Fixes mismatched package versions"
+cmd = "npx expo install --fix"
+
+[[group.section.command]]
+note = "Diagnoses common project problems"
+cmd = "npx expo-doctor"
+
+[[group.section]]
+title = "Run & Develop (Expo)"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the dev server"
+cmd = "npx expo start"
+
+[[group.section.command]]
+note = "Starts with a cleared cache"
+cmd = "npx expo start --clear"
+
+[[group.section.command]]
+note = "Starts a tunnel for devices on other networks"
+cmd = "npx expo start --tunnel"
+
+[[group.section.command]]
+note = "Builds and runs the Android app"
+cmd = "npx expo run:android"
+
+[[group.section.command]]
+note = "Builds and runs the iOS app"
+cmd = "npx expo run:ios"
+
+[[group.section.command]]
+note = "Generates the native android and ios folders"
+cmd = "npx expo prebuild"
+
+[[group.section.command]]
+note = "Regenerates the native folders from scratch"
+cmd = "npx expo prebuild --clean"
+
+[[group.section]]
+title = "Dev Server Keys (While Running)"
+aliases = []
+
+[[group.section.command]]
+note = "Opens the app on Android"
+cmd = "a"
+
+[[group.section.command]]
+note = "Opens the app on the iOS simulator"
+cmd = "i"
+
+[[group.section.command]]
+note = "Opens the app in the browser"
+cmd = "w"
+
+[[group.section.command]]
+note = "Reloads the app"
+cmd = "r"
+
+[[group.section.command]]
+note = "Toggles the developer menu"
+cmd = "m"
+
+[[group.section.command]]
+note = "Opens the debugger"
+cmd = "j"
+
+[[group]]
+title = "Builds & Updates (EAS)"
+
+[[group.section]]
+title = "Set Up EAS"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the EAS CLI"
+cmd = "npm install -g eas-cli"
+
+[[group.section.command]]
+note = "Logs in to your Expo account"
+cmd = "eas login"
+
+[[group.section.command]]
+note = "Prints the logged-in account"
+cmd = "eas whoami"
+
+[[group.section.command]]
+note = "Links the project to EAS"
+cmd = "eas init"
+
+[[group.section.command]]
+note = "Creates eas.json for builds"
+cmd = "eas build:configure"
+
+[[group.section]]
+title = "Build & Submit"
+aliases = []
+
+[[group.section.command]]
+note = "Builds the Android app in the cloud"
+cmd = "eas build --platform android"
+
+[[group.section.command]]
+note = "Builds the iOS app in the cloud"
+cmd = "eas build --platform ios"
+
+[[group.section.command]]
+note = "Builds for both platforms"
+cmd = "eas build --platform all"
+
+[[group.section.command]]
+note = "Builds using a profile from eas.json"
+cmd = "eas build --profile <profile>"
+
+[[group.section.command]]
+note = "Runs the build on your machine"
+cmd = "eas build --local"
+
+[[group.section.command]]
+note = "Submits the build to Google Play"
+cmd = "eas submit --platform android"
+
+[[group.section.command]]
+note = "Submits the build to App Store Connect"
+cmd = "eas submit --platform ios"
+
+[[group.section]]
+title = "OTA Updates & Builds"
+aliases = []
+
+[[group.section.command]]
+note = "Publishes an over-the-air update"
+cmd = "eas update --branch <branch> --message \"<message>\""
+
+[[group.section.command]]
+note = "Uses the Git branch and last commit message"
+cmd = "eas update --auto"
+
+[[group.section.command]]
+note = "Rolls back to a previous update"
+cmd = "eas update:rollback"
+
+[[group.section.command]]
+note = "Lists published updates"
+cmd = "eas update:list"
+
+[[group.section.command]]
+note = "Lists update channels"
+cmd = "eas channel:list"
+
+[[group.section.command]]
+note = "Lists your builds"
+cmd = "eas build:list"
+
+[[group]]
+title = "React Native CLI"
+
+[[group.section]]
+title = "Create & Run"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new React Native app"
+cmd = "npx @react-native-community/cli@latest init <name>"
+
+[[group.section.command]]
+note = "Starts the Metro bundler"
+cmd = "npx react-native start"
+
+[[group.section.command]]
+note = "Builds and runs on Android"
+cmd = "npx react-native run-android"
+
+[[group.section.command]]
+note = "Builds and runs on iOS"
+cmd = "npx react-native run-ios"
+
+[[group.section.command]]
+note = "Starts Metro with a cleared cache"
+cmd = "npx react-native start --reset-cache"
+
+[[group.section.command]]
+note = "Checks your development environment"
+cmd = "npx react-native doctor"
+
+[[group.section]]
+title = "Clean & Fix Builds"
+aliases = []
+
+[[group.section.command]]
+note = "Cleans the Android build"
+unix = "cd android && ./gradlew clean"
+windows = "cd android && gradlew clean"
+
+[[group.section.command]]
+note = "Reinstalls iOS native pods"
+macos = "cd ios && pod install"
+
+[[group.section.command]]
+note = "Reinstalls JS dependencies from scratch"
+unix = "rm -rf node_modules && npm install"
+
+[[group.section.command]]
+note = "Resets Watchman's file watches"
+unix = "watchman watch-del-all"
+
+[[group.section.command]]
+note = "Prints environment details for bug reports"
+cmd = "npx react-native info"

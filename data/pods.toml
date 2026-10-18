@@ -1,0 +1,62 @@
+tool = "pods"
+name = "CocoaPods"
+category = "Mobile Development"
+order = 6
+aliases = ["cocoapods", "pod"]
+platforms = ["macos"]
+draft = true
+
+[[group]]
+title = "Everything CocoaPods"
+
+[[group.section]]
+title = "Install & Update Pods"
+aliases = []
+
+[[group.section.command]]
+note = "Installs CocoaPods"
+cmd = "brew install cocoapods"
+
+[[group.section.command]]
+note = "Creates a Podfile"
+cmd = "pod init"
+
+[[group.section.command]]
+note = "Installs the pods in the Podfile"
+cmd = "pod install"
+
+[[group.section.command]]
+note = "Installs after updating the pod index"
+cmd = "pod install --repo-update"
+
+[[group.section.command]]
+note = "Updates all pods"
+cmd = "pod update"
+
+[[group.section.command]]
+note = "Updates one pod"
+cmd = "pod update <pod>"
+
+[[group.section.command]]
+note = "Lists pods with newer versions"
+cmd = "pod outdated"
+
+[[group.section]]
+title = "Fix Pod Problems"
+aliases = []
+
+[[group.section.command]]
+note = "Removes CocoaPods from the project"
+cmd = "pod deintegrate"
+
+[[group.section.command]]
+note = "Clears the pod cache"
+cmd = "pod cache clean --all"
+
+[[group.section.command]]
+note = "Updates the local pod index"
+cmd = "pod repo update"
+
+[[group.section.command]]
+note = "Prints the CocoaPods version"
+cmd = "pod --version"

@@ -1,0 +1,106 @@
+tool = "nextjs"
+name = "Next.js"
+category = "JavaScript & Web"
+order = 5
+aliases = ["next", "vercel-next"]
+draft = true
+
+[[group]]
+title = "Everything Next.js"
+
+[[group.section]]
+title = "Create an App"
+aliases = []
+
+[[group.section.command]]
+note = "Scaffolds an app with prompts"
+cmd = "npx create-next-app@latest"
+
+[[group.section.command]]
+note = "Creates an app using the recommended defaults"
+cmd = "npx create-next-app@latest <name> --yes"
+
+[[group.section.command]]
+note = "Creates a TypeScript app (the default)"
+cmd = "npx create-next-app@latest <name> --ts"
+
+[[group.section.command]]
+note = "Creates a JavaScript app"
+cmd = "npx create-next-app@latest <name> --no-ts"
+
+[[group.section.command]]
+note = "Creates an app using pnpm (or --use-bun)"
+cmd = "npx create-next-app@latest <name> --use-pnpm"
+
+[[group.section.command]]
+note = "Starts from an official example"
+cmd = "npx create-next-app@latest <name> --example <example>"
+
+[[group.section]]
+title = "Dev, Build & Start"
+aliases = []
+
+[[group.section.command]]
+note = "Starts the dev server"
+cmd = "npm run dev"
+
+[[group.section.command]]
+note = "Starts the dev server on another port"
+cmd = "npx next dev -p <port>"
+
+[[group.section.command]]
+note = "Creates a production build"
+cmd = "npm run build"
+
+[[group.section.command]]
+note = "Serves the production build"
+cmd = "npm run start"
+
+[[group.section.command]]
+note = "Serves the production build on another port"
+cmd = "npx next start -p <port>"
+
+[[group.section.command]]
+note = "Builds with Webpack instead of Turbopack"
+cmd = "npx next build --webpack"
+
+[[group.section.command]]
+note = "Prints environment info for bug reports"
+cmd = "npx next info"
+
+[[group.section.command]]
+note = "Upgrades Next.js and React"
+cmd = "npm install next@latest react@latest react-dom@latest"
+
+[[group.section]]
+title = "Clean & Reset"
+aliases = []
+
+[[group.section.command]]
+note = "Deletes the Next.js build cache"
+unix = "rm -rf .next"
+windows = "rmdir /s /q .next"
+
+[[group.section.command]]
+note = "Turns off anonymous telemetry"
+cmd = "npx next telemetry --disable"
+
+[[group.section.command]]
+note = "Turns anonymous telemetry back on"
+cmd = "npx next telemetry --enable"
+
+[[group.section]]
+title = "Deploy"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the Vercel CLI"
+cmd = "npm install -g vercel"
+
+[[group.section.command]]
+note = "Deploys a preview build"
+cmd = "vercel"
+
+[[group.section.command]]
+note = "Deploys to production"
+cmd = "vercel --prod"

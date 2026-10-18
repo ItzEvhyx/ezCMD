@@ -1,0 +1,89 @@
+tool = "conda"
+name = "Conda"
+category = "Languages & Package Tools"
+order = 5
+aliases = ["anaconda", "miniconda", "mamba"]
+draft = true
+
+[[group]]
+title = "Everything Conda"
+
+[[group.section]]
+title = "Environments"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new environment"
+cmd = "conda create -n <env> python=<version>"
+
+[[group.section.command]]
+note = "Activates an environment"
+cmd = "conda activate <env>"
+
+[[group.section.command]]
+note = "Leaves the current environment"
+cmd = "conda deactivate"
+
+[[group.section.command]]
+note = "Lists all environments"
+cmd = "conda env list"
+
+[[group.section.command]]
+note = "Deletes an environment"
+cmd = "conda remove -n <env> --all"
+
+[[group.section]]
+title = "Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "conda install <pkg>"
+
+[[group.section.command]]
+note = "Installs from the conda-forge channel"
+cmd = "conda install -c conda-forge <pkg>"
+
+[[group.section.command]]
+note = "Lists installed packages"
+cmd = "conda list"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "conda remove <pkg>"
+
+[[group.section.command]]
+note = "Updates a package"
+cmd = "conda update <pkg>"
+
+[[group.section.command]]
+note = "Searches for a package"
+cmd = "conda search <pkg>"
+
+[[group.section]]
+title = "Export, Share & Clean Up"
+aliases = []
+
+[[group.section.command]]
+note = "Saves the environment to a file"
+cmd = "conda env export > environment.yml"
+
+[[group.section.command]]
+note = "Creates an environment from a file"
+cmd = "conda env create -f environment.yml"
+
+[[group.section.command]]
+note = "Updates conda itself"
+cmd = "conda update conda"
+
+[[group.section.command]]
+note = "Clears unused packages and caches"
+cmd = "conda clean --all"
+
+[[group.section.command]]
+note = "Stops activating base automatically"
+cmd = "conda config --set auto_activate_base false"
+
+[[group.section.command]]
+note = "Sets up conda for your shell"
+cmd = "conda init <shell>"

@@ -1,0 +1,89 @@
+tool = "sqlite"
+name = "SQLite"
+category = "Databases"
+order = 3
+aliases = ["sqlite3"]
+draft = true
+
+[[group]]
+title = "Everything SQLite"
+
+[[group.section]]
+title = "Open & Query"
+aliases = []
+
+[[group.section.command]]
+note = "Opens or creates a database"
+cmd = "sqlite3 <file.db>"
+
+[[group.section.command]]
+note = "Runs one SQL command and exits"
+cmd = "sqlite3 <file.db> \"<sql>\""
+
+[[group.section.command]]
+note = "Runs the SQL in a file"
+cmd = ".read <file.sql>"
+
+[[group.section.command]]
+note = "Quits the sqlite3 shell"
+cmd = ".quit"
+
+[[group.section]]
+title = "Inspect (Dot Commands)"
+aliases = []
+
+[[group.section.command]]
+note = "Lists tables"
+cmd = ".tables"
+
+[[group.section.command]]
+note = "Shows the SQL that creates a table"
+cmd = ".schema <table>"
+
+[[group.section.command]]
+note = "Lists attached databases"
+cmd = ".databases"
+
+[[group.section.command]]
+note = "Shows column names in results"
+cmd = ".headers on"
+
+[[group.section.command]]
+note = "Prints results in aligned columns"
+cmd = ".mode column"
+
+[[group.section]]
+title = "Import & Export"
+aliases = []
+
+[[group.section.command]]
+note = "Switches to CSV format"
+cmd = ".mode csv"
+
+[[group.section.command]]
+note = "Imports a CSV file into a table"
+cmd = ".import <file.csv> <table>"
+
+[[group.section.command]]
+note = "Sends results to a file"
+cmd = ".output <file>"
+
+[[group.section.command]]
+note = "Sends results back to the screen"
+cmd = ".output stdout"
+
+[[group.section]]
+title = "Backup"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the whole database as SQL"
+cmd = ".dump"
+
+[[group.section.command]]
+note = "Exports a database to a SQL file"
+cmd = "sqlite3 <file.db> .dump > <backup.sql>"
+
+[[group.section.command]]
+note = "Copies the database to another file"
+cmd = ".backup <file.db>"

@@ -1,0 +1,145 @@
+tool = "terraform"
+name = "Terraform"
+category = "Containers & DevOps"
+order = 6
+aliases = ["tf", "iac"]
+draft = true
+
+[[group]]
+title = "Everything Terraform"
+
+[[group.section]]
+title = "Set Up & Format"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Terraform version"
+cmd = "terraform version"
+
+[[group.section.command]]
+note = "Downloads providers and sets up the backend"
+cmd = "terraform init"
+
+[[group.section.command]]
+note = "Updates providers to the newest allowed versions"
+cmd = "terraform init -upgrade"
+
+[[group.section.command]]
+note = "Formats the configuration files"
+cmd = "terraform fmt"
+
+[[group.section.command]]
+note = "Checks the configuration for errors"
+cmd = "terraform validate"
+
+[[group.section]]
+title = "Plan & Apply"
+aliases = []
+
+[[group.section.command]]
+note = "Previews the changes"
+cmd = "terraform plan"
+
+[[group.section.command]]
+note = "Saves the plan to a file"
+cmd = "terraform plan -out=<file>"
+
+[[group.section.command]]
+note = "Applies the changes"
+cmd = "terraform apply"
+
+[[group.section.command]]
+note = "Applies a saved plan"
+cmd = "terraform apply <file>"
+
+[[group.section.command]]
+note = "Applies without a confirmation prompt"
+cmd = "terraform apply -auto-approve"
+
+[[group.section.command]]
+note = "Applies using a variables file"
+cmd = "terraform apply -var-file=<file.tfvars>"
+
+[[group.section.command]]
+note = "Recreates a single resource"
+cmd = "terraform apply -replace=<resource>"
+
+[[group.section.command]]
+note = "Destroys all managed resources"
+cmd = "terraform destroy"
+
+[[group.section]]
+title = "State & Imports"
+aliases = []
+
+[[group.section.command]]
+note = "Lists resources in the state"
+cmd = "terraform state list"
+
+[[group.section.command]]
+note = "Shows one resource's details"
+cmd = "terraform state show <resource>"
+
+[[group.section.command]]
+note = "Removes a resource from the state"
+cmd = "terraform state rm <resource>"
+
+[[group.section.command]]
+note = "Imports an existing resource"
+cmd = "terraform import <resource> <id>"
+
+[[group.section.command]]
+note = "Prints the output values"
+cmd = "terraform output"
+
+[[group.section.command]]
+note = "Shows the current state or a plan"
+cmd = "terraform show"
+
+[[group.section]]
+title = "Workspaces"
+aliases = []
+
+[[group.section.command]]
+note = "Lists workspaces"
+cmd = "terraform workspace list"
+
+[[group.section.command]]
+note = "Creates a workspace"
+cmd = "terraform workspace new <name>"
+
+[[group.section.command]]
+note = "Switches to a workspace"
+cmd = "terraform workspace select <name>"
+
+[[group.section.command]]
+note = "Prints the current workspace"
+cmd = "terraform workspace show"
+
+[[group.section.command]]
+note = "Deletes a workspace"
+cmd = "terraform workspace delete <name>"
+
+[[group.section]]
+title = "Debugging"
+aliases = []
+
+[[group.section.command]]
+note = "Prints a dependency graph"
+cmd = "terraform graph"
+
+[[group.section.command]]
+note = "Lists the providers in use"
+cmd = "terraform providers"
+
+[[group.section.command]]
+note = "Releases a stuck state lock"
+cmd = "terraform force-unlock <lock-id>"
+
+[[group.section.command]]
+note = "Runs a plan with debug logging"
+unix = "TF_LOG=DEBUG terraform plan"
+
+[[group.section.command]]
+note = "Turns on debug logging for this terminal"
+windows = "set TF_LOG=DEBUG"

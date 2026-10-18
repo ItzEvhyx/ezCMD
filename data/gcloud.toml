@@ -1,0 +1,89 @@
+tool = "gcloud"
+name = "Google Cloud CLI (gcloud)"
+category = "Cloud & Backend Services"
+order = 4
+aliases = ["google-cloud", "gcp", "cloud-run"]
+draft = true
+
+[[group]]
+title = "Everything Google Cloud"
+
+[[group.section]]
+title = "Log In & Configure"
+aliases = []
+
+[[group.section.command]]
+note = "Sets up gcloud interactively"
+cmd = "gcloud init"
+
+[[group.section.command]]
+note = "Logs in with your Google account"
+cmd = "gcloud auth login"
+
+[[group.section.command]]
+note = "Lists logged-in accounts"
+cmd = "gcloud auth list"
+
+[[group.section.command]]
+note = "Creates credentials for local code"
+cmd = "gcloud auth application-default login"
+
+[[group.section.command]]
+note = "Shows the current configuration"
+cmd = "gcloud config list"
+
+[[group.section.command]]
+note = "Sets the active project"
+cmd = "gcloud config set project <project-id>"
+
+[[group.section.command]]
+note = "Lists your projects"
+cmd = "gcloud projects list"
+
+[[group.section]]
+title = "Compute & Cloud Run"
+aliases = []
+
+[[group.section.command]]
+note = "Lists virtual machines"
+cmd = "gcloud compute instances list"
+
+[[group.section.command]]
+note = "Connects to a VM over SSH"
+cmd = "gcloud compute ssh <instance>"
+
+[[group.section.command]]
+note = "Builds and deploys to Cloud Run"
+cmd = "gcloud run deploy <service> --source ."
+
+[[group.section.command]]
+note = "Lists Cloud Run services"
+cmd = "gcloud run services list"
+
+[[group.section.command]]
+note = "Deploys to App Engine"
+cmd = "gcloud app deploy"
+
+[[group.section]]
+title = "Cloud Storage"
+aliases = []
+
+[[group.section.command]]
+note = "Lists your buckets"
+cmd = "gcloud storage ls"
+
+[[group.section.command]]
+note = "Lists the contents of a bucket"
+cmd = "gcloud storage ls gs://<bucket>"
+
+[[group.section.command]]
+note = "Uploads a file"
+cmd = "gcloud storage cp <file> gs://<bucket>"
+
+[[group.section.command]]
+note = "Downloads a file"
+cmd = "gcloud storage cp gs://<bucket>/<object> <file>"
+
+[[group.section.command]]
+note = "Syncs a folder to a bucket"
+cmd = "gcloud storage rsync <folder> gs://<bucket>"

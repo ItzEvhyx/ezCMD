@@ -1,0 +1,216 @@
+tool = "python"
+name = "Python & pip"
+category = "Languages & Package Tools"
+order = 1
+aliases = ["pip", "venv", "virtualenv", "pytest"]
+notes = ["Windows usually uses python or the py launcher, while Linux and macOS use python3"]
+draft = true
+
+[[group]]
+title = "Setup & Environments"
+
+[[group.section]]
+title = "Check Your Setup"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Python version"
+unix = "python3 --version"
+windows = "py --version"
+
+[[group.section.command]]
+note = "Prints the pip version and its Python"
+cmd = "pip --version"
+
+[[group.section.command]]
+note = "Shows where Python is installed"
+unix = "which python3"
+windows = "where python"
+
+[[group.section]]
+title = "Virtual Environments"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a virtual environment"
+unix = "python3 -m venv .venv"
+windows = "python -m venv .venv"
+
+[[group.section.command]]
+note = "Activates the environment"
+unix = "source .venv/bin/activate"
+
+[[group.section.command]]
+note = "Activates the environment in CMD"
+windows = ".venv\\Scripts\\activate"
+
+[[group.section.command]]
+note = "Activates the environment in PowerShell"
+windows = ".venv\\Scripts\\Activate.ps1"
+
+[[group.section.command]]
+note = "Leaves the environment"
+cmd = "deactivate"
+
+[[group.section.command]]
+note = "Deletes the environment"
+unix = "rm -rf .venv"
+windows = "rmdir /s /q .venv"
+
+[[group]]
+title = "Packages"
+
+[[group.section]]
+title = "Install Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "pip install <pkg>"
+
+[[group.section.command]]
+note = "Installs a specific version"
+cmd = "pip install <pkg>==<version>"
+
+[[group.section.command]]
+note = "Installs everything in a requirements file"
+cmd = "pip install -r requirements.txt"
+
+[[group.section.command]]
+note = "Upgrades a package"
+cmd = "pip install --upgrade <pkg>"
+
+[[group.section.command]]
+note = "Installs the current project in editable mode"
+cmd = "pip install -e ."
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "pip uninstall <pkg>"
+
+[[group.section.command]]
+note = "Upgrades pip itself"
+cmd = "python -m pip install --upgrade pip"
+
+[[group.section]]
+title = "Inspect & Export Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Lists installed packages"
+cmd = "pip list"
+
+[[group.section.command]]
+note = "Lists packages with newer versions"
+cmd = "pip list --outdated"
+
+[[group.section.command]]
+note = "Shows a package's details"
+cmd = "pip show <pkg>"
+
+[[group.section.command]]
+note = "Prints installed packages with versions"
+cmd = "pip freeze"
+
+[[group.section.command]]
+note = "Saves installed packages to a file"
+cmd = "pip freeze > requirements.txt"
+
+[[group.section.command]]
+note = "Checks for broken dependencies"
+cmd = "pip check"
+
+[[group.section.command]]
+note = "Clears the pip cache"
+cmd = "pip cache purge"
+
+[[group]]
+title = "Running & Quality"
+
+[[group.section]]
+title = "Run Code & Quick Servers"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a Python file"
+cmd = "python <file.py>"
+
+[[group.section.command]]
+note = "Runs a one-line script"
+cmd = "python -c \"<code>\""
+
+[[group.section.command]]
+note = "Serves the current folder over HTTP"
+cmd = "python -m http.server 8000"
+
+[[group.section.command]]
+note = "Pretty-prints a JSON file"
+cmd = "python -m json.tool <file.json>"
+
+[[group.section.command]]
+note = "Runs a file in the debugger"
+cmd = "python -m pdb <file.py>"
+
+[[group.section.command]]
+note = "Runs a file, then opens an interactive prompt"
+cmd = "python -i <file.py>"
+
+[[group.section]]
+title = "Test, Lint & Format"
+aliases = []
+
+[[group.section.command]]
+note = "Runs all tests"
+cmd = "python -m pytest"
+
+[[group.section.command]]
+note = "Runs tests with detailed output"
+cmd = "python -m pytest -v"
+
+[[group.section.command]]
+note = "Runs one test"
+cmd = "python -m pytest <file>::<test>"
+
+[[group.section.command]]
+note = "Runs tests matching a name"
+cmd = "python -m pytest -k \"<expression>\""
+
+[[group.section.command]]
+note = "Stops at the first failure"
+cmd = "python -m pytest -x"
+
+[[group.section.command]]
+note = "Lints the code"
+cmd = "ruff check ."
+
+[[group.section.command]]
+note = "Formats the code"
+cmd = "ruff format ."
+
+[[group.section.command]]
+note = "Type-checks the code"
+cmd = "mypy ."
+
+[[group.section]]
+title = "Build & Publish"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the packaging tools"
+cmd = "pip install build twine"
+
+[[group.section.command]]
+note = "Builds the package files"
+cmd = "python -m build"
+
+[[group.section.command]]
+note = "Validates the built files"
+cmd = "twine check dist/*"
+
+[[group.section.command]]
+note = "Uploads to TestPyPI"
+cmd = "twine upload --repository testpypi dist/*"
+
+[[group.section.command]]
+note = "Uploads to PyPI"
+cmd = "twine upload dist/*"

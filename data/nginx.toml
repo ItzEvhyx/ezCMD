@@ -1,0 +1,103 @@
+tool = "nginx"
+name = "Nginx & Certbot"
+category = "Containers & DevOps"
+order = 7
+aliases = ["certbot", "reverse-proxy", "https"]
+platforms = ["linux", "macos"]
+notes = ["Linux commands use systemd and Debian-style paths. On macOS, Nginx comes from Homebrew, so services and file paths differ"]
+draft = true
+
+[[group]]
+title = "Everything Nginx"
+
+[[group.section]]
+title = "Test & Reload"
+aliases = []
+
+[[group.section.command]]
+note = "Tests the configuration for errors"
+cmd = "sudo nginx -t"
+
+[[group.section.command]]
+note = "Reloads the config without downtime"
+cmd = "sudo nginx -s reload"
+
+[[group.section.command]]
+note = "Restarts Nginx"
+linux = "sudo systemctl restart nginx"
+
+[[group.section.command]]
+note = "Shows whether Nginx is running"
+linux = "sudo systemctl status nginx"
+
+[[group.section.command]]
+note = "Restarts Nginx"
+macos = "brew services restart nginx"
+
+[[group.section.command]]
+note = "Shows whether Nginx is running"
+macos = "brew services info nginx"
+
+[[group.section.command]]
+note = "Prints version and build options"
+cmd = "nginx -V"
+
+[[group.section]]
+title = "Sites & Logs"
+aliases = []
+
+[[group.section.command]]
+note = "Enables a site (Debian and Ubuntu)"
+linux = "sudo ln -s /etc/nginx/sites-available/<site> /etc/nginx/sites-enabled/"
+
+[[group.section.command]]
+note = "Disables a site (Debian and Ubuntu)"
+linux = "sudo rm /etc/nginx/sites-enabled/<site>"
+
+[[group.section.command]]
+note = "Follows the error log"
+linux = "sudo tail -f /var/log/nginx/error.log"
+
+[[group.section.command]]
+note = "Follows the access log"
+linux = "sudo tail -f /var/log/nginx/access.log"
+
+[[group.section.command]]
+note = "Follows the error log"
+macos = "tail -f $(brew --prefix)/var/log/nginx/error.log"
+
+[[group.section.command]]
+note = "Follows the access log"
+macos = "tail -f $(brew --prefix)/var/log/nginx/access.log"
+
+[[group.section.command]]
+note = "Lists the site configs Nginx loads"
+macos = "ls $(brew --prefix)/etc/nginx/servers"
+
+[[group.section]]
+title = "HTTPS with Certbot"
+aliases = []
+
+[[group.section.command]]
+note = "Installs Certbot"
+macos = "brew install certbot"
+
+[[group.section.command]]
+note = "Gets a certificate and configures Nginx"
+cmd = "sudo certbot --nginx -d <domain>"
+
+[[group.section.command]]
+note = "Lists your certificates"
+cmd = "sudo certbot certificates"
+
+[[group.section.command]]
+note = "Tests automatic renewal"
+cmd = "sudo certbot renew --dry-run"
+
+[[group.section.command]]
+note = "Renews certificates that are close to expiring"
+cmd = "sudo certbot renew"
+
+[[group.section.command]]
+note = "Deletes a certificate"
+cmd = "sudo certbot delete --cert-name <domain>"

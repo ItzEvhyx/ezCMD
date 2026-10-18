@@ -1,0 +1,454 @@
+tool = "flutter"
+name = "Flutter"
+category = "Mobile Development"
+order = 1
+aliases = ["flutter-sdk", "pub"]
+draft = true
+
+[[group]]
+title = "Setup & Projects"
+
+[[group.section]]
+title = "Check Your Setup"
+aliases = []
+
+[[group.section.command]]
+note = "Checks your Flutter installation"
+cmd = "flutter doctor"
+
+[[group.section.command]]
+note = "Shows detailed setup information"
+cmd = "flutter doctor -v"
+
+[[group.section.command]]
+note = "Prints the Flutter and Dart versions"
+cmd = "flutter --version"
+
+[[group.section.command]]
+note = "Updates Flutter to the latest version"
+cmd = "flutter upgrade"
+
+[[group.section.command]]
+note = "Lists Flutter channels"
+cmd = "flutter channel"
+
+[[group.section.command]]
+note = "Switches to the stable channel"
+cmd = "flutter channel stable"
+
+[[group.section]]
+title = "Create a Project"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Flutter app"
+cmd = "flutter create <name>"
+
+[[group.section.command]]
+note = "Sets the app's organization ID"
+cmd = "flutter create --org <com.example> <name>"
+
+[[group.section.command]]
+note = "Creates an app for chosen platforms"
+cmd = "flutter create --platforms=android,ios <name>"
+
+[[group.section.command]]
+note = "Creates a reusable Flutter package"
+cmd = "flutter create --template=package <name>"
+
+[[group.section.command]]
+note = "Adds missing platform folders to this project"
+cmd = "flutter create ."
+
+[[group.section.command]]
+note = "Adds web support to an existing project"
+cmd = "flutter create . --platforms=web"
+
+[[group]]
+title = "Running"
+
+[[group.section]]
+title = "Run the App"
+aliases = []
+
+[[group.section.command]]
+note = "Lists connected devices and emulators"
+cmd = "flutter devices"
+
+[[group.section.command]]
+note = "Runs the app in debug mode"
+cmd = "flutter run"
+
+[[group.section.command]]
+note = "Runs on a specific device"
+cmd = "flutter run -d <device-id>"
+
+[[group.section.command]]
+note = "Runs in profile mode for performance testing"
+cmd = "flutter run --profile"
+
+[[group.section.command]]
+note = "Runs in release mode"
+cmd = "flutter run --release"
+
+[[group.section.command]]
+note = "Runs a different entry file"
+cmd = "flutter run -t <lib/main_dev.dart>"
+
+[[group.section.command]]
+note = "Runs a specific build flavor"
+cmd = "flutter run --flavor <name>"
+
+[[group.section.command]]
+note = "Passes a compile-time variable"
+cmd = "flutter run --dart-define=<KEY>=<value>"
+
+[[group.section]]
+title = "Emulators"
+aliases = []
+
+[[group.section.command]]
+note = "Lists available emulators"
+cmd = "flutter emulators"
+
+[[group.section.command]]
+note = "Starts an emulator"
+cmd = "flutter emulators --launch <id>"
+
+[[group.section.command]]
+note = "Creates an Android emulator based on a Pixel device"
+cmd = "flutter emulators --create"
+
+[[group.section.command]]
+note = "Creates an emulator with a chosen name"
+cmd = "flutter emulators --create --name <name>"
+
+[[group.section.command]]
+note = "Lists devices as JSON"
+cmd = "flutter devices --machine"
+
+[[group.section]]
+title = "Run on Web & Desktop"
+aliases = []
+
+[[group.section.command]]
+note = "Runs the app in Chrome"
+cmd = "flutter run -d chrome"
+
+[[group.section.command]]
+note = "Runs the app in Chrome using WebAssembly"
+cmd = "flutter run -d chrome --wasm"
+
+[[group.section.command]]
+note = "Serves the app without opening a browser"
+cmd = "flutter run -d web-server"
+
+[[group.section.command]]
+note = "Runs the app as a Windows desktop app"
+cmd = "flutter run -d windows"
+
+[[group.section.command]]
+note = "Runs the app as a Linux desktop app"
+cmd = "flutter run -d linux"
+
+[[group.section.command]]
+note = "Runs the app as a macOS desktop app"
+cmd = "flutter run -d macos"
+
+[[group.section]]
+title = "Hot Reload Keys (While Running)"
+aliases = []
+
+[[group.section.command]]
+note = "Hot reloads the app"
+cmd = "r"
+
+[[group.section.command]]
+note = "Hot restarts the app"
+cmd = "R"
+
+[[group.section.command]]
+note = "Lists all available keys"
+cmd = "h"
+
+[[group.section.command]]
+note = "Detaches and leaves the app running"
+cmd = "d"
+
+[[group.section.command]]
+note = "Clears the terminal"
+cmd = "c"
+
+[[group.section.command]]
+note = "Saves a screenshot"
+cmd = "s"
+
+[[group.section.command]]
+note = "Toggles light and dark mode"
+cmd = "b"
+
+[[group.section.command]]
+note = "Toggles the widget inspector"
+cmd = "i"
+
+[[group.section.command]]
+note = "Dumps the widget tree to the console"
+cmd = "w"
+
+[[group.section.command]]
+note = "Simulates a different operating system"
+cmd = "o"
+
+[[group.section.command]]
+note = "Quits the app"
+cmd = "q"
+
+[[group]]
+title = "Packages & Code Generation"
+
+[[group.section]]
+title = "Manage Packages"
+aliases = []
+
+[[group.section.command]]
+note = "Downloads the packages in pubspec.yaml"
+cmd = "flutter pub get"
+
+[[group.section.command]]
+note = "Adds a package to pubspec.yaml"
+cmd = "flutter pub add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "flutter pub add dev:<pkg>"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "flutter pub remove <pkg>"
+
+[[group.section.command]]
+note = "Upgrades packages within version limits"
+cmd = "flutter pub upgrade"
+
+[[group.section.command]]
+note = "Upgrades and rewrites version constraints"
+cmd = "flutter pub upgrade --major-versions"
+
+[[group.section.command]]
+note = "Lists packages with newer versions"
+cmd = "flutter pub outdated"
+
+[[group.section.command]]
+note = "Prints the dependency tree"
+cmd = "flutter pub deps"
+
+[[group.section]]
+title = "Code Generation (build_runner)"
+aliases = []
+
+[[group.section.command]]
+note = "Generates code once"
+cmd = "dart run build_runner build"
+
+[[group.section.command]]
+note = "Regenerates and resolves conflicts"
+cmd = "dart run build_runner build --delete-conflicting-outputs"
+
+[[group.section.command]]
+note = "Regenerates when files change"
+cmd = "dart run build_runner watch"
+
+[[group.section.command]]
+note = "Deletes generated files"
+cmd = "dart run build_runner clean"
+
+[[group.section]]
+title = "Icons, Splash & Localization"
+aliases = []
+
+[[group.section.command]]
+note = "Generates app icons"
+cmd = "dart run flutter_launcher_icons"
+
+[[group.section.command]]
+note = "Generates the splash screen"
+cmd = "dart run flutter_native_splash:create"
+
+[[group.section.command]]
+note = "Generates localization files"
+cmd = "flutter gen-l10n"
+
+[[group]]
+title = "Build & Release"
+
+[[group.section]]
+title = "Build for Android"
+aliases = []
+
+[[group.section.command]]
+note = "Builds a release APK"
+cmd = "flutter build apk"
+
+[[group.section.command]]
+note = "Builds a debug APK"
+cmd = "flutter build apk --debug"
+
+[[group.section.command]]
+note = "Builds smaller APKs per CPU type"
+cmd = "flutter build apk --split-per-abi"
+
+[[group.section.command]]
+note = "Builds an AAB for the Play Store"
+cmd = "flutter build appbundle"
+
+[[group.section.command]]
+note = "Obfuscates code and saves debug symbols"
+cmd = "flutter build apk --obfuscate --split-debug-info=<dir>"
+
+[[group.section.command]]
+note = "Installs the built app on a device"
+cmd = "flutter install"
+
+[[group.section]]
+title = "Build for iOS (macOS Only)"
+aliases = []
+
+[[group.section.command]]
+note = "Builds the iOS app"
+macos = "flutter build ios"
+
+[[group.section.command]]
+note = "Builds without code signing"
+macos = "flutter build ios --no-codesign"
+
+[[group.section.command]]
+note = "Builds an archive for the App Store"
+macos = "flutter build ipa"
+
+[[group.section.command]]
+note = "Opens the iOS project in Xcode"
+macos = "open ios/Runner.xcworkspace"
+
+[[group.section]]
+title = "Build for Web & Desktop"
+aliases = []
+
+[[group.section.command]]
+note = "Builds the web app"
+cmd = "flutter build web"
+
+[[group.section.command]]
+note = "Builds the web app as WebAssembly"
+cmd = "flutter build web --wasm"
+
+[[group.section.command]]
+note = "Builds a Windows desktop app"
+cmd = "flutter build windows"
+
+[[group.section.command]]
+note = "Builds a Linux desktop app"
+cmd = "flutter build linux"
+
+[[group.section.command]]
+note = "Builds a macOS desktop app"
+cmd = "flutter build macos"
+
+[[group.section]]
+title = "Android Signing Keys"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a release keystore"
+cmd = "keytool -genkey -v -keystore <keystore.jks> -keyalg RSA -keysize 2048 -validity 10000 -alias <alias>"
+
+[[group.section.command]]
+note = "Shows the SHA-1 and SHA-256 fingerprints"
+cmd = "keytool -list -v -keystore <keystore.jks> -alias <alias>"
+
+[[group.section.command]]
+note = "Shows debug fingerprints (password: android)"
+unix = "keytool -list -v -alias androiddebugkey -keystore ~/.android/debug.keystore"
+windows = "keytool -list -v -alias androiddebugkey -keystore %USERPROFILE%\\.android\\debug.keystore"
+
+[[group]]
+title = "Quality & Troubleshooting"
+
+[[group.section]]
+title = "Test & Analyze"
+aliases = []
+
+[[group.section.command]]
+note = "Checks the code for errors and lint issues"
+cmd = "flutter analyze"
+
+[[group.section.command]]
+note = "Runs all unit and widget tests"
+cmd = "flutter test"
+
+[[group.section.command]]
+note = "Runs one test file"
+cmd = "flutter test <file>"
+
+[[group.section.command]]
+note = "Runs tests with coverage output"
+cmd = "flutter test --coverage"
+
+[[group.section.command]]
+note = "Runs integration tests"
+cmd = "flutter test integration_test"
+
+[[group.section.command]]
+note = "Formats all Dart files"
+cmd = "dart format ."
+
+[[group.section.command]]
+note = "Applies automated lint fixes"
+cmd = "dart fix --apply"
+
+[[group.section]]
+title = "Clean & Reset"
+aliases = []
+
+[[group.section.command]]
+note = "Deletes build artifacts and caches"
+cmd = "flutter clean"
+
+[[group.section.command]]
+note = "Re-downloads packages after a clean"
+cmd = "flutter pub get"
+
+[[group.section.command]]
+note = "Repairs the pub cache"
+cmd = "flutter pub cache repair"
+
+[[group.section.command]]
+note = "Downloads platform binaries ahead of time"
+cmd = "flutter precache"
+
+[[group.section.command]]
+note = "Accepts the Android SDK licenses"
+cmd = "flutter doctor --android-licenses"
+
+[[group.section]]
+title = "Debug & Logs"
+aliases = []
+
+[[group.section.command]]
+note = "Streams logs from a running app"
+cmd = "flutter logs"
+
+[[group.section.command]]
+note = "Attaches to an app that is already running"
+cmd = "flutter attach"
+
+[[group.section.command]]
+note = "Saves a screenshot of the running app"
+cmd = "flutter screenshot"
+
+[[group.section.command]]
+note = "Shows detailed output while running"
+cmd = "flutter run --verbose"
+
+[[group.section.command]]
+note = "Opens Flutter DevTools"
+cmd = "dart devtools"

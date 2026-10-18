@@ -1,0 +1,94 @@
+tool = "typescript"
+name = "TypeScript"
+category = "JavaScript & Web"
+order = 7
+aliases = ["ts", "tsc", "tsx"]
+notes = ["TypeScript 7 ships the native Go compiler as tsc. The @typescript/typescript6 package provides the 6.0 compiler as tsc6. In TypeScript 7, passing file paths in a folder that has a tsconfig.json fails unless you add --ignoreConfig"]
+draft = true
+
+[[group]]
+title = "Everything TypeScript"
+
+[[group.section]]
+title = "Set Up TypeScript"
+aliases = []
+
+[[group.section.command]]
+note = "Adds TypeScript to a project"
+cmd = "npm install -D typescript"
+
+[[group.section.command]]
+note = "Creates a tsconfig.json"
+cmd = "npx tsc --init"
+
+[[group.section.command]]
+note = "Prints the TypeScript version"
+cmd = "npx tsc -v"
+
+[[group.section.command]]
+note = "Adds Node.js type definitions"
+cmd = "npm install -D @types/node"
+
+[[group.section.command]]
+note = "Adds type definitions for a package"
+cmd = "npm install -D @types/<pkg>"
+
+[[group.section]]
+title = "Compile & Type-Check"
+aliases = []
+
+[[group.section.command]]
+note = "Compiles the project"
+cmd = "npx tsc"
+
+[[group.section.command]]
+note = "Type-checks without writing files"
+cmd = "npx tsc --noEmit"
+
+[[group.section.command]]
+note = "Recompiles when files change"
+cmd = "npx tsc --watch"
+
+[[group.section.command]]
+note = "Compiles using a specific config"
+cmd = "npx tsc -p <tsconfig.json>"
+
+[[group.section.command]]
+note = "Compiles one file and ignores tsconfig.json"
+cmd = "npx tsc --ignoreConfig <file.ts>"
+
+[[group.section]]
+title = "Run TypeScript Directly"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a TypeScript file with tsx"
+cmd = "npx tsx <file.ts>"
+
+[[group.section.command]]
+note = "Reruns when the file changes"
+cmd = "npx tsx watch <file.ts>"
+
+[[group.section.command]]
+note = "Runs a TypeScript file with ts-node"
+cmd = "npx ts-node <file.ts>"
+
+[[group.section.command]]
+note = "Runs a TypeScript file with Bun"
+cmd = "bun run <file.ts>"
+
+[[group.section]]
+title = "Inspect the Setup"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the resolved tsconfig"
+cmd = "npx tsc --showConfig"
+
+[[group.section.command]]
+note = "Lists every file in the compilation"
+cmd = "npx tsc --listFiles"
+
+[[group.section.command]]
+note = "Generates only .d.ts files"
+cmd = "npx tsc --declaration --emitDeclarationOnly"

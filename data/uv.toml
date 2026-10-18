@@ -1,0 +1,129 @@
+tool = "uv"
+name = "uv"
+category = "Languages & Package Tools"
+order = 3
+aliases = ["uvx", "astral"]
+draft = true
+
+[[group]]
+title = "Everything uv"
+
+[[group.section]]
+title = "Projects & Dependencies"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Python project"
+cmd = "uv init <name>"
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "uv add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "uv add --dev <pkg>"
+
+[[group.section.command]]
+note = "Removes a dependency"
+cmd = "uv remove <pkg>"
+
+[[group.section.command]]
+note = "Installs dependencies from the lockfile"
+cmd = "uv sync"
+
+[[group.section.command]]
+note = "Updates the lockfile"
+cmd = "uv lock"
+
+[[group.section.command]]
+note = "Upgrades all dependencies in the lockfile"
+cmd = "uv lock --upgrade"
+
+[[group.section.command]]
+note = "Upgrades one dependency in the lockfile"
+cmd = "uv lock --upgrade-package <pkg>"
+
+[[group.section.command]]
+note = "Runs a file in the project environment"
+cmd = "uv run <file.py>"
+
+[[group.section.command]]
+note = "Runs a command in the project environment"
+cmd = "uv run <command>"
+
+[[group.section.command]]
+note = "Prints the dependency tree"
+cmd = "uv tree"
+
+[[group.section]]
+title = "Python Versions & Environments"
+aliases = []
+
+[[group.section.command]]
+note = "Lists available Python versions"
+cmd = "uv python list"
+
+[[group.section.command]]
+note = "Installs a Python version"
+cmd = "uv python install <version>"
+
+[[group.section.command]]
+note = "Pins the project's Python version"
+cmd = "uv python pin <version>"
+
+[[group.section.command]]
+note = "Creates a virtual environment"
+cmd = "uv venv"
+
+[[group.section.command]]
+note = "Creates one with a specific Python version"
+cmd = "uv venv --python <version>"
+
+[[group.section]]
+title = "pip Interface"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "uv pip install <pkg>"
+
+[[group.section.command]]
+note = "Installs from a requirements file"
+cmd = "uv pip install -r requirements.txt"
+
+[[group.section.command]]
+note = "Lists installed packages"
+cmd = "uv pip freeze"
+
+[[group.section.command]]
+note = "Locks requirements with exact versions"
+cmd = "uv pip compile requirements.in -o requirements.txt"
+
+[[group.section]]
+title = "Tools & Maintenance"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a tool without installing it"
+cmd = "uvx <tool>"
+
+[[group.section.command]]
+note = "Installs a command-line tool"
+cmd = "uv tool install <tool>"
+
+[[group.section.command]]
+note = "Lists installed tools"
+cmd = "uv tool list"
+
+[[group.section.command]]
+note = "Upgrades all installed tools"
+cmd = "uv tool upgrade --all"
+
+[[group.section.command]]
+note = "Clears the uv cache"
+cmd = "uv cache clean"
+
+[[group.section.command]]
+note = "Updates uv itself"
+cmd = "uv self update"

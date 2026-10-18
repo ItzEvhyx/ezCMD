@@ -1,0 +1,77 @@
+tool = "az"
+name = "Azure CLI"
+category = "Cloud & Backend Services"
+order = 5
+aliases = ["azure", "microsoft-azure"]
+draft = true
+
+[[group]]
+title = "Everything Azure"
+
+[[group.section]]
+title = "Log In & Subscriptions"
+aliases = []
+
+[[group.section.command]]
+note = "Logs in to Azure"
+cmd = "az login"
+
+[[group.section.command]]
+note = "Lists your subscriptions"
+cmd = "az account list"
+
+[[group.section.command]]
+note = "Sets the active subscription"
+cmd = "az account set --subscription <id>"
+
+[[group.section.command]]
+note = "Shows the active subscription"
+cmd = "az account show"
+
+[[group.section.command]]
+note = "Logs out of Azure"
+cmd = "az logout"
+
+[[group.section]]
+title = "Resource Groups"
+aliases = []
+
+[[group.section.command]]
+note = "Lists resource groups"
+cmd = "az group list"
+
+[[group.section.command]]
+note = "Creates a resource group"
+cmd = "az group create --name <name> --location <region>"
+
+[[group.section.command]]
+note = "Deletes a resource group and its contents"
+cmd = "az group delete --name <name>"
+
+[[group.section.command]]
+note = "Lists all resources"
+cmd = "az resource list"
+
+[[group.section]]
+title = "Web Apps & VMs"
+aliases = []
+
+[[group.section.command]]
+note = "Lists web apps"
+cmd = "az webapp list"
+
+[[group.section.command]]
+note = "Deploys the current folder as a web app"
+cmd = "az webapp up --name <name>"
+
+[[group.section.command]]
+note = "Lists virtual machines"
+cmd = "az vm list"
+
+[[group.section.command]]
+note = "Starts a virtual machine"
+cmd = "az vm start --name <name> --resource-group <group>"
+
+[[group.section.command]]
+note = "Stops a virtual machine"
+cmd = "az vm stop --name <name> --resource-group <group>"

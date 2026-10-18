@@ -1,0 +1,116 @@
+tool = "disk"
+name = "Disk & Storage"
+category = "Linux & System Tools"
+order = 7
+aliases = ["df", "du", "lsblk", "mount", "ncdu", "diskutil", "free-space"]
+platforms = ["linux", "macos"]
+notes = ["Drive and partition tools differ. Linux uses lsblk, fdisk, and mkfs. macOS uses diskutil. ncdu is a separate install"]
+draft = true
+
+[[group]]
+title = "Everything Disk"
+
+[[group.section]]
+title = "Check Free Space"
+aliases = []
+
+[[group.section.command]]
+note = "Shows free space on each drive"
+cmd = "df -h"
+
+[[group.section.command]]
+note = "Shows the total size of a folder"
+cmd = "du -sh <folder>"
+
+[[group.section.command]]
+note = "Shows the size of each subfolder"
+linux = "du -h --max-depth=1"
+macos = "du -h -d 1"
+
+[[group.section.command]]
+note = "Lists the 20 largest files and folders"
+cmd = "du -ah . | sort -rh | head -n 20"
+
+[[group.section.command]]
+note = "Browses disk usage interactively"
+cmd = "ncdu <folder>"
+
+[[group.section]]
+title = "Drives & Partitions"
+aliases = []
+
+[[group.section.command]]
+note = "Lists drives and partitions"
+linux = "lsblk"
+
+[[group.section.command]]
+note = "Lists drives with file system types"
+linux = "lsblk -f"
+
+[[group.section.command]]
+note = "Lists partition tables"
+linux = "sudo fdisk -l"
+
+[[group.section.command]]
+note = "Shows drive UUIDs and file system types"
+linux = "blkid"
+
+[[group.section.command]]
+note = "Lists drives and partitions"
+macos = "diskutil list"
+
+[[group.section.command]]
+note = "Shows a drive's details and file system"
+macos = "diskutil info <disk>"
+
+[[group.section]]
+title = "Mount & Unmount"
+aliases = []
+
+[[group.section.command]]
+note = "Mounts a drive on a folder"
+linux = "sudo mount <device> <folder>"
+
+[[group.section.command]]
+note = "Unmounts a drive"
+linux = "sudo umount <folder>"
+
+[[group.section.command]]
+note = "Shows mounts as a tree"
+linux = "findmnt"
+
+[[group.section.command]]
+note = "Mounts a drive"
+macos = "diskutil mount <disk>"
+
+[[group.section.command]]
+note = "Unmounts a drive"
+macos = "diskutil unmount <disk>"
+
+[[group.section.command]]
+note = "Lists everything that is mounted"
+cmd = "mount"
+
+[[group.section]]
+title = "Format & Check"
+aliases = []
+
+[[group.section.command]]
+note = "Formats a drive as ext4 (erases it)"
+linux = "sudo mkfs.ext4 <device>"
+
+[[group.section.command]]
+note = "Checks and repairs a file system"
+linux = "sudo fsck <device>"
+
+[[group.section.command]]
+note = "Formats a whole drive as APFS (erases it)"
+macos = "diskutil eraseDisk APFS <name> <disk>"
+
+[[group.section.command]]
+note = "Checks a volume's file system"
+macos = "diskutil verifyVolume <volume>"
+
+[[group.section.command]]
+note = "Lists processes using files in a folder"
+cmd = "lsof +D <folder>"

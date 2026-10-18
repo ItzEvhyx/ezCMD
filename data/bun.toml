@@ -1,0 +1,85 @@
+tool = "bun"
+name = "Bun"
+category = "JavaScript & Web"
+order = 4
+aliases = ["bunx"]
+draft = true
+
+[[group]]
+title = "Everything Bun"
+
+[[group.section]]
+title = "Create & Install"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Bun project"
+cmd = "bun init"
+
+[[group.section.command]]
+note = "Installs everything in package.json"
+cmd = "bun install"
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "bun add <pkg>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "bun add -d <pkg>"
+
+[[group.section.command]]
+note = "Removes a package"
+cmd = "bun remove <pkg>"
+
+[[group.section.command]]
+note = "Updates packages"
+cmd = "bun update"
+
+[[group.section]]
+title = "Run Code & Scripts"
+aliases = []
+
+[[group.section.command]]
+note = "Runs a TypeScript or JavaScript file"
+cmd = "bun run <file.ts>"
+
+[[group.section.command]]
+note = "Runs a script from package.json"
+cmd = "bun run <script>"
+
+[[group.section.command]]
+note = "Reruns the file when it changes"
+cmd = "bun --watch run <file.ts>"
+
+[[group.section.command]]
+note = "Runs a package without installing"
+cmd = "bunx <pkg>"
+
+[[group.section.command]]
+note = "Scaffolds a project from a template"
+cmd = "bun create <template>"
+
+[[group.section]]
+title = "Test, Build & Upgrade"
+aliases = []
+
+[[group.section.command]]
+note = "Runs the test suite"
+cmd = "bun test"
+
+[[group.section.command]]
+note = "Bundles code into a folder"
+cmd = "bun build <entry.ts> --outdir <dir>"
+
+[[group.section.command]]
+note = "Compiles to a standalone executable"
+cmd = "bun build <entry.ts> --compile --outfile <name>"
+
+[[group.section.command]]
+note = "Updates Bun itself"
+cmd = "bun upgrade"
+
+[[group.section.command]]
+note = "Clears the Bun cache"
+cmd = "bun pm cache rm"

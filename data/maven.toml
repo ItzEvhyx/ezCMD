@@ -1,0 +1,73 @@
+tool = "maven"
+name = "Maven"
+category = "Languages & Package Tools"
+order = 9
+aliases = ["mvn", "pom"]
+draft = true
+
+[[group]]
+title = "Everything Maven"
+
+[[group.section]]
+title = "Build Lifecycle"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the Maven version"
+cmd = "mvn -v"
+
+[[group.section.command]]
+note = "Deletes the target folder"
+cmd = "mvn clean"
+
+[[group.section.command]]
+note = "Compiles the source code"
+cmd = "mvn compile"
+
+[[group.section.command]]
+note = "Runs the tests"
+cmd = "mvn test"
+
+[[group.section.command]]
+note = "Builds the JAR or WAR file"
+cmd = "mvn package"
+
+[[group.section.command]]
+note = "Cleans, builds, and installs to the local repository"
+cmd = "mvn clean install"
+
+[[group.section.command]]
+note = "Builds without running tests"
+cmd = "mvn clean package -DskipTests"
+
+[[group.section.command]]
+note = "Forces updates of snapshot dependencies"
+cmd = "mvn -U clean install"
+
+[[group.section]]
+title = "Dependencies & Plugins"
+aliases = []
+
+[[group.section.command]]
+note = "Prints the dependency tree"
+cmd = "mvn dependency:tree"
+
+[[group.section.command]]
+note = "Downloads all dependencies"
+cmd = "mvn dependency:resolve"
+
+[[group.section.command]]
+note = "Lists dependencies with newer versions"
+cmd = "mvn versions:display-dependency-updates"
+
+[[group.section.command]]
+note = "Creates a project from a template"
+cmd = "mvn archetype:generate"
+
+[[group.section.command]]
+note = "Runs tests in one class"
+cmd = "mvn test -Dtest=<ClassName>"
+
+[[group.section.command]]
+note = "Runs a Spring Boot app"
+cmd = "mvn spring-boot:run"

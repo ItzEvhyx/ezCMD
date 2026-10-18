@@ -1,0 +1,114 @@
+tool = "find"
+name = "Find & Search Text"
+category = "Linux & System Tools"
+order = 2
+aliases = ["grep", "rg", "ripgrep", "search-files"]
+platforms = ["linux", "macos"]
+draft = true
+
+[[group]]
+title = "Everything Search"
+
+[[group.section]]
+title = "Find Files"
+aliases = []
+
+[[group.section.command]]
+note = "Finds files by name"
+cmd = "find . -name \"<pattern>\""
+
+[[group.section.command]]
+note = "Finds files by name, ignoring case"
+cmd = "find . -iname \"<pattern>\""
+
+[[group.section.command]]
+note = "Finds only files"
+cmd = "find . -type f -name \"<pattern>\""
+
+[[group.section.command]]
+note = "Finds only folders"
+cmd = "find . -type d -name \"<name>\""
+
+[[group.section.command]]
+note = "Finds files larger than 100 MB"
+cmd = "find . -size +100M"
+
+[[group.section.command]]
+note = "Finds files changed in the last 7 days"
+cmd = "find . -mtime -7"
+
+[[group.section.command]]
+note = "Runs a command on each match"
+cmd = "find . -name \"<pattern>\" -exec <command> {} \\;"
+
+[[group.section.command]]
+note = "Deletes matching files"
+cmd = "find . -name \"*.log\" -delete"
+
+[[group.section.command]]
+note = "Finds empty files and folders"
+cmd = "find . -empty"
+
+[[group.section]]
+title = "Search Text (grep)"
+aliases = []
+
+[[group.section.command]]
+note = "Finds lines containing text"
+cmd = "grep \"<text>\" <file>"
+
+[[group.section.command]]
+note = "Searches all files with line numbers"
+cmd = "grep -rn \"<text>\" ."
+
+[[group.section.command]]
+note = "Searches ignoring case"
+cmd = "grep -i \"<text>\" <file>"
+
+[[group.section.command]]
+note = "Shows lines that do not match"
+cmd = "grep -v \"<text>\" <file>"
+
+[[group.section.command]]
+note = "Counts matching lines"
+cmd = "grep -c \"<text>\" <file>"
+
+[[group.section.command]]
+note = "Searches with an extended regex"
+cmd = "grep -E \"<regex>\" <file>"
+
+[[group.section.command]]
+note = "Lists files that contain the text"
+cmd = "grep -l \"<text>\" *"
+
+[[group.section.command]]
+note = "Searches only certain file types"
+cmd = "grep -rn \"<text>\" --include=\"*.js\" ."
+
+[[group.section.command]]
+note = "Shows 3 lines around each match"
+cmd = "grep -A 3 -B 3 \"<text>\" <file>"
+
+[[group.section]]
+title = "Search Faster (ripgrep)"
+aliases = []
+
+[[group.section.command]]
+note = "Searches the current folder recursively"
+cmd = "rg \"<text>\""
+
+[[group.section.command]]
+note = "Searches ignoring case"
+cmd = "rg -i \"<text>\""
+
+[[group.section.command]]
+note = "Searches only one file type"
+cmd = "rg -t js \"<text>\""
+
+[[group.section.command]]
+note = "Lists files that contain the text"
+cmd = "rg -l \"<text>\""
+
+[[group.section.command]]
+note = "Lists the files ripgrep would search"
+cmd = "rg --files"

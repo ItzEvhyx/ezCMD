@@ -1,0 +1,133 @@
+tool = "firebase"
+name = "Firebase CLI"
+category = "Cloud & Backend Services"
+order = 1
+aliases = ["firebase-tools", "flutterfire"]
+draft = true
+
+[[group]]
+title = "Everything Firebase"
+
+[[group.section]]
+title = "Log In & Set Up"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the Firebase CLI"
+cmd = "npm install -g firebase-tools"
+
+[[group.section.command]]
+note = "Logs in to Firebase"
+cmd = "firebase login"
+
+[[group.section.command]]
+note = "Logs out of Firebase"
+cmd = "firebase logout"
+
+[[group.section.command]]
+note = "Lists your projects"
+cmd = "firebase projects:list"
+
+[[group.section.command]]
+note = "Selects the active project"
+cmd = "firebase use <project-id>"
+
+[[group.section.command]]
+note = "Sets up Firebase in the current folder"
+cmd = "firebase init"
+
+[[group.section]]
+title = "Emulators"
+aliases = []
+
+[[group.section.command]]
+note = "Sets up the local emulators"
+cmd = "firebase init emulators"
+
+[[group.section.command]]
+note = "Starts all configured emulators"
+cmd = "firebase emulators:start"
+
+[[group.section.command]]
+note = "Starts only some emulators"
+cmd = "firebase emulators:start --only <emulators>"
+
+[[group.section.command]]
+note = "Starts with saved emulator data"
+cmd = "firebase emulators:start --import=<dir>"
+
+[[group.section.command]]
+note = "Saves emulator data when you stop"
+cmd = "firebase emulators:start --import=<dir> --export-on-exit"
+
+[[group.section.command]]
+note = "Saves the emulator data"
+cmd = "firebase emulators:export <dir>"
+
+[[group.section]]
+title = "Deploy"
+aliases = []
+
+[[group.section.command]]
+note = "Deploys everything configured"
+cmd = "firebase deploy"
+
+[[group.section.command]]
+note = "Deploys only hosting"
+cmd = "firebase deploy --only hosting"
+
+[[group.section.command]]
+note = "Deploys only Cloud Functions"
+cmd = "firebase deploy --only functions"
+
+[[group.section.command]]
+note = "Deploys one function"
+cmd = "firebase deploy --only functions:<name>"
+
+[[group.section.command]]
+note = "Deploys only Firestore rules"
+cmd = "firebase deploy --only firestore:rules"
+
+[[group.section.command]]
+note = "Deploys a preview channel"
+cmd = "firebase hosting:channel:deploy <channel>"
+
+[[group.section]]
+title = "Cloud Functions"
+aliases = []
+
+[[group.section.command]]
+note = "Sets up Cloud Functions"
+cmd = "firebase init functions"
+
+[[group.section.command]]
+note = "Lists deployed functions"
+cmd = "firebase functions:list"
+
+[[group.section.command]]
+note = "Shows function logs"
+cmd = "firebase functions:log"
+
+[[group.section.command]]
+note = "Deletes a deployed function"
+cmd = "firebase functions:delete <name>"
+
+[[group.section.command]]
+note = "Stores a secret for functions"
+cmd = "firebase functions:secrets:set <NAME>"
+
+[[group.section]]
+title = "FlutterFire Setup"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the FlutterFire CLI"
+cmd = "dart pub global activate flutterfire_cli"
+
+[[group.section.command]]
+note = "Connects a Flutter app to Firebase"
+cmd = "flutterfire configure"
+
+[[group.section.command]]
+note = "Connects the app to a specific project"
+cmd = "flutterfire configure --project=<project-id>"

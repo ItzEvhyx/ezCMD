@@ -1,0 +1,154 @@
+tool = "systemd"
+name = "systemd & journalctl"
+category = "Linux & System Tools"
+order = 5
+aliases = ["systemctl", "journalctl", "service", "daemon"]
+platforms = ["linux"]
+draft = true
+
+[[group]]
+title = "Everything systemd"
+
+[[group.section]]
+title = "Control Services"
+aliases = []
+
+[[group.section.command]]
+note = "Shows a service's status"
+cmd = "systemctl status <service>"
+
+[[group.section.command]]
+note = "Starts a service"
+cmd = "sudo systemctl start <service>"
+
+[[group.section.command]]
+note = "Stops a service"
+cmd = "sudo systemctl stop <service>"
+
+[[group.section.command]]
+note = "Restarts a service"
+cmd = "sudo systemctl restart <service>"
+
+[[group.section.command]]
+note = "Reloads a service's config"
+cmd = "sudo systemctl reload <service>"
+
+[[group.section.command]]
+note = "Starts a service now and at every boot"
+cmd = "sudo systemctl enable --now <service>"
+
+[[group.section.command]]
+note = "Stops a service starting at boot"
+cmd = "sudo systemctl disable <service>"
+
+[[group.section]]
+title = "List & Debug Services"
+aliases = []
+
+[[group.section.command]]
+note = "Lists running services"
+cmd = "systemctl list-units --type=service"
+
+[[group.section.command]]
+note = "Lists all installed services"
+cmd = "systemctl list-unit-files --type=service"
+
+[[group.section.command]]
+note = "Lists services that failed"
+cmd = "systemctl --failed"
+
+[[group.section.command]]
+note = "Shows a service's unit file"
+cmd = "systemctl cat <service>"
+
+[[group.section.command]]
+note = "Prints whether a service is running"
+cmd = "systemctl is-active <service>"
+
+[[group.section.command]]
+note = "Lists scheduled timers"
+cmd = "systemctl list-timers"
+
+[[group.section]]
+title = "Create a Service"
+aliases = []
+
+[[group.section.command]]
+note = "Creates or edits a service file"
+cmd = "sudo nano /etc/systemd/system/<name>.service"
+
+[[group.section.command]]
+note = "Reloads unit files after changes"
+cmd = "sudo systemctl daemon-reload"
+
+[[group.section.command]]
+note = "Starts the new service and enables it at boot"
+cmd = "sudo systemctl enable --now <name>"
+
+[[group.section.command]]
+note = "Shows a user-level service's status"
+cmd = "systemctl --user status <service>"
+
+[[group.section.command]]
+note = "Starts and enables a user-level service"
+cmd = "systemctl --user enable --now <service>"
+
+[[group.section]]
+title = "Read Logs (journalctl)"
+aliases = []
+
+[[group.section.command]]
+note = "Shows a service's logs"
+cmd = "journalctl -u <service>"
+
+[[group.section.command]]
+note = "Follows a service's logs live"
+cmd = "journalctl -u <service> -f"
+
+[[group.section.command]]
+note = "Shows logs from the last hour"
+cmd = "journalctl -u <service> --since \"1 hour ago\""
+
+[[group.section.command]]
+note = "Shows logs since the last boot"
+cmd = "journalctl -b"
+
+[[group.section.command]]
+note = "Shows only errors"
+cmd = "journalctl -p err"
+
+[[group.section.command]]
+note = "Jumps to the latest entries with explanations"
+cmd = "journalctl -xe"
+
+[[group.section.command]]
+note = "Shows kernel messages"
+cmd = "journalctl -k"
+
+[[group.section]]
+title = "Log Space & Power"
+aliases = []
+
+[[group.section.command]]
+note = "Shows how much space logs use"
+cmd = "journalctl --disk-usage"
+
+[[group.section.command]]
+note = "Deletes logs older than 7 days"
+cmd = "sudo journalctl --vacuum-time=7d"
+
+[[group.section.command]]
+note = "Restarts the machine"
+cmd = "sudo reboot"
+
+[[group.section.command]]
+note = "Shuts down immediately"
+cmd = "sudo shutdown now"
+
+[[group.section.command]]
+note = "Restarts in 10 minutes"
+cmd = "sudo shutdown -r +10"
+
+[[group.section.command]]
+note = "Cancels a scheduled shutdown"
+cmd = "shutdown -c"

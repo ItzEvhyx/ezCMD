@@ -1,0 +1,102 @@
+tool = "archive"
+name = "Archives (tar & zip)"
+category = "Linux & System Tools"
+order = 4
+aliases = ["tar", "zip", "unzip", "gzip", "7z", "compress"]
+notes = ["tar is built in to Windows 10 and later. zip, unzip, gzip, and gunzip are not, so use tar or PowerShell there. 7z needs 7-Zip installed (p7zip on Linux)"]
+draft = true
+
+[[group]]
+title = "Everything Archives"
+
+[[group.section]]
+title = "tar Archives"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a gzip-compressed archive"
+cmd = "tar -czf <archive.tar.gz> <folder>"
+
+[[group.section.command]]
+note = "Extracts a .tar.gz archive"
+cmd = "tar -xzf <archive.tar.gz>"
+
+[[group.section.command]]
+note = "Extracts into a chosen folder"
+cmd = "tar -xzf <archive.tar.gz> -C <dest>"
+
+[[group.section.command]]
+note = "Lists an archive's contents"
+cmd = "tar -tzf <archive.tar.gz>"
+
+[[group.section.command]]
+note = "Creates an xz-compressed archive"
+cmd = "tar -cJf <archive.tar.xz> <folder>"
+
+[[group.section.command]]
+note = "Extracts any tar archive, detecting compression"
+cmd = "tar -xf <archive>"
+
+[[group.section]]
+title = "zip & gzip"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a zip archive"
+unix = "zip -r <archive.zip> <folder>"
+
+[[group.section.command]]
+note = "Extracts a zip archive"
+unix = "unzip <archive.zip>"
+
+[[group.section.command]]
+note = "Extracts into a chosen folder"
+unix = "unzip <archive.zip> -d <dest>"
+
+[[group.section.command]]
+note = "Lists a zip's contents"
+unix = "unzip -l <archive.zip>"
+
+[[group.section.command]]
+note = "Compresses a single file"
+unix = "gzip <file>"
+
+[[group.section.command]]
+note = "Decompresses a .gz file"
+unix = "gunzip <file.gz>"
+
+[[group.section.command]]
+note = "Creates a zip archive"
+windows = "tar -a -c -f <archive.zip> <folder>"
+
+[[group.section.command]]
+note = "Extracts a zip archive"
+windows = "tar -xf <archive.zip>"
+
+[[group.section]]
+title = "7-Zip"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a 7z archive"
+cmd = "7z a <archive.7z> <folder>"
+
+[[group.section.command]]
+note = "Extracts a 7z archive"
+cmd = "7z x <archive.7z>"
+
+[[group.section.command]]
+note = "Lists an archive's contents"
+cmd = "7z l <archive>"
+
+[[group.section]]
+title = "PowerShell Zip (Windows)"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a zip archive"
+windows = "Compress-Archive -Path <folder> -DestinationPath <archive.zip>"
+
+[[group.section.command]]
+note = "Extracts a zip archive"
+windows = "Expand-Archive -Path <archive.zip> -DestinationPath <dest>"

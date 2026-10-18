@@ -1,0 +1,189 @@
+tool = "gh"
+name = "GitHub CLI (gh)"
+category = "Containers & DevOps"
+order = 4
+aliases = ["github", "github-cli", "actions"]
+draft = true
+
+[[group]]
+title = "Everything gh"
+
+[[group.section]]
+title = "Log In & Set Up"
+aliases = []
+
+[[group.section.command]]
+note = "Logs in to GitHub"
+cmd = "gh auth login"
+
+[[group.section.command]]
+note = "Shows your login status"
+cmd = "gh auth status"
+
+[[group.section.command]]
+note = "Logs out of GitHub"
+cmd = "gh auth logout"
+
+[[group.section.command]]
+note = "Sets the editor gh opens"
+cmd = "gh config set editor <editor>"
+
+[[group.section]]
+title = "Repositories"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a public repo on GitHub"
+cmd = "gh repo create <name> --public"
+
+[[group.section.command]]
+note = "Creates a private repo from this folder and pushes"
+cmd = "gh repo create <name> --private --source=. --push"
+
+[[group.section.command]]
+note = "Clones a repository"
+cmd = "gh repo clone <owner>/<repo>"
+
+[[group.section.command]]
+note = "Forks the current repository"
+cmd = "gh repo fork"
+
+[[group.section.command]]
+note = "Opens the repo in the browser"
+cmd = "gh repo view --web"
+
+[[group.section.command]]
+note = "Lists your repositories"
+cmd = "gh repo list"
+
+[[group.section]]
+title = "Pull Requests"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a pull request interactively"
+cmd = "gh pr create"
+
+[[group.section.command]]
+note = "Creates a PR using the commit messages"
+cmd = "gh pr create --fill"
+
+[[group.section.command]]
+note = "Lists open pull requests"
+cmd = "gh pr list"
+
+[[group.section.command]]
+note = "Shows a pull request"
+cmd = "gh pr view <number>"
+
+[[group.section.command]]
+note = "Checks out a pull request locally"
+cmd = "gh pr checkout <number>"
+
+[[group.section.command]]
+note = "Shows the PR's changes"
+cmd = "gh pr diff"
+
+[[group.section.command]]
+note = "Squash-merges a pull request"
+cmd = "gh pr merge <number> --squash"
+
+[[group.section.command]]
+note = "Shows PRs that involve you"
+cmd = "gh pr status"
+
+[[group.section]]
+title = "Issues"
+aliases = []
+
+[[group.section.command]]
+note = "Creates an issue interactively"
+cmd = "gh issue create"
+
+[[group.section.command]]
+note = "Lists open issues"
+cmd = "gh issue list"
+
+[[group.section.command]]
+note = "Shows an issue"
+cmd = "gh issue view <number>"
+
+[[group.section.command]]
+note = "Closes an issue"
+cmd = "gh issue close <number>"
+
+[[group.section.command]]
+note = "Adds a comment to an issue"
+cmd = "gh issue comment <number> --body \"<text>\""
+
+[[group.section]]
+title = "Releases"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a release with generated notes"
+cmd = "gh release create <tag> --generate-notes"
+
+[[group.section.command]]
+note = "Creates a release with attached files"
+cmd = "gh release create <tag> <files>"
+
+[[group.section.command]]
+note = "Lists releases"
+cmd = "gh release list"
+
+[[group.section.command]]
+note = "Downloads a release's assets"
+cmd = "gh release download <tag>"
+
+[[group.section.command]]
+note = "Deletes a release"
+cmd = "gh release delete <tag>"
+
+[[group.section]]
+title = "Workflow Runs (Actions)"
+aliases = []
+
+[[group.section.command]]
+note = "Lists recent workflow runs"
+cmd = "gh run list"
+
+[[group.section.command]]
+note = "Watches a run until it finishes"
+cmd = "gh run watch"
+
+[[group.section.command]]
+note = "Shows logs from failed steps"
+cmd = "gh run view <id> --log-failed"
+
+[[group.section.command]]
+note = "Reruns a workflow run"
+cmd = "gh run rerun <id>"
+
+[[group.section.command]]
+note = "Lists workflows"
+cmd = "gh workflow list"
+
+[[group.section.command]]
+note = "Triggers a workflow manually"
+cmd = "gh workflow run <workflow>"
+
+[[group.section]]
+title = "Secrets & API"
+aliases = []
+
+[[group.section.command]]
+note = "Sets a repository secret"
+cmd = "gh secret set <NAME>"
+
+[[group.section.command]]
+note = "Lists repository secrets"
+cmd = "gh secret list"
+
+[[group.section.command]]
+note = "Calls the GitHub API"
+cmd = "gh api <endpoint>"
+
+[[group.section.command]]
+note = "Creates a gist from a file"
+cmd = "gh gist create <file>"

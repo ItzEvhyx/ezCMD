@@ -1,0 +1,93 @@
+tool = "pyweb"
+name = "Django, Flask & FastAPI"
+category = "Languages & Package Tools"
+order = 2
+aliases = ["django", "flask", "fastapi", "uvicorn"]
+draft = true
+
+[[group]]
+title = "Python Web Frameworks"
+
+[[group.section]]
+title = "Django"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new Django project"
+cmd = "django-admin startproject <name>"
+
+[[group.section.command]]
+note = "Creates a new app in the project"
+cmd = "python manage.py startapp <app>"
+
+[[group.section.command]]
+note = "Starts the dev server"
+cmd = "python manage.py runserver"
+
+[[group.section.command]]
+note = "Creates migrations from model changes"
+cmd = "python manage.py makemigrations"
+
+[[group.section.command]]
+note = "Applies migrations"
+cmd = "python manage.py migrate"
+
+[[group.section.command]]
+note = "Creates an admin user"
+cmd = "python manage.py createsuperuser"
+
+[[group.section.command]]
+note = "Gathers static files for deployment"
+cmd = "python manage.py collectstatic"
+
+[[group.section.command]]
+note = "Opens a Python shell with Django loaded"
+cmd = "python manage.py shell"
+
+[[group.section]]
+title = "Flask"
+aliases = []
+
+[[group.section.command]]
+note = "Installs Flask"
+cmd = "pip install flask"
+
+[[group.section.command]]
+note = "Runs the Flask dev server"
+cmd = "flask run"
+
+[[group.section.command]]
+note = "Runs with debug mode and reloading"
+cmd = "flask --app <module> run --debug"
+
+[[group.section.command]]
+note = "Lists the app's routes"
+cmd = "flask --app <module> routes"
+
+[[group.section.command]]
+note = "Opens a shell with the app context"
+cmd = "flask --app <module> shell"
+
+[[group.section]]
+title = "FastAPI"
+aliases = []
+
+[[group.section.command]]
+note = "Installs FastAPI with its standard extras"
+cmd = "pip install \"fastapi[standard]\""
+
+[[group.section.command]]
+note = "Runs the dev server with reloading"
+cmd = "fastapi dev <main.py>"
+
+[[group.section.command]]
+note = "Runs the production server"
+cmd = "fastapi run <main.py>"
+
+[[group.section.command]]
+note = "Runs the app with Uvicorn and reloading"
+cmd = "uvicorn <module>:app --reload"
+
+[[group.section.command]]
+note = "Serves the app on your network"
+cmd = "uvicorn <module>:app --host 0.0.0.0 --port <port>"

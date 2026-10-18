@@ -1,0 +1,135 @@
+tool = "curl"
+name = "curl & wget"
+category = "Linux & System Tools"
+order = 12
+aliases = ["wget", "http", "api-request", "download"]
+notes = ["In Windows PowerShell, curl is an alias for Invoke-WebRequest. Use curl.exe instead"]
+draft = true
+
+[[group]]
+title = "Everything curl"
+
+[[group.section]]
+title = "Send GET Requests"
+aliases = []
+
+[[group.section.command]]
+note = "Fetches a URL and prints the response"
+cmd = "curl <url>"
+
+[[group.section.command]]
+note = "Includes the response headers"
+cmd = "curl -i <url>"
+
+[[group.section.command]]
+note = "Shows only the response headers"
+cmd = "curl -I <url>"
+
+[[group.section.command]]
+note = "Follows redirects"
+cmd = "curl -L <url>"
+
+[[group.section.command]]
+note = "Hides the progress output"
+cmd = "curl -s <url>"
+
+[[group.section.command]]
+note = "Shows the full request and response details"
+cmd = "curl -v <url>"
+
+[[group.section]]
+title = "Send POST & JSON Requests"
+aliases = []
+
+[[group.section.command]]
+note = "Sends a JSON body"
+unix = "curl -X POST <url> -H \"Content-Type: application/json\" -d '{\"key\":\"value\"}'"
+windows = "curl -X POST <url> -H \"Content-Type: application/json\" -d \"{\\\"key\\\":\\\"value\\\"}\""
+
+[[group.section.command]]
+note = "Sends form data"
+cmd = "curl -X POST <url> -d \"<key>=<value>\""
+
+[[group.section.command]]
+note = "Uploads a file"
+cmd = "curl -F \"file=@<path>\" <url>"
+
+[[group.section.command]]
+note = "Sends a PUT request"
+cmd = "curl -X PUT <url> -d \"<data>\""
+
+[[group.section.command]]
+note = "Sends a DELETE request"
+cmd = "curl -X DELETE <url>"
+
+[[group.section]]
+title = "Headers & Authentication"
+aliases = []
+
+[[group.section.command]]
+note = "Sends a bearer token"
+cmd = "curl -H \"Authorization: Bearer <token>\" <url>"
+
+[[group.section.command]]
+note = "Sends basic authentication"
+cmd = "curl -u <user>:<password> <url>"
+
+[[group.section.command]]
+note = "Adds a custom header"
+cmd = "curl -H \"<header>: <value>\" <url>"
+
+[[group.section.command]]
+note = "Saves cookies to a file"
+cmd = "curl -c <cookie-file> <url>"
+
+[[group.section.command]]
+note = "Sends cookies from a file"
+cmd = "curl -b <cookie-file> <url>"
+
+[[group.section]]
+title = "Download Files (curl)"
+aliases = []
+
+[[group.section.command]]
+note = "Saves the response to a named file"
+cmd = "curl -o <file> <url>"
+
+[[group.section.command]]
+note = "Saves the file under its remote name"
+cmd = "curl -O <url>"
+
+[[group.section.command]]
+note = "Resumes an interrupted download"
+cmd = "curl -C - -O <url>"
+
+[[group.section.command]]
+note = "Gives up after a time limit"
+cmd = "curl --max-time <seconds> <url>"
+
+[[group.section.command]]
+note = "Ignores TLS certificate errors"
+cmd = "curl -k <url>"
+
+[[group.section]]
+title = "Download Files (wget)"
+aliases = []
+
+[[group.section.command]]
+note = "Downloads a file"
+cmd = "wget <url>"
+
+[[group.section.command]]
+note = "Saves the download under a chosen name"
+cmd = "wget -O <file> <url>"
+
+[[group.section.command]]
+note = "Resumes an interrupted download"
+cmd = "wget -c <url>"
+
+[[group.section.command]]
+note = "Downloads every URL listed in a file"
+cmd = "wget -i <urls.txt>"
+
+[[group.section.command]]
+note = "Downloads a folder recursively"
+cmd = "wget -r -np <url>"

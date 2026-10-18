@@ -1,0 +1,81 @@
+tool = "netlify"
+name = "Netlify CLI"
+category = "JavaScript & Web"
+order = 10
+aliases = ["netlify-cli"]
+draft = true
+
+[[group]]
+title = "Everything Netlify"
+
+[[group.section]]
+title = "Log In & Link"
+aliases = []
+
+[[group.section.command]]
+note = "Installs the Netlify CLI"
+cmd = "npm install -g netlify-cli"
+
+[[group.section.command]]
+note = "Logs in to Netlify"
+cmd = "netlify login"
+
+[[group.section.command]]
+note = "Creates or connects a site"
+cmd = "netlify init"
+
+[[group.section.command]]
+note = "Links the folder to an existing site"
+cmd = "netlify link"
+
+[[group.section.command]]
+note = "Shows the current site and login"
+cmd = "netlify status"
+
+[[group.section]]
+title = "Develop & Deploy"
+aliases = []
+
+[[group.section.command]]
+note = "Runs the site locally with Netlify features"
+cmd = "netlify dev"
+
+[[group.section.command]]
+note = "Runs the Netlify build locally"
+cmd = "netlify build"
+
+[[group.section.command]]
+note = "Deploys a draft preview"
+cmd = "netlify deploy"
+
+[[group.section.command]]
+note = "Deploys to production"
+cmd = "netlify deploy --prod"
+
+[[group.section.command]]
+note = "Opens the site admin in the browser"
+cmd = "netlify open"
+
+[[group.section]]
+title = "Environment & Functions"
+aliases = []
+
+[[group.section.command]]
+note = "Lists environment variables"
+cmd = "netlify env:list"
+
+[[group.section.command]]
+note = "Sets an environment variable"
+cmd = "netlify env:set <KEY> <value>"
+
+[[group.section.command]]
+note = "Imports variables from a .env file"
+cmd = "netlify env:import <file>"
+
+[[group.section.command]]
+note = "Creates a new serverless function"
+cmd = "netlify functions:create"
+
+[[group.section.command]]
+note = "Calls a function locally"
+cmd = "netlify functions:invoke <name>"

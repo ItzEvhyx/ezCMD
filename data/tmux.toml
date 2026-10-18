@@ -1,0 +1,102 @@
+tool = "tmux"
+name = "tmux"
+category = "Linux & System Tools"
+order = 9
+aliases = ["terminal-multiplexer", "sessions", "panes"]
+platforms = ["linux", "macos"]
+draft = true
+
+[[group]]
+title = "Everything tmux"
+
+[[group.section]]
+title = "Sessions"
+aliases = []
+
+[[group.section.command]]
+note = "Starts a named session"
+cmd = "tmux new -s <name>"
+
+[[group.section.command]]
+note = "Lists sessions"
+cmd = "tmux ls"
+
+[[group.section.command]]
+note = "Reattaches to a session"
+cmd = "tmux attach -t <name>"
+
+[[group.section.command]]
+note = "Ends a session"
+cmd = "tmux kill-session -t <name>"
+
+[[group.section.command]]
+note = "Renames a session"
+cmd = "tmux rename-session -t <old> <new>"
+
+[[group.section.command]]
+note = "Detaches from the session"
+cmd = "Ctrl+b d"
+
+[[group.section]]
+title = "Windows & Panes (Keys)"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new window"
+cmd = "Ctrl+b c"
+
+[[group.section.command]]
+note = "Goes to the next window"
+cmd = "Ctrl+b n"
+
+[[group.section.command]]
+note = "Goes to the previous window"
+cmd = "Ctrl+b p"
+
+[[group.section.command]]
+note = "Renames the current window"
+cmd = "Ctrl+b ,"
+
+[[group.section.command]]
+note = "Splits the pane side by side"
+cmd = "Ctrl+b %"
+
+[[group.section.command]]
+note = "Splits the pane top and bottom"
+cmd = "Ctrl+b \""
+
+[[group.section.command]]
+note = "Moves between panes"
+cmd = "Ctrl+b <arrow>"
+
+[[group.section.command]]
+note = "Zooms the current pane"
+cmd = "Ctrl+b z"
+
+[[group.section.command]]
+note = "Closes the current pane"
+cmd = "Ctrl+b x"
+
+[[group.section.command]]
+note = "Enters scroll mode (q to exit)"
+cmd = "Ctrl+b ["
+
+[[group.section]]
+title = "Config & Help"
+aliases = []
+
+[[group.section.command]]
+note = "Reloads your tmux config"
+cmd = "tmux source-file ~/.tmux.conf"
+
+[[group.section.command]]
+note = "Lists all key bindings"
+cmd = "tmux list-keys"
+
+[[group.section.command]]
+note = "Shows key bindings inside tmux"
+cmd = "Ctrl+b ?"
+
+[[group.section.command]]
+note = "Ends every session and tmux itself"
+cmd = "tmux kill-server"

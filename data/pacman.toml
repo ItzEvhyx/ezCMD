@@ -1,0 +1,82 @@
+tool = "pacman"
+name = "pacman & paru (Arch)"
+category = "Package Managers"
+order = 2
+aliases = ["paru", "aur", "arch", "cachyos", "manjaro"]
+platforms = ["linux"]
+draft = true
+
+[[group]]
+title = "Everything pacman"
+
+[[group.section]]
+title = "Install & Remove"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a package"
+cmd = "sudo pacman -S <pkg>"
+
+[[group.section.command]]
+note = "Removes a package, its config, and unused dependencies"
+cmd = "sudo pacman -Rns <pkg>"
+
+[[group.section.command]]
+note = "Installs a package from the AUR"
+cmd = "paru -S <pkg>"
+
+[[group.section.command]]
+note = "Removes an AUR package"
+cmd = "paru -Rns <pkg>"
+
+[[group.section]]
+title = "Update & Clean"
+aliases = []
+
+[[group.section.command]]
+note = "Updates the whole system"
+cmd = "sudo pacman -Syu"
+
+[[group.section.command]]
+note = "Updates the system and AUR packages"
+cmd = "paru -Syu"
+
+[[group.section.command]]
+note = "Clears old cached packages"
+cmd = "sudo pacman -Sc"
+
+[[group.section.command]]
+note = "Removes orphans (errors if none exist)"
+cmd = "pacman -Qdtq | sudo pacman -Rns -"
+
+[[group.section]]
+title = "Search & Inspect"
+aliases = []
+
+[[group.section.command]]
+note = "Searches the repositories"
+cmd = "pacman -Ss <term>"
+
+[[group.section.command]]
+note = "Searches installed packages"
+cmd = "pacman -Qs <term>"
+
+[[group.section.command]]
+note = "Shows an installed package's details"
+cmd = "pacman -Qi <pkg>"
+
+[[group.section.command]]
+note = "Lists the files a package installed"
+cmd = "pacman -Ql <pkg>"
+
+[[group.section.command]]
+note = "Finds which package owns a file"
+cmd = "pacman -Qo <file>"
+
+[[group.section.command]]
+note = "Lists packages you installed explicitly"
+cmd = "pacman -Qe"
+
+[[group.section.command]]
+note = "Lists orphaned packages"
+cmd = "pacman -Qdtq"

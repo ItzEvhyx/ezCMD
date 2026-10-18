@@ -1,0 +1,105 @@
+tool = "mongodb"
+name = "MongoDB"
+category = "Databases"
+order = 4
+aliases = ["mongo", "mongosh", "mongodump"]
+draft = true
+
+[[group]]
+title = "Everything MongoDB"
+
+[[group.section]]
+title = "Connect & Browse"
+aliases = []
+
+[[group.section.command]]
+note = "Connects to a local server"
+cmd = "mongosh"
+
+[[group.section.command]]
+note = "Connects using a connection string"
+cmd = "mongosh \"<connection-string>\""
+
+[[group.section.command]]
+note = "Lists databases"
+cmd = "show dbs"
+
+[[group.section.command]]
+note = "Switches to a database"
+cmd = "use <database>"
+
+[[group.section.command]]
+note = "Lists collections"
+cmd = "show collections"
+
+[[group.section]]
+title = "Query & Edit Documents"
+aliases = []
+
+[[group.section.command]]
+note = "Returns all documents"
+cmd = "db.<collection>.find()"
+
+[[group.section.command]]
+note = "Returns documents matching a filter"
+cmd = "db.<collection>.find({<field>: <value>})"
+
+[[group.section.command]]
+note = "Returns one document"
+cmd = "db.<collection>.findOne()"
+
+[[group.section.command]]
+note = "Adds a document"
+cmd = "db.<collection>.insertOne({<field>: <value>})"
+
+[[group.section.command]]
+note = "Updates one document"
+cmd = "db.<collection>.updateOne({<filter>}, {$set: {<field>: <value>}})"
+
+[[group.section.command]]
+note = "Deletes one document"
+cmd = "db.<collection>.deleteOne({<filter>})"
+
+[[group.section.command]]
+note = "Counts documents"
+cmd = "db.<collection>.countDocuments()"
+
+[[group.section]]
+title = "Indexes & Cleanup"
+aliases = []
+
+[[group.section.command]]
+note = "Creates an index"
+cmd = "db.<collection>.createIndex({<field>: 1})"
+
+[[group.section.command]]
+note = "Lists a collection's indexes"
+cmd = "db.<collection>.getIndexes()"
+
+[[group.section.command]]
+note = "Deletes a collection"
+cmd = "db.<collection>.drop()"
+
+[[group.section.command]]
+note = "Deletes the current database"
+cmd = "db.dropDatabase()"
+
+[[group.section]]
+title = "Backup & Restore"
+aliases = []
+
+[[group.section.command]]
+note = "Exports a database to a folder"
+cmd = "mongodump --uri=\"<uri>\" --out=<dir>"
+
+[[group.section.command]]
+note = "Restores from a dump folder"
+cmd = "mongorestore --uri=\"<uri>\" <dir>"
+
+[[group.section.command]]
+note = "Exports a collection to JSON"
+cmd = "mongoexport --db=<db> --collection=<name> --out=<file.json>"
+
+[[group.section.command]]
+note = "Imports a JSON file into a collection"
+cmd = "mongoimport --db=<db> --collection=<name> --file=<file.json>"

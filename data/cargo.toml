@@ -1,0 +1,255 @@
+tool = "cargo"
+name = "Rust & Cargo"
+category = "Languages & Package Tools"
+order = 6
+aliases = ["rust", "rustup", "rustc", "crate"]
+draft = true
+
+[[group]]
+title = "Projects & Toolchain"
+
+[[group.section]]
+title = "Create a Project"
+aliases = []
+
+[[group.section.command]]
+note = "Creates a new binary project"
+cmd = "cargo new <name>"
+
+[[group.section.command]]
+note = "Creates a new library project"
+cmd = "cargo new <name> --lib"
+
+[[group.section.command]]
+note = "Sets up Cargo in the current folder"
+cmd = "cargo init"
+
+[[group.section.command]]
+note = "Prints the Rust compiler version"
+cmd = "rustc --version"
+
+[[group.section.command]]
+note = "Prints the Cargo version"
+cmd = "cargo --version"
+
+[[group.section]]
+title = "Toolchains & Targets (rustup)"
+aliases = []
+
+[[group.section.command]]
+note = "Updates Rust to the latest version"
+cmd = "rustup update"
+
+[[group.section.command]]
+note = "Shows the active toolchain and targets"
+cmd = "rustup show"
+
+[[group.section.command]]
+note = "Sets the default toolchain"
+cmd = "rustup default stable"
+
+[[group.section.command]]
+note = "Installs the nightly toolchain"
+cmd = "rustup toolchain install nightly"
+
+[[group.section.command]]
+note = "Adds a compile target"
+cmd = "rustup target add <triple>"
+
+[[group.section.command]]
+note = "Installs the lint and format tools"
+cmd = "rustup component add clippy rustfmt"
+
+[[group.section.command]]
+note = "Sets the toolchain for this folder"
+cmd = "rustup override set <toolchain>"
+
+[[group.section.command]]
+note = "Runs a command with the nightly toolchain"
+cmd = "cargo +nightly <command>"
+
+[[group]]
+title = "Build & Dependencies"
+
+[[group.section]]
+title = "Build & Run"
+aliases = []
+
+[[group.section.command]]
+note = "Compiles in debug mode"
+cmd = "cargo build"
+
+[[group.section.command]]
+note = "Compiles with optimizations"
+cmd = "cargo build --release"
+
+[[group.section.command]]
+note = "Builds and runs the program"
+cmd = "cargo run"
+
+[[group.section.command]]
+note = "Builds and runs with optimizations"
+cmd = "cargo run --release"
+
+[[group.section.command]]
+note = "Runs the program with arguments"
+cmd = "cargo run -- <args>"
+
+[[group.section.command]]
+note = "Runs a specific binary"
+cmd = "cargo run --bin <name>"
+
+[[group.section.command]]
+note = "Checks the code without building"
+cmd = "cargo check"
+
+[[group.section.command]]
+note = "Compiles for another target"
+cmd = "cargo build --target <triple>"
+
+[[group.section.command]]
+note = "Deletes the target folder"
+cmd = "cargo clean"
+
+[[group.section]]
+title = "Dependencies"
+aliases = []
+
+[[group.section.command]]
+note = "Adds a dependency"
+cmd = "cargo add <crate>"
+
+[[group.section.command]]
+note = "Adds a dependency with features"
+cmd = "cargo add <crate> --features <list>"
+
+[[group.section.command]]
+note = "Adds a dev dependency"
+cmd = "cargo add --dev <crate>"
+
+[[group.section.command]]
+note = "Removes a dependency"
+cmd = "cargo remove <crate>"
+
+[[group.section.command]]
+note = "Updates dependencies in Cargo.lock"
+cmd = "cargo update"
+
+[[group.section.command]]
+note = "Updates a single crate"
+cmd = "cargo update -p <crate>"
+
+[[group.section.command]]
+note = "Prints the dependency tree"
+cmd = "cargo tree"
+
+[[group.section.command]]
+note = "Shows duplicate dependencies"
+cmd = "cargo tree -d"
+
+[[group]]
+title = "Quality & Publishing"
+
+[[group.section]]
+title = "Test & Benchmark"
+aliases = []
+
+[[group.section.command]]
+note = "Runs all tests"
+cmd = "cargo test"
+
+[[group.section.command]]
+note = "Runs tests matching a name"
+cmd = "cargo test <name>"
+
+[[group.section.command]]
+note = "Shows println output from tests"
+cmd = "cargo test -- --nocapture"
+
+[[group.section.command]]
+note = "Runs only library tests"
+cmd = "cargo test --lib"
+
+[[group.section.command]]
+note = "Runs only documentation tests"
+cmd = "cargo test --doc"
+
+[[group.section.command]]
+note = "Runs benchmarks"
+cmd = "cargo bench"
+
+[[group.section]]
+title = "Lint & Format"
+aliases = []
+
+[[group.section.command]]
+note = "Formats the code"
+cmd = "cargo fmt"
+
+[[group.section.command]]
+note = "Checks formatting without changing files"
+cmd = "cargo fmt --check"
+
+[[group.section.command]]
+note = "Runs the linter"
+cmd = "cargo clippy"
+
+[[group.section.command]]
+note = "Treats lint warnings as errors"
+cmd = "cargo clippy -- -D warnings"
+
+[[group.section.command]]
+note = "Applies lint fixes automatically"
+cmd = "cargo clippy --fix"
+
+[[group.section.command]]
+note = "Builds the docs and opens them"
+cmd = "cargo doc --open"
+
+[[group.section]]
+title = "Install Tools"
+aliases = []
+
+[[group.section.command]]
+note = "Installs a command-line tool"
+cmd = "cargo install <crate>"
+
+[[group.section.command]]
+note = "Installs the current project as a tool"
+cmd = "cargo install --path ."
+
+[[group.section.command]]
+note = "Lists installed tools"
+cmd = "cargo install --list"
+
+[[group.section.command]]
+note = "Reinstalls or updates a tool"
+cmd = "cargo install --force <crate>"
+
+[[group.section.command]]
+note = "Removes an installed tool"
+cmd = "cargo uninstall <crate>"
+
+[[group.section]]
+title = "Publish a Crate"
+aliases = []
+
+[[group.section.command]]
+note = "Logs in to crates.io"
+cmd = "cargo login"
+
+[[group.section.command]]
+note = "Creates the package that would be published"
+cmd = "cargo package"
+
+[[group.section.command]]
+note = "Previews a publish"
+cmd = "cargo publish --dry-run"
+
+[[group.section.command]]
+note = "Publishes the crate to crates.io"
+cmd = "cargo publish"
+
+[[group.section.command]]
+note = "Marks a version as not recommended"
+cmd = "cargo yank --version <version>"

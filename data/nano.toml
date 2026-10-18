@@ -1,0 +1,83 @@
+tool = "nano"
+name = "nano"
+category = "Linux & System Tools"
+order = 11
+aliases = ["pico"]
+platforms = ["linux", "macos"]
+notes = ["nano is not built in to Windows. Use it through Git Bash or WSL. The nano that ships with macOS is old, so Alt shortcuts may not work until you run brew install nano"]
+draft = true
+
+[[group]]
+title = "Everything nano"
+
+[[group.section]]
+title = "Open & Save"
+aliases = []
+
+[[group.section.command]]
+note = "Opens a file in nano"
+cmd = "nano <file>"
+
+[[group.section.command]]
+note = "Saves the file"
+cmd = "Ctrl+o"
+
+[[group.section.command]]
+note = "Exits nano"
+cmd = "Ctrl+x"
+
+[[group.section.command]]
+note = "Opens the help screen"
+cmd = "Ctrl+g"
+
+[[group.section]]
+title = "Edit Text"
+aliases = []
+
+[[group.section.command]]
+note = "Cuts the current line"
+cmd = "Ctrl+k"
+
+[[group.section.command]]
+note = "Pastes the cut text"
+cmd = "Ctrl+u"
+
+[[group.section.command]]
+note = "Starts or ends a selection"
+cmd = "Alt+a"
+
+[[group.section.command]]
+note = "Copies the selection or current line"
+cmd = "Alt+6"
+
+[[group.section.command]]
+note = "Undoes the last change"
+cmd = "Alt+u"
+
+[[group.section.command]]
+note = "Redoes the last undone change"
+cmd = "Alt+e"
+
+[[group.section]]
+title = "Search & Navigate"
+aliases = []
+
+[[group.section.command]]
+note = "Searches for text"
+cmd = "Ctrl+w"
+
+[[group.section.command]]
+note = "Searches and replaces text"
+cmd = "Ctrl+\\"
+
+[[group.section.command]]
+note = "Jumps to a line number"
+cmd = "Ctrl+_"
+
+[[group.section.command]]
+note = "Jumps to the start of the line"
+cmd = "Ctrl+a"
+
+[[group.section.command]]
+note = "Jumps to the end of the line"
+cmd = "Ctrl+e"
