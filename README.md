@@ -28,6 +28,7 @@
   <a href="#preview"><b>Preview</b></a> &nbsp;|&nbsp;
   <a href="#features"><b>Features</b></a> &nbsp;|&nbsp;
   <a href="#platforms"><b>Platforms</b></a> &nbsp;|&nbsp;
+  <a href="#updating"><b>Updating</b></a> &nbsp;|&nbsp;
   <a href="#installation"><b>Installation</b></a> &nbsp;|&nbsp;
   <a href="#usage"><b>Usage</b></a> &nbsp;|&nbsp;
   <a href="#uninstalling"><b>Uninstalling</b></a> &nbsp;|&nbsp;
@@ -90,6 +91,22 @@ $ ezcmd initializing repo
 | **Linux** | x86_64, aarch64 (ARM64) | Supported |
 | **macOS** | Apple Silicon (M1/M2/M3), Intel x86_64 | Supported |
 | **Windows** | Windows 10, 11 (x86_64 CMD & PowerShell) | Supported |
+
+---
+
+<a id="updating"></a>
+
+## <img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Updating
+
+If you already have **ezcmd 2.1.0 or later**, future releases do not require uninstalling or rerunning the installer. Update the global binary with:
+
+```bash
+ezcmd --update
+```
+
+`ezcmd update` works too. The updater downloads the matching GitHub Release for your OS and CPU, verifies its published SHA-256 checksum, and replaces the installed executable. Regular searches remain offline.
+
+If you are on v1 or v2.0.0, run the installer below once to get v2.1.0. After that, use `ezcmd --update` for later releases.
 
 ---
 
@@ -273,18 +290,6 @@ ezcmd --help -windows -winget
 ### Tool aliases
 
 Each tool has a canonical flag such as `-docker` and may have alternate names shown in its `Also matches` line. Non-shadowed aliases can be used as tool flags, so `ezcmd --help -rebase` opens Git. If an alias is also meaningful as a section search, select the tool first: `ezcmd --help -git -worktree`.
-
-### Updating ezcmd
-
-After installing version 2.1.0 or later, update the globally installed binary with:
-
-```bash
-ezcmd update
-```
-
-The updater checks the latest GitHub Release, selects the archive for your OS and CPU, verifies its published SHA-256 checksum, and replaces the installed executable. It only uses the network when you explicitly run this command—ordinary searches remain offline. Linux and macOS require `curl` and `tar`; Windows requires the built-in `curl.exe` and PowerShell. On Windows, the replacement finishes immediately after `ezcmd update` exits because Windows locks a running `.exe`.
-
-Users who installed v1 or v2.0.0 need to run the normal installer one final time to receive v2.1.0. Later releases can then be installed globally with `ezcmd update`.
 
 ### Handling Ambiguous Queries
 

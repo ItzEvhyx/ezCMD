@@ -1,2 +1,7 @@
 /target
-IMPLEMENTATION.md
+
+# Keep planning, release, and private notes local. The README remains public
+# because it is the GitHub landing page and user guide.
+*.md
+*.MD
+!README.md
