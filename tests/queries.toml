@@ -97,7 +97,7 @@ expect = "Cloning a Repo"
 
 [[q]]
 query  = "clone a repository from github"
-expect = "Cloning a Repo"
+expect = "Repositories"
 
 [[q]]
 query  = "download git project"

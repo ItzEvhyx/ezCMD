@@ -69,7 +69,7 @@ aliases = ["clone repo", "download repo", "checkout repo", "download project"]
 
 [[section]]
 title   = "Daily Workflow"
-aliases = ["git workflow", "save changes", "commit changes", "push code", "daily work"]
+aliases = ["git workflow", "save changes", "commit changes", "push code", "daily work", "git add changes"]
 
   [[section.command]]
   cmd  = "git status"

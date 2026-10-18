@@ -3,14 +3,14 @@ name = "Go"
 category = "Languages & Package Tools"
 order = 7
 aliases = ["golang", "go-modules"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Go"
 
 [[group.section]]
 title = "Modules & Setup"
-aliases = []
+aliases = ["go module", "initialize go project", "go mod tidy"]
 
 [[group.section.command]]
 note = "Prints the Go version"
@@ -42,7 +42,7 @@ cmd = "go mod why <pkg>"
 
 [[group.section]]
 title = "Run & Build"
-aliases = []
+aliases = ["go run program", "go build binary", "install go command"]
 
 [[group.section.command]]
 note = "Runs the program in this folder"
@@ -70,7 +70,7 @@ cmd = "go install <pkg>@latest"
 
 [[group.section]]
 title = "Cross-Compile"
-aliases = []
+aliases = ["cross compile go", "go build target", "build go for windows"]
 
 [[group.section.command]]
 note = "Builds for 64-bit Linux"
@@ -98,7 +98,7 @@ cmd = "go tool dist list"
 
 [[group.section]]
 title = "Dependencies"
-aliases = []
+aliases = ["go add dependency", "go get module", "update go dependencies"]
 
 [[group.section.command]]
 note = "Adds a dependency"
@@ -130,7 +130,7 @@ cmd = "go mod edit -replace=<old>=<new>"
 
 [[group.section]]
 title = "Test"
-aliases = []
+aliases = ["go test project", "go test coverage", "run go benchmark"]
 
 [[group.section.command]]
 note = "Runs tests in this package"
@@ -166,7 +166,7 @@ cmd = "go test -bench ."
 
 [[group.section]]
 title = "Format, Vet & Clean"
-aliases = []
+aliases = ["go format code", "go vet lint", "clean go build cache"]
 
 [[group.section.command]]
 note = "Formats the code"

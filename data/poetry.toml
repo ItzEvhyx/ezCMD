@@ -3,14 +3,14 @@ name = "Poetry"
 category = "Languages & Package Tools"
 order = 4
 aliases = ["pyproject"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Poetry"
 
 [[group.section]]
 title = "Projects & Dependencies"
-aliases = []
+aliases = ["poetry project", "poetry add dependency", "poetry install lockfile"]
 
 [[group.section.command]]
 note = "Creates a new project"
@@ -50,7 +50,7 @@ cmd = "poetry show --tree"
 
 [[group.section]]
 title = "Environments & Running"
-aliases = []
+aliases = ["poetry run command", "poetry virtual environment", "activate poetry environment"]
 
 [[group.section.command]]
 note = "Runs a command in the project environment"
@@ -94,7 +94,7 @@ cmd = "poetry config virtualenvs.in-project true"
 
 [[group.section]]
 title = "Build & Publish"
-aliases = []
+aliases = ["poetry build package", "publish poetry package", "poetry version bump"]
 
 [[group.section.command]]
 note = "Builds the package files"

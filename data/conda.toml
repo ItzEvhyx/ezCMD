@@ -3,14 +3,14 @@ name = "Conda"
 category = "Languages & Package Tools"
 order = 5
 aliases = ["anaconda", "miniconda", "mamba"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Conda"
 
 [[group.section]]
 title = "Environments"
-aliases = []
+aliases = ["conda environment", "create conda env", "activate conda environment"]
 
 [[group.section.command]]
 note = "Creates a new environment"
@@ -34,7 +34,7 @@ cmd = "conda remove -n <env> --all"
 
 [[group.section]]
 title = "Packages"
-aliases = []
+aliases = ["conda install package", "conda forge package", "update conda package"]
 
 [[group.section.command]]
 note = "Installs a package"
@@ -62,7 +62,7 @@ cmd = "conda search <pkg>"
 
 [[group.section]]
 title = "Export, Share & Clean Up"
-aliases = []
+aliases = ["export conda environment", "clean conda cache", "conda environment file"]
 
 [[group.section.command]]
 note = "Saves the environment to a file"

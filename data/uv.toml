@@ -3,14 +3,14 @@ name = "uv"
 category = "Languages & Package Tools"
 order = 3
 aliases = ["uvx", "astral"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything uv"
 
 [[group.section]]
 title = "Projects & Dependencies"
-aliases = []
+aliases = ["uv project", "uv add dependency", "uv sync lockfile"]
 
 [[group.section.command]]
 note = "Creates a new Python project"
@@ -58,7 +58,7 @@ cmd = "uv tree"
 
 [[group.section]]
 title = "Python Versions & Environments"
-aliases = []
+aliases = ["uv python version", "uv virtual environment", "install python with uv"]
 
 [[group.section.command]]
 note = "Lists available Python versions"
@@ -82,7 +82,7 @@ cmd = "uv venv --python <version>"
 
 [[group.section]]
 title = "pip Interface"
-aliases = []
+aliases = ["uv pip install", "uv pip freeze", "compile requirements with uv"]
 
 [[group.section.command]]
 note = "Installs a package"
@@ -102,7 +102,7 @@ cmd = "uv pip compile requirements.in -o requirements.txt"
 
 [[group.section]]
 title = "Tools & Maintenance"
-aliases = []
+aliases = ["uvx run tool", "uv install command tool", "purge uv download cache"]
 
 [[group.section.command]]
 note = "Runs a tool without installing it"

@@ -3,14 +3,14 @@ name = "Java"
 category = "Languages & Package Tools"
 order = 8
 aliases = ["javac", "jar", "jshell", "jdk"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Java"
 
 [[group.section]]
 title = "Compile & Run"
-aliases = []
+aliases = ["compile java code", "run java program", "java jshell"]
 
 [[group.section.command]]
 note = "Prints the Java runtime version"
@@ -42,7 +42,7 @@ cmd = "jshell"
 
 [[group.section]]
 title = "Packaging & Classpath"
-aliases = []
+aliases = ["create java jar", "java classpath", "package java application"]
 
 [[group.section.command]]
 note = "Creates a JAR file"

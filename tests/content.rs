@@ -112,6 +112,27 @@ fn test_cloud_backend_v8d_tools_are_complete() {
 }
 
 #[test]
+fn test_languages_package_tools_v8e_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Languages & Package Tools")
+        .expect("Languages & Package Tools category present");
+    let expected = [
+        "python", "pyweb", "uv", "poetry", "conda", "cargo", "go", "java", "maven",
+    ];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        38
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

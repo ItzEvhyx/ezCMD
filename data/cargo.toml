@@ -3,14 +3,14 @@ name = "Rust & Cargo"
 category = "Languages & Package Tools"
 order = 6
 aliases = ["rust", "rustup", "rustc", "crate"]
-draft = true
+draft = false
 
 [[group]]
 title = "Projects & Toolchain"
 
 [[group.section]]
 title = "Create a Project"
-aliases = []
+aliases = ["cargo new project", "cargo init project", "check rust version"]
 
 [[group.section.command]]
 note = "Creates a new binary project"
@@ -34,7 +34,7 @@ cmd = "cargo --version"
 
 [[group.section]]
 title = "Toolchains & Targets (rustup)"
-aliases = []
+aliases = ["rustup toolchain", "add rust target", "install rust nightly"]
 
 [[group.section.command]]
 note = "Updates Rust to the latest version"
@@ -73,7 +73,7 @@ title = "Build & Dependencies"
 
 [[group.section]]
 title = "Build & Run"
-aliases = []
+aliases = ["cargo build project", "cargo run program", "cargo check code"]
 
 [[group.section.command]]
 note = "Compiles in debug mode"
@@ -113,7 +113,7 @@ cmd = "cargo clean"
 
 [[group.section]]
 title = "Dependencies"
-aliases = []
+aliases = ["cargo add crate", "update cargo dependencies", "cargo dependency tree"]
 
 [[group.section.command]]
 note = "Adds a dependency"
@@ -152,7 +152,7 @@ title = "Quality & Publishing"
 
 [[group.section]]
 title = "Test & Benchmark"
-aliases = []
+aliases = ["cargo test project", "run cargo benchmark", "cargo test output"]
 
 [[group.section.command]]
 note = "Runs all tests"
@@ -180,7 +180,7 @@ cmd = "cargo bench"
 
 [[group.section]]
 title = "Lint & Format"
-aliases = []
+aliases = ["cargo format code", "cargo clippy lint", "build cargo documentation"]
 
 [[group.section.command]]
 note = "Formats the code"
@@ -208,7 +208,7 @@ cmd = "cargo doc --open"
 
 [[group.section]]
 title = "Install Tools"
-aliases = []
+aliases = ["cargo install tool", "list cargo tools", "uninstall cargo tool"]
 
 [[group.section.command]]
 note = "Installs a command-line tool"
@@ -232,7 +232,7 @@ cmd = "cargo uninstall <crate>"
 
 [[group.section]]
 title = "Publish a Crate"
-aliases = []
+aliases = ["cargo publish crate", "cargo login crates io", "release rust crate"]
 
 [[group.section.command]]
 note = "Logs in to crates.io"

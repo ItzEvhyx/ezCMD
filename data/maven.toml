@@ -3,14 +3,14 @@ name = "Maven"
 category = "Languages & Package Tools"
 order = 9
 aliases = ["mvn", "pom"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Maven"
 
 [[group.section]]
 title = "Build Lifecycle"
-aliases = []
+aliases = ["maven build", "maven test", "maven package"]
 
 [[group.section.command]]
 note = "Prints the Maven version"
@@ -46,7 +46,7 @@ cmd = "mvn -U clean install"
 
 [[group.section]]
 title = "Dependencies & Plugins"
-aliases = []
+aliases = ["maven dependency", "maven plugin", "inspect maven dependencies"]
 
 [[group.section.command]]
 note = "Prints the dependency tree"

@@ -40,5 +40,16 @@ Cloud & Backend Services
   -gcloud      Google Cloud CLI (gcloud)      3 sections
   -az          Azure CLI                      3 sections
 
+Languages & Package Tools
+  -python      Python & pip                   7 sections
+  -pyweb       Django, Flask & FastAPI        3 sections
+  -uv          uv                             4 sections
+  -poetry      Poetry                         3 sections
+  -conda       Conda                          3 sections
+  -cargo       Rust & Cargo                   8 sections
+  -go          Go                             6 sections
+  -java        Java                           2 sections
+  -maven       Maven                          2 sections
+
 Linux & System Tools
   -shell       Shell Basics (CMD & Terminal)  10 sections

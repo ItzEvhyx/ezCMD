@@ -3,14 +3,14 @@ name = "Django, Flask & FastAPI"
 category = "Languages & Package Tools"
 order = 2
 aliases = ["django", "flask", "fastapi", "uvicorn"]
-draft = true
+draft = false
 
 [[group]]
 title = "Python Web Frameworks"
 
 [[group.section]]
 title = "Django"
-aliases = []
+aliases = ["django project", "django migration", "django development server"]
 
 [[group.section.command]]
 note = "Creates a new Django project"
@@ -46,7 +46,7 @@ cmd = "python manage.py shell"
 
 [[group.section]]
 title = "Flask"
-aliases = []
+aliases = ["flask app", "flask development server", "flask routes"]
 
 [[group.section.command]]
 note = "Installs Flask"
@@ -70,7 +70,7 @@ cmd = "flask --app <module> shell"
 
 [[group.section]]
 title = "FastAPI"
-aliases = []
+aliases = ["fastapi app", "fastapi development server", "uvicorn api server"]
 
 [[group.section.command]]
 note = "Installs FastAPI with its standard extras"

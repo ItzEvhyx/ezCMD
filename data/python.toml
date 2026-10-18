@@ -4,14 +4,14 @@ category = "Languages & Package Tools"
 order = 1
 aliases = ["pip", "venv", "virtualenv", "pytest"]
 notes = ["Windows usually uses python or the py launcher, while Linux and macOS use python3"]
-draft = true
+draft = false
 
 [[group]]
 title = "Setup & Environments"
 
 [[group.section]]
 title = "Check Your Setup"
-aliases = []
+aliases = ["python version", "check pip version", "find python installation"]
 
 [[group.section.command]]
 note = "Prints the Python version"
@@ -29,7 +29,7 @@ windows = "where python"
 
 [[group.section]]
 title = "Virtual Environments"
-aliases = []
+aliases = ["create virtual environment", "activate python venv", "delete virtual environment"]
 
 [[group.section.command]]
 note = "Creates a virtual environment"
@@ -62,7 +62,7 @@ title = "Packages"
 
 [[group.section]]
 title = "Install Packages"
-aliases = []
+aliases = ["pip install package", "install python dependency", "upgrade pip package"]
 
 [[group.section.command]]
 note = "Installs a package"
@@ -94,7 +94,7 @@ cmd = "python -m pip install --upgrade pip"
 
 [[group.section]]
 title = "Inspect & Export Packages"
-aliases = []
+aliases = ["pip list packages", "export requirements file", "check python dependencies"]
 
 [[group.section.command]]
 note = "Lists installed packages"
@@ -129,7 +129,7 @@ title = "Running & Quality"
 
 [[group.section]]
 title = "Run Code & Quick Servers"
-aliases = []
+aliases = ["run python script", "python http server", "debug python file"]
 
 [[group.section.command]]
 note = "Runs a Python file"
@@ -157,7 +157,7 @@ cmd = "python -i <file.py>"
 
 [[group.section]]
 title = "Test, Lint & Format"
-aliases = []
+aliases = ["run pytest tests", "format python code", "lint python project"]
 
 [[group.section.command]]
 note = "Runs all tests"
@@ -193,7 +193,7 @@ cmd = "mypy ."
 
 [[group.section]]
 title = "Build & Publish"
-aliases = []
+aliases = ["build python package", "publish to pypi", "upload python distribution"]
 
 [[group.section.command]]
 note = "Installs the packaging tools"

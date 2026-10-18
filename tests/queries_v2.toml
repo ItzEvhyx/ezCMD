@@ -1060,3 +1060,297 @@ kind = "tool"
 query = "deploy azure app"
 tool = "az"
 expect = "Web Apps & VMs"
+
+[[q]]
+kind = "tool"
+query = "python version"
+tool = "python"
+expect = "Check Your Setup"
+
+[[q]]
+kind = "tool"
+query = "create virtual environment"
+tool = "python"
+expect = "Virtual Environments"
+
+[[q]]
+kind = "tool"
+query = "pip install package"
+tool = "python"
+expect = "Install Packages"
+
+[[q]]
+kind = "tool"
+query = "export requirements file"
+tool = "python"
+expect = "Inspect & Export Packages"
+
+[[q]]
+kind = "tool"
+query = "run pytest tests"
+tool = "python"
+expect = "Test, Lint & Format"
+
+[[q]]
+kind = "tool"
+query = "django migration"
+tool = "pyweb"
+expect = "Django"
+
+[[q]]
+kind = "tool"
+query = "flask routes"
+tool = "pyweb"
+expect = "Flask"
+
+[[q]]
+kind = "tool"
+query = "fastapi uvicorn api"
+tool = "pyweb"
+expect = "FastAPI"
+
+[[q]]
+kind = "tool"
+query = "django development server"
+tool = "pyweb"
+expect = "Django"
+
+[[q]]
+kind = "tool"
+query = "uvicorn api server"
+tool = "pyweb"
+expect = "FastAPI"
+
+[[q]]
+kind = "tool"
+query = "uv project"
+tool = "uv"
+expect = "Projects & Dependencies"
+
+[[q]]
+kind = "tool"
+query = "uv python version"
+tool = "uv"
+expect = "Python Versions & Environments"
+
+[[q]]
+kind = "tool"
+query = "uv compile requirements"
+tool = "uv"
+expect = "pip Interface"
+
+[[q]]
+kind = "tool"
+query = "uvx run tool"
+tool = "uv"
+expect = "Tools & Maintenance"
+
+[[q]]
+kind = "tool"
+query = "purge uv download cache"
+tool = "uv"
+expect = "Tools & Maintenance"
+
+[[q]]
+kind = "tool"
+query = "poetry add dependency"
+tool = "poetry"
+expect = "Projects & Dependencies"
+
+[[q]]
+kind = "tool"
+query = "poetry run command"
+tool = "poetry"
+expect = "Environments & Running"
+
+[[q]]
+kind = "tool"
+query = "activate poetry environment"
+tool = "poetry"
+expect = "Environments & Running"
+
+[[q]]
+kind = "tool"
+query = "poetry build package"
+tool = "poetry"
+expect = "Build & Publish"
+
+[[q]]
+kind = "tool"
+query = "poetry version bump"
+tool = "poetry"
+expect = "Build & Publish"
+
+[[q]]
+kind = "tool"
+query = "create conda env"
+tool = "conda"
+expect = "Environments"
+
+[[q]]
+kind = "tool"
+query = "activate conda environment"
+tool = "conda"
+expect = "Environments"
+
+[[q]]
+kind = "tool"
+query = "conda install package"
+tool = "conda"
+expect = "Packages"
+
+[[q]]
+kind = "tool"
+query = "conda forge package"
+tool = "conda"
+expect = "Packages"
+
+[[q]]
+kind = "tool"
+query = "export conda environment"
+tool = "conda"
+expect = "Export, Share & Clean Up"
+
+[[q]]
+kind = "tool"
+query = "cargo new project"
+tool = "cargo"
+expect = "Create a Project"
+
+[[q]]
+kind = "tool"
+query = "rustup toolchain"
+tool = "cargo"
+expect = "Toolchains & Targets (rustup)"
+
+[[q]]
+kind = "tool"
+query = "cargo build project"
+tool = "cargo"
+expect = "Build & Run"
+
+[[q]]
+kind = "tool"
+query = "cargo add dev dependency"
+tool = "cargo"
+expect = "Dependencies"
+
+[[q]]
+kind = "tool"
+query = "cargo test project"
+tool = "cargo"
+expect = "Test & Benchmark"
+
+[[q]]
+kind = "tool"
+query = "cargo clippy warnings"
+tool = "cargo"
+expect = "Lint & Format"
+
+[[q]]
+kind = "tool"
+query = "cargo install tool"
+tool = "cargo"
+expect = "Install Tools"
+
+[[q]]
+kind = "tool"
+query = "cargo publish crate"
+tool = "cargo"
+expect = "Publish a Crate"
+
+[[q]]
+kind = "tool"
+query = "go module"
+tool = "go"
+expect = "Modules & Setup"
+
+[[q]]
+kind = "tool"
+query = "go run program"
+tool = "go"
+expect = "Run & Build"
+
+[[q]]
+kind = "tool"
+query = "cross compile go"
+tool = "go"
+expect = "Cross-Compile"
+
+[[q]]
+kind = "tool"
+query = "go add dependency"
+tool = "go"
+expect = "Dependencies"
+
+[[q]]
+kind = "tool"
+query = "go test coverage"
+tool = "go"
+expect = "Test"
+
+[[q]]
+kind = "tool"
+query = "go vet lint"
+tool = "go"
+expect = "Format, Vet & Clean"
+
+[[q]]
+kind = "tool"
+query = "compile java code"
+tool = "java"
+expect = "Compile & Run"
+
+[[q]]
+kind = "tool"
+query = "run java program"
+tool = "java"
+expect = "Compile & Run"
+
+[[q]]
+kind = "tool"
+query = "create java jar"
+tool = "java"
+expect = "Packaging & Classpath"
+
+[[q]]
+kind = "tool"
+query = "java classpath"
+tool = "java"
+expect = "Packaging & Classpath"
+
+[[q]]
+kind = "tool"
+query = "package java application"
+tool = "java"
+expect = "Packaging & Classpath"
+
+[[q]]
+kind = "tool"
+query = "maven build"
+tool = "maven"
+expect = "Build Lifecycle"
+
+[[q]]
+kind = "tool"
+query = "maven test"
+tool = "maven"
+expect = "Build Lifecycle"
+
+[[q]]
+kind = "tool"
+query = "maven package"
+tool = "maven"
+expect = "Build Lifecycle"
+
+[[q]]
+kind = "tool"
+query = "maven dependency"
+tool = "maven"
+expect = "Dependencies & Plugins"
+
+[[q]]
+kind = "tool"
+query = "inspect maven dependencies"
+tool = "maven"
+expect = "Dependencies & Plugins"
