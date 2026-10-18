@@ -1,9 +1,0 @@
----
-source: tests/render.rs
-expression: output
----
- ___[ Drive Switching ]_______________________________________________|
-|                                                                     |
-|  (no equivalent)  --- Windows switch drive [no equivalent on Linux] |
-|  cd <folder>      --- Standard folder enter                         |
-|_____________________________________________________________________|

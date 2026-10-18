@@ -58,7 +58,6 @@ fn colorize_command(cmd_text: &str) -> String {
 struct PreparedCommand {
     cmd_text: String,
     note_text: String,
-    is_no_eq: bool,
 }
 
 /// Render a single section for the given OS.
@@ -73,22 +72,15 @@ pub fn render_section<W: Write>(
         return Ok(());
     }
 
-    let mut prepared = Vec::new();
-    for cmd in section.commands {
-        if let Some(resolved) = cmd.resolve(os) {
-            prepared.push(PreparedCommand {
+    let prepared: Vec<PreparedCommand> = section
+        .visible_commands(os)
+        .filter_map(|command| {
+            command.resolve(os).map(|resolved| PreparedCommand {
                 cmd_text: resolved.to_string(),
-                note_text: cmd.note.to_string(),
-                is_no_eq: false,
-            });
-        } else {
-            prepared.push(PreparedCommand {
-                cmd_text: "(no equivalent)".to_string(),
-                note_text: format!("{} [no equivalent on {}]", cmd.note, os.display()),
-                is_no_eq: true,
-            });
-        }
-    }
+                note_text: command.note.to_string(),
+            })
+        })
+        .collect();
 
     // Plain mode (--plain): `# ---Title---` then `command --- note`
     if ctx.plain {
@@ -195,17 +187,7 @@ pub fn render_section<W: Write>(
             let right_pad = (frame_width.saturating_sub(1)).saturating_sub(line_content_len);
 
             if ctx.color {
-                let colored_cmd = if p.is_no_eq {
-                    format!("{}{}{}{}", term::DIM, p.cmd_text, term::RESET, pad)
-                } else {
-                    format!("{}{}", colorize_command(&p.cmd_text), pad)
-                };
-
-                let colored_note = if p.is_no_eq {
-                    format!("{}{}{}", term::DIM, p.note_text, term::RESET)
-                } else {
-                    p.note_text
-                };
+                let colored_cmd = format!("{}{}", colorize_command(&p.cmd_text), pad);
 
                 writeln!(
                     w,
@@ -215,7 +197,7 @@ pub fn render_section<W: Write>(
                     colored_cmd,
                     term::DIM,
                     term::RESET,
-                    colored_note,
+                    p.note_text,
                     " ".repeat(right_pad),
                     term::DIM,
                     term::RESET
@@ -239,16 +221,7 @@ pub fn render_section<W: Write>(
             let note_right_pad = (frame_width.saturating_sub(1)).saturating_sub(11 + note_len);
 
             if ctx.color {
-                let colored_cmd = if p.is_no_eq {
-                    format!("{}{}{}", term::DIM, p.cmd_text, term::RESET)
-                } else {
-                    colorize_command(&p.cmd_text)
-                };
-                let colored_note = if p.is_no_eq {
-                    format!("{}{}{}", term::DIM, p.note_text, term::RESET)
-                } else {
-                    p.note_text
-                };
+                let colored_cmd = colorize_command(&p.cmd_text);
 
                 writeln!(
                     w,
@@ -265,7 +238,7 @@ pub fn render_section<W: Write>(
                     "{}|      ---{} {}{}{}|{}",
                     term::DIM,
                     term::RESET,
-                    colored_note,
+                    p.note_text,
                     " ".repeat(note_right_pad),
                     term::DIM,
                     term::RESET

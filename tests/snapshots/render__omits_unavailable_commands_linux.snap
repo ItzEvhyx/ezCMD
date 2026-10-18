@@ -1,0 +1,9 @@
+---
+source: tests/render.rs
+assertion_line: 105
+expression: output
+---
+ ___[ Drive Switching ]____________________________________|
+|                                                          |
+|  cd <folder>  --- Standard folder enter                  |
+|__________________________________________________________|

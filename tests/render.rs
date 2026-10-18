@@ -69,7 +69,7 @@ fn test_snapshot_plain_mode() {
 }
 
 #[test]
-fn test_snapshot_no_equivalent() {
+fn test_snapshot_omits_unavailable_commands() {
     static CMDS: [Command; 2] = [
         Command {
             note: "Windows switch drive",
@@ -102,7 +102,7 @@ fn test_snapshot_no_equivalent() {
     let mut buf = Vec::new();
     render_section(&mut buf, &sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
-    insta::assert_snapshot!("no_equivalent_linux", output);
+    insta::assert_snapshot!("omits_unavailable_commands_linux", output);
 }
 
 #[test]
