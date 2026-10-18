@@ -57,7 +57,14 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
         Ok(inv) => inv,
         Err(err) => {
             eprintln!("error: {err}");
-            eprintln!("Try: ezcmd --help");
+            match err {
+                cli::CliError::StrayWord(word) => eprintln!("Try: ezcmd --help -{word}"),
+                cli::CliError::SelectorAfterText(_) => {
+                    eprintln!("Put -<os> and -<tool> before the section text")
+                }
+                cli::CliError::TwoTools { .. } => eprintln!("Use one tool at a time"),
+                _ => eprintln!("Try: ezcmd --help"),
+            }
             return Ok(2);
         }
     };
@@ -141,17 +148,12 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                 }
             }
         }
-        Action::Help {
-            os: opt_os,
-            tool: opt_tool,
-            section: opt_section,
-        } => {
-            let target_os = opt_os.unwrap_or_else(Os::current);
+        Action::Help(request) => {
+            let target_os = request.os.unwrap_or_else(Os::current);
 
             // If a specific section query is requested: `--help -<tool> -<section>`
-            if let Some(sec_query) = opt_section {
-                let search_res =
-                    matcher::search(all_tools(), target_os, &sec_query, opt_tool.as_deref());
+            if let Some(sec_query) = request.section {
+                let search_res = matcher::search(all_tools(), target_os, &sec_query, request.tool);
 
                 match search_res {
                     SearchResult::Single(hit) => {
@@ -210,7 +212,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                 print_usage_header(out, &render_ctx)?;
                 writeln!(out)?;
 
-                let target_tools: Vec<_> = if let Some(ref tool_name) = opt_tool {
+                let target_tools: Vec<_> = if let Some(tool_name) = request.tool {
                     all_tools()
                         .filter(|tool| tool.slug.eq_ignore_ascii_case(tool_name))
                         .collect()
@@ -233,7 +235,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                         writeln!(out)?;
                     }
 
-                    if opt_tool.is_none() {
+                    if request.tool.is_none() {
                         if render_ctx.color {
                             writeln!(
                                 out,

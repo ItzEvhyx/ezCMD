@@ -9,27 +9,49 @@ pub struct Invocation {
 }
 
 #[derive(Debug, PartialEq, Eq)]
+pub struct HelpRequest {
+    pub os: Option<Os>,
+    pub tool: Option<&'static str>,
+    pub section: Option<String>,
+    pub forced: bool,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HelpLevel {
+    Overview,
+    ToolToc,
+    ToolSection,
+    SectionSearch,
+}
+
+impl HelpRequest {
+    pub fn level(&self) -> HelpLevel {
+        match (self.tool.is_some(), self.section.is_some()) {
+            (false, false) => HelpLevel::Overview,
+            (true, false) => HelpLevel::ToolToc,
+            (true, true) => HelpLevel::ToolSection,
+            (false, true) => HelpLevel::SectionSearch,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Eq)]
 pub enum Action {
     Usage,         // no arguments at all
     Version,       // --version
     Query(String), // free-text search
-    Help {
-        os: Option<Os>,
-        tool: Option<String>,
-        section: Option<String>,
-    },
-    Uninstall {
-        yes: bool,
-    }, // --uninstall
-    Welcome, // --welcome
-    Install, // --install
+    Help(HelpRequest),
+    Uninstall { yes: bool }, // --uninstall
+    Welcome,                 // --welcome
+    Install,                 // --install
 }
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum CliError {
     UnknownFlag(String),
-    UnknownSelector(String),
-    SectionWithoutTool(String),
+    TwoTools { first: String, second: String },
+    StrayWord(String),
+    SelectorAfterText(String),
     EmptyQuery,
 }
 
@@ -37,21 +59,12 @@ impl fmt::Display for CliError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             CliError::UnknownFlag(flag) => write!(f, "unknown flag: {flag}"),
-            CliError::UnknownSelector(sel) => {
-                let tool_list = all_tools()
-                    .map(|tool| tool.slug)
-                    .collect::<Vec<_>>()
-                    .join(", ");
-                write!(
-                    f,
-                    "unknown selector \"-{sel}\". Available tools: {tool_list}. Available OS: windows, linux, macos"
-                )
+            CliError::TwoTools { first, second } => {
+                write!(f, "cannot select both -{first} and -{second}")
             }
-            CliError::SectionWithoutTool(sec) => {
-                write!(
-                    f,
-                    "section query \"{sec}\" requires a tool selector (e.g. ezcmd --help -git -{sec})"
-                )
+            CliError::StrayWord(word) => write!(f, "unexpected word \"{word}\" after --help"),
+            CliError::SelectorAfterText(selector) => {
+                write!(f, "selector \"{selector}\" appears after section text")
             }
             CliError::EmptyQuery => write!(f, "query cannot be empty"),
         }
@@ -205,113 +218,119 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
 }
 
 fn parse_help<S: AsRef<str>>(args: &[S], mut plain: bool) -> Result<Invocation, CliError> {
-    let mut os: Option<Os> = None;
-    let mut tool: Option<String> = None;
-    let mut section_tokens: Vec<String> = Vec::new();
+    let mut os = None;
+    let mut tool: Option<&'static str> = None;
+    let mut section_tokens = Vec::new();
+    let mut seen_help = false;
+    let mut forced = false;
 
-    // Collect all tokens that are not the first `--help`
-    let mut passed_first_help = false;
-    let mut help_args = Vec::new();
     for arg in args {
-        let s = arg.as_ref();
-        if s == "--help" && !passed_first_help {
-            passed_first_help = true;
+        let token = arg.as_ref();
+        if token == "--help" && !seen_help {
+            seen_help = true;
             continue;
         }
-        help_args.push(s);
-    }
-
-    let mut i = 0;
-    while i < help_args.len() {
-        let s = help_args[i];
-
-        if s == "--plain" {
+        if !seen_help {
+            if token == "--plain" {
+                plain = true;
+                continue;
+            }
+            return Err(CliError::StrayWord(token.to_string()));
+        }
+        if forced {
+            push_section_token(&mut section_tokens, token)?;
+            continue;
+        }
+        if token == "--plain" {
             plain = true;
-            i += 1;
             continue;
         }
-
-        if s.starts_with("--") {
-            return Err(CliError::UnknownFlag(s.to_string()));
+        if token == "--" {
+            if !section_tokens.is_empty() {
+                return Err(CliError::SelectorAfterText(token.to_string()));
+            }
+            forced = true;
+            continue;
         }
-
-        // Once section tokens have begun, append non-flag tokens to section query
+        if token.starts_with("--") {
+            return Err(CliError::UnknownFlag(token.to_string()));
+        }
         if !section_tokens.is_empty() {
-            if s.starts_with('-') {
-                // If it's an OS selector that wasn't set yet, allow it
-                let without_dash = s.trim_start_matches('-');
-                if let Some(parsed_os) = Os::from_flag(without_dash) {
-                    if os.is_none() {
-                        os = Some(parsed_os);
-                        i += 1;
-                        continue;
-                    }
-                }
-                return Err(CliError::UnknownSelector(without_dash.to_string()));
+            if token.starts_with('-') {
+                return Err(CliError::SelectorAfterText(token.to_string()));
             }
-            section_tokens.push(s.to_string());
-            i += 1;
+            section_tokens.push(token.to_string());
             continue;
         }
-
-        // Section tokens have not started yet
-        if let Some(stripped) = s.strip_prefix('-') {
-            if stripped.is_empty() {
-                return Err(CliError::UnknownSelector("-".to_string()));
+        if let Some(selector) = token.strip_prefix('-') {
+            if selector.is_empty() {
+                return Err(CliError::StrayWord(token.to_string()));
             }
-
-            // 1. Check if it's an OS selector
-            if let Some(parsed_os) = Os::from_flag(stripped) {
+            if let Some(parsed_os) = Os::from_flag(selector) {
                 os = Some(parsed_os);
-                i += 1;
                 continue;
             }
-
-            // 2. Check if it's a known tool
-            if let Some(tool_name) = find_tool_name(stripped) {
-                tool = Some(tool_name.to_string());
-                i += 1;
+            if let Some(selected_tool) = find_tool_name(selector) {
+                if let Some(first) = tool {
+                    return Err(CliError::TwoTools {
+                        first: first.to_string(),
+                        second: selected_tool.to_string(),
+                    });
+                }
+                tool = Some(selected_tool);
                 continue;
             }
-
-            // 3. If a tool was already selected, it begins the section query
-            if tool.is_some() {
-                section_tokens.push(stripped.to_string());
-                i += 1;
-                continue;
-            }
-
-            // 4. Otherwise, unknown selector
-            return Err(CliError::UnknownSelector(stripped.to_string()));
-        } else {
-            // Token does NOT start with '-'
-            // If a tool was already selected, it begins the section query
-            if tool.is_some() {
-                section_tokens.push(s.to_string());
-                i += 1;
-                continue;
-            }
-
-            // Token without '-' and no tool selected: section query without tool is invalid
-            return Err(CliError::SectionWithoutTool(s.to_string()));
+            push_section_token(&mut section_tokens, selector)?;
+            continue;
         }
+        return Err(CliError::StrayWord(token.to_string()));
     }
 
-    let section = if section_tokens.is_empty() {
-        None
-    } else {
-        Some(section_tokens.join(" "))
-    };
-
+    if forced && section_tokens.is_empty() {
+        return Err(CliError::EmptyQuery);
+    }
     Ok(Invocation {
         plain,
-        action: Action::Help { os, tool, section },
+        action: Action::Help(HelpRequest {
+            os,
+            tool,
+            section: (!section_tokens.is_empty()).then(|| section_tokens.join(" ")),
+            forced,
+        }),
     })
+}
+
+fn push_section_token(tokens: &mut Vec<String>, token: &str) -> Result<(), CliError> {
+    let first = tokens.is_empty();
+    let value = if first {
+        token.strip_prefix('-').unwrap_or(token)
+    } else {
+        token
+    };
+    if value.is_empty() {
+        return Err(CliError::EmptyQuery);
+    }
+    tokens.push(value.to_string());
+    Ok(())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn help(
+        os: Option<Os>,
+        tool: Option<&'static str>,
+        section: Option<&str>,
+        forced: bool,
+    ) -> Action {
+        Action::Help(HelpRequest {
+            os,
+            tool,
+            section: section.map(str::to_owned),
+            forced,
+        })
+    }
 
     #[test]
     fn test_empty_args_usage() {
@@ -352,28 +371,14 @@ mod tests {
     fn test_help_all() {
         let inv = parse(&["--help"]).expect("parse help");
         assert!(!inv.plain);
-        assert_eq!(
-            inv.action,
-            Action::Help {
-                os: None,
-                tool: None,
-                section: None
-            }
-        );
+        assert_eq!(inv.action, help(None, None, None, false));
     }
 
     #[test]
     fn test_help_tool() {
         let inv = parse(&["--help", "-git"]).expect("parse help tool");
         assert!(!inv.plain);
-        assert_eq!(
-            inv.action,
-            Action::Help {
-                os: None,
-                tool: Some("git".into()),
-                section: None
-            }
-        );
+        assert_eq!(inv.action, help(None, Some("git"), None, false));
     }
 
     #[test]
@@ -383,11 +388,7 @@ mod tests {
         assert!(!inv.plain);
         assert_eq!(
             inv.action,
-            Action::Help {
-                os: None,
-                tool: Some("git".into()),
-                section: Some("initialize repo".into())
-            }
+            help(None, Some("git"), Some("initialize repo"), false)
         );
     }
 
@@ -395,14 +396,7 @@ mod tests {
     fn test_help_os() {
         let inv = parse(&["--help", "-windows"]).expect("parse help os");
         assert!(!inv.plain);
-        assert_eq!(
-            inv.action,
-            Action::Help {
-                os: Some(Os::Windows),
-                tool: None,
-                section: None
-            }
-        );
+        assert_eq!(inv.action, help(Some(Os::Windows), None, None, false));
     }
 
     #[test]
@@ -412,11 +406,12 @@ mod tests {
         assert!(!inv.plain);
         assert_eq!(
             inv.action,
-            Action::Help {
-                os: Some(Os::Windows),
-                tool: Some("git".into()),
-                section: Some("initialize repo".into())
-            }
+            help(
+                Some(Os::Windows),
+                Some("git"),
+                Some("initialize repo"),
+                false
+            )
         );
     }
 
@@ -427,18 +422,19 @@ mod tests {
         assert!(!inv.plain);
         assert_eq!(
             inv.action,
-            Action::Help {
-                os: Some(Os::Windows),
-                tool: Some("git".into()),
-                section: Some("initialize repo".into())
-            }
+            help(
+                Some(Os::Windows),
+                Some("git"),
+                Some("initialize repo"),
+                false
+            )
         );
     }
 
     #[test]
-    fn test_help_unknown_selector() {
-        let err = parse(&["--help", "-nope"]).unwrap_err();
-        assert_eq!(err, CliError::UnknownSelector("nope".into()));
+    fn test_help_unknown_selector_starts_a_cross_tool_search() {
+        let inv = parse(&["--help", "-initialize"]).expect("parse section search");
+        assert_eq!(inv.action, help(None, None, Some("initialize"), false));
     }
 
     #[test]
@@ -455,12 +451,9 @@ mod tests {
     }
 
     #[test]
-    fn test_section_without_tool_error() {
-        let err = parse(&["--help", "-initialize", "repo"]).unwrap_err();
-        assert_eq!(err, CliError::UnknownSelector("initialize".into()));
-
-        let err2 = parse(&["--help", "initialize", "repo"]).unwrap_err();
-        assert_eq!(err2, CliError::SectionWithoutTool("initialize".into()));
+    fn test_help_stray_word_error() {
+        let err = parse(&["--help", "initialize", "repo"]).unwrap_err();
+        assert_eq!(err, CliError::StrayWord("initialize".into()));
     }
 
     #[test]
@@ -469,11 +462,7 @@ mod tests {
         assert!(!inv.plain);
         assert_eq!(
             inv.action,
-            Action::Help {
-                os: None,
-                tool: Some("git".into()),
-                section: Some("initialize repo".into())
-            }
+            help(None, Some("git"), Some("initialize repo"), false)
         );
     }
 
@@ -482,11 +471,7 @@ mod tests {
         let inv = parse(&["--help", "-Windows", "-GIT"]).expect("parse case insensitive");
         assert_eq!(
             inv.action,
-            Action::Help {
-                os: Some(Os::Windows),
-                tool: Some("git".into()),
-                section: None
-            }
+            help(Some(Os::Windows), Some("git"), None, false)
         );
     }
 
@@ -494,14 +479,69 @@ mod tests {
     fn test_help_trailing_plain() {
         let inv = parse(&["--help", "-git", "--plain"]).expect("parse trailing plain");
         assert!(inv.plain);
+        assert_eq!(inv.action, help(None, Some("git"), None, false));
+    }
+
+    #[test]
+    fn test_help_tool_alias_resolves_to_canonical_slug() {
+        let inv = parse(&["--help", "-rebase"]).expect("parse tool alias");
+        assert_eq!(inv.action, help(None, Some("git"), None, false));
+    }
+
+    #[test]
+    fn test_help_forced_section_search() {
+        let inv = parse(&["--help", "--", "find", "files"]).expect("parse forced search");
+        assert_eq!(inv.action, help(None, None, Some("find files"), true));
+
+        let inv = parse(&["--help", "-git", "--", "history"]).expect("parse forced tool search");
+        assert_eq!(inv.action, help(None, Some("git"), Some("history"), true));
+    }
+
+    #[test]
+    fn test_help_parser_errors() {
+        let err = parse(&["--help", "-git", "-shell"]).unwrap_err();
         assert_eq!(
-            inv.action,
-            Action::Help {
-                os: None,
-                tool: Some("git".into()),
-                section: None
+            err,
+            CliError::TwoTools {
+                first: "git".into(),
+                second: "shell".into(),
             }
         );
+
+        let err = parse(&["--help", "-git", "-initialize", "-windows"]).unwrap_err();
+        assert_eq!(err, CliError::SelectorAfterText("-windows".into()));
+
+        let err = parse(&["--help", "--unknown"]).unwrap_err();
+        assert_eq!(err, CliError::UnknownFlag("--unknown".into()));
+    }
+
+    #[test]
+    fn test_help_levels_are_derived_from_request_shape() {
+        let overview = HelpRequest {
+            os: None,
+            tool: None,
+            section: None,
+            forced: false,
+        };
+        assert_eq!(overview.level(), HelpLevel::Overview);
+
+        let tool_toc = HelpRequest {
+            tool: Some("git"),
+            ..overview
+        };
+        assert_eq!(tool_toc.level(), HelpLevel::ToolToc);
+
+        let tool_section = HelpRequest {
+            section: Some("history".into()),
+            ..tool_toc
+        };
+        assert_eq!(tool_section.level(), HelpLevel::ToolSection);
+
+        let search = HelpRequest {
+            tool: None,
+            ..tool_section
+        };
+        assert_eq!(search.level(), HelpLevel::SectionSearch);
     }
 
     #[test]

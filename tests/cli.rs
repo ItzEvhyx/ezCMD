@@ -174,12 +174,12 @@ fn test_help_windows_git_single_section() {
 }
 
 #[test]
-fn test_help_unknown_selector_exit_2() {
+fn test_help_unknown_selector_searches_sections() {
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.args(["--help", "-nonexistent"])
         .assert()
-        .code(2)
-        .stderr(predicate::str::contains("unknown selector"));
+        .code(1)
+        .stdout(predicate::str::contains("No match for \"nonexistent\""));
 }
 
 #[test]
