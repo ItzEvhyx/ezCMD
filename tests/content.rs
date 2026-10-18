@@ -47,6 +47,25 @@ fn test_javascript_web_v8a_tools_are_complete() {
 }
 
 #[test]
+fn test_mobile_development_v8b_tools_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Mobile Development")
+        .expect("Mobile Development category present");
+    let expected = ["flutter", "dart", "expo", "adb", "gradle", "pods", "xcode"];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        45
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")
@@ -121,16 +140,17 @@ fn test_section_rules() {
                 );
             }
 
-            // Every seed section is available on all three OSes
-            for os in Os::ALL {
-                assert!(
-                    sec.available_on(os),
-                    "section {} not available on {:?}",
-                    sec.title,
-                    os
-                );
-            }
+            assert!(
+                Os::ALL.iter().any(|&os| sec.available_on(os)),
+                "section {} is not available on any OS",
+                sec.title
+            );
         }
+        assert!(
+            Os::ALL.iter().any(|&os| tool.available_on(os)),
+            "tool {} is not available on any OS",
+            tool.slug
+        );
     }
 }
 

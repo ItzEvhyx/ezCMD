@@ -4,14 +4,14 @@ category = "Mobile Development"
 order = 6
 aliases = ["cocoapods", "pod"]
 platforms = ["macos"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything CocoaPods"
 
 [[group.section]]
 title = "Install & Update Pods"
-aliases = []
+aliases = ["pod install", "update cocoapods", "add ios pod"]
 
 [[group.section.command]]
 note = "Installs CocoaPods"
@@ -43,7 +43,7 @@ cmd = "pod outdated"
 
 [[group.section]]
 title = "Fix Pod Problems"
-aliases = []
+aliases = ["fix pod install", "clean cocoapods", "repair ios pods"]
 
 [[group.section.command]]
 note = "Removes CocoaPods from the project"

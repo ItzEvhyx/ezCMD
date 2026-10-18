@@ -3,14 +3,14 @@ name = "Android (ADB & SDK)"
 category = "Mobile Development"
 order = 4
 aliases = ["android", "sdkmanager", "avdmanager", "emulator"]
-draft = true
+draft = false
 
 [[group]]
 title = "ADB"
 
 [[group.section]]
 title = "Connect to Devices"
-aliases = []
+aliases = ["adb devices", "connect android device", "wireless adb"]
 
 [[group.section.command]]
 note = "Lists connected devices"
@@ -46,7 +46,7 @@ cmd = "adb start-server"
 
 [[group.section]]
 title = "Install & Manage Apps"
-aliases = []
+aliases = ["install apk", "adb install app", "remove android app"]
 
 [[group.section.command]]
 note = "Installs an APK"
@@ -78,7 +78,7 @@ cmd = "adb shell monkey -p <package> -c android.intent.category.LAUNCHER 1"
 
 [[group.section]]
 title = "Logs & Debugging"
-aliases = []
+aliases = ["adb logcat", "android debug logs", "debug android app"]
 
 [[group.section.command]]
 note = "Streams device logs"
@@ -102,7 +102,7 @@ cmd = "adb bugreport"
 
 [[group.section]]
 title = "Files & Screen"
-aliases = []
+aliases = ["adb push file", "adb pull file", "record android screen"]
 
 [[group.section.command]]
 note = "Copies a file to the device"
@@ -126,7 +126,7 @@ cmd = "adb shell screenrecord /sdcard/demo.mp4"
 
 [[group.section]]
 title = "Device Info & Control"
-aliases = []
+aliases = ["android device info", "adb reboot", "control android device"]
 
 [[group.section.command]]
 note = "Restarts the device"
@@ -157,7 +157,7 @@ title = "SDK & Emulator"
 
 [[group.section]]
 title = "SDK Manager"
-aliases = []
+aliases = ["android sdk manager", "install android sdk", "sdkmanager package"]
 
 [[group.section.command]]
 note = "Lists available SDK packages"
@@ -181,7 +181,7 @@ cmd = "sdkmanager --update"
 
 [[group.section]]
 title = "Virtual Devices (AVD)"
-aliases = []
+aliases = ["create android virtual device", "android avd", "start android emulator"]
 
 [[group.section.command]]
 note = "Lists your virtual devices"

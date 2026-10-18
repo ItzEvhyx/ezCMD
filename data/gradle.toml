@@ -4,14 +4,14 @@ category = "Mobile Development"
 order = 5
 aliases = ["gradlew", "android-build"]
 notes = ["On Windows CMD use gradlew instead of ./gradlew"]
-draft = true
+draft = false
 
 [[group]]
 title = "Android Builds"
 
 [[group.section]]
 title = "Build & Install Android Apps"
-aliases = []
+aliases = ["gradle android build", "build android app", "install android debug app"]
 
 [[group.section.command]]
 note = "Builds a debug APK"
@@ -35,7 +35,7 @@ cmd = "./gradlew clean"
 
 [[group.section]]
 title = "Android Checks & Reports"
-aliases = []
+aliases = ["gradle lint", "android test report", "check android build"]
 
 [[group.section.command]]
 note = "Prints SHA-1 and SHA-256 fingerprints"
@@ -62,7 +62,7 @@ title = "General Gradle"
 
 [[group.section]]
 title = "Build & Test"
-aliases = []
+aliases = ["gradle build", "gradle test", "run gradle task"]
 
 [[group.section.command]]
 note = "Creates a new Gradle project"
@@ -90,7 +90,7 @@ cmd = "gradle clean"
 
 [[group.section]]
 title = "Inspect & Troubleshoot"
-aliases = []
+aliases = ["gradle dependencies", "debug gradle build", "list gradle tasks"]
 
 [[group.section.command]]
 note = "Lists available tasks"

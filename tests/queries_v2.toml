@@ -471,3 +471,225 @@ kind = "tool"
 query = "netlify functions"
 tool = "netlify"
 expect = "Environment & Functions"
+
+# Mobile Development (V8b): five focused cases for every enabled tool.
+
+[[q]]
+kind = "tool"
+query = "flutter doctor"
+tool = "flutter"
+expect = "Check Your Setup"
+
+[[q]]
+kind = "tool"
+query = "flutter create app"
+tool = "flutter"
+expect = "Create a Project"
+
+[[q]]
+kind = "tool"
+query = "flutter run app"
+tool = "flutter"
+expect = "Run the App"
+
+[[q]]
+kind = "tool"
+query = "flutter pub add"
+tool = "flutter"
+expect = "Manage Packages"
+
+[[q]]
+kind = "tool"
+query = "flutter clean"
+tool = "flutter"
+expect = "Clean & Reset"
+
+[[q]]
+kind = "tool"
+query = "dart create project"
+tool = "dart"
+expect = "Create & Run"
+
+[[q]]
+kind = "tool"
+query = "dart pub add"
+tool = "dart"
+expect = "Manage Packages"
+
+[[q]]
+kind = "tool"
+query = "dart compile"
+tool = "dart"
+expect = "Compile"
+
+[[q]]
+kind = "tool"
+query = "dart test"
+tool = "dart"
+expect = "Test, Analyze & Format"
+
+[[q]]
+kind = "tool"
+query = "dart format code"
+tool = "dart"
+expect = "Test, Analyze & Format"
+
+[[q]]
+kind = "tool"
+query = "expo create app"
+tool = "expo"
+expect = "Create an Expo App"
+
+[[q]]
+kind = "tool"
+query = "expo start server"
+tool = "expo"
+expect = "Run & Develop (Expo)"
+
+[[q]]
+kind = "tool"
+query = "expo eas setup"
+tool = "expo"
+expect = "Set Up EAS"
+
+[[q]]
+kind = "tool"
+query = "expo build submit"
+tool = "expo"
+expect = "Build & Submit"
+
+[[q]]
+kind = "tool"
+query = "expo ota update"
+tool = "expo"
+expect = "OTA Updates & Builds"
+
+[[q]]
+kind = "tool"
+query = "adb devices"
+tool = "adb"
+expect = "Connect to Devices"
+
+[[q]]
+kind = "tool"
+query = "adb install apk"
+tool = "adb"
+expect = "Install & Manage Apps"
+
+[[q]]
+kind = "tool"
+query = "adb logcat"
+tool = "adb"
+expect = "Logs & Debugging"
+
+[[q]]
+kind = "tool"
+query = "adb push file"
+tool = "adb"
+expect = "Files & Screen"
+
+[[q]]
+kind = "tool"
+query = "adb sdk manager"
+tool = "adb"
+expect = "SDK Manager"
+
+[[q]]
+kind = "tool"
+query = "gradle android build"
+tool = "gradle"
+expect = "Build & Install Android Apps"
+
+[[q]]
+kind = "tool"
+query = "gradle lint"
+tool = "gradle"
+expect = "Android Checks & Reports"
+
+[[q]]
+kind = "tool"
+query = "gradle unit test"
+tool = "gradle"
+expect = "Build & Test"
+
+[[q]]
+kind = "tool"
+query = "gradle test"
+tool = "gradle"
+expect = "Build & Test"
+
+[[q]]
+kind = "tool"
+query = "gradle dependencies"
+tool = "gradle"
+expect = "Inspect & Troubleshoot"
+
+[[q]]
+kind = "tool"
+query = "pods install"
+tool = "pods"
+expect = "Install & Update Pods"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "pods update"
+tool = "pods"
+expect = "Install & Update Pods"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "pods clean"
+tool = "pods"
+expect = "Fix Pod Problems"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "pods fix install"
+tool = "pods"
+expect = "Fix Pod Problems"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "pods repair"
+tool = "pods"
+expect = "Fix Pod Problems"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "xcode command line tools"
+tool = "xcode"
+expect = "Command Line Tools"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "xcode build"
+tool = "xcode"
+expect = "Build & Test"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "xcode test"
+tool = "xcode"
+expect = "Build & Test"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "xcode simulator"
+tool = "xcode"
+expect = "Simulators (simctl)"
+os = "macos"
+
+[[q]]
+kind = "tool"
+query = "xcode clear cache"
+tool = "xcode"
+expect = "Clear Caches"
+os = "macos"

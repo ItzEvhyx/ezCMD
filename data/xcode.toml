@@ -4,14 +4,14 @@ category = "Mobile Development"
 order = 7
 aliases = ["xcodebuild", "simctl", "ios-simulator"]
 platforms = ["macos"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Xcode"
 
 [[group.section]]
 title = "Command Line Tools"
-aliases = []
+aliases = ["install xcode tools", "xcode command line tools", "select xcode version"]
 
 [[group.section.command]]
 note = "Installs the Xcode command line tools"
@@ -35,7 +35,7 @@ cmd = "xcodebuild -showsdks"
 
 [[group.section]]
 title = "Build & Test"
-aliases = []
+aliases = ["xcode build", "xcode test", "build ios app"]
 
 [[group.section.command]]
 note = "Lists schemes and targets"
@@ -63,7 +63,7 @@ cmd = "xcodebuild clean"
 
 [[group.section]]
 title = "Simulators (simctl)"
-aliases = []
+aliases = ["ios simulator", "simctl boot", "run ios simulator"]
 
 [[group.section.command]]
 note = "Lists simulators"
@@ -103,7 +103,7 @@ cmd = "open -a Simulator"
 
 [[group.section]]
 title = "Clear Caches"
-aliases = []
+aliases = ["clear xcode cache", "clean derived data", "reset xcode build"]
 
 [[group.section.command]]
 note = "Clears Xcode build caches"

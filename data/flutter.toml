@@ -3,14 +3,14 @@ name = "Flutter"
 category = "Mobile Development"
 order = 1
 aliases = ["flutter-sdk", "pub"]
-draft = true
+draft = false
 
 [[group]]
 title = "Setup & Projects"
 
 [[group.section]]
 title = "Check Your Setup"
-aliases = []
+aliases = ["flutter doctor", "check flutter install", "flutter version"]
 
 [[group.section.command]]
 note = "Checks your Flutter installation"
@@ -38,7 +38,7 @@ cmd = "flutter channel stable"
 
 [[group.section]]
 title = "Create a Project"
-aliases = []
+aliases = ["create flutter app", "new flutter project", "scaffold flutter app"]
 
 [[group.section.command]]
 note = "Creates a new Flutter app"
@@ -69,7 +69,7 @@ title = "Running"
 
 [[group.section]]
 title = "Run the App"
-aliases = []
+aliases = ["run flutter app", "launch flutter app", "start flutter app"]
 
 [[group.section.command]]
 note = "Lists connected devices and emulators"
@@ -105,7 +105,7 @@ cmd = "flutter run --dart-define=<KEY>=<value>"
 
 [[group.section]]
 title = "Emulators"
-aliases = []
+aliases = ["flutter emulator", "create android emulator", "run emulator"]
 
 [[group.section.command]]
 note = "Lists available emulators"
@@ -129,7 +129,7 @@ cmd = "flutter devices --machine"
 
 [[group.section]]
 title = "Run on Web & Desktop"
-aliases = []
+aliases = ["flutter web", "run flutter desktop", "run web app"]
 
 [[group.section.command]]
 note = "Runs the app in Chrome"
@@ -157,7 +157,7 @@ cmd = "flutter run -d macos"
 
 [[group.section]]
 title = "Hot Reload Keys (While Running)"
-aliases = []
+aliases = ["flutter hot reload", "flutter run keys", "reload running app"]
 
 [[group.section.command]]
 note = "Hot reloads the app"
@@ -208,7 +208,7 @@ title = "Packages & Code Generation"
 
 [[group.section]]
 title = "Manage Packages"
-aliases = []
+aliases = ["flutter pub add", "install flutter package", "update flutter package"]
 
 [[group.section.command]]
 note = "Downloads the packages in pubspec.yaml"
@@ -244,7 +244,7 @@ cmd = "flutter pub deps"
 
 [[group.section]]
 title = "Code Generation (build_runner)"
-aliases = []
+aliases = ["flutter code generation", "build runner", "generate dart files"]
 
 [[group.section.command]]
 note = "Generates code once"
@@ -264,7 +264,7 @@ cmd = "dart run build_runner clean"
 
 [[group.section]]
 title = "Icons, Splash & Localization"
-aliases = []
+aliases = ["flutter app icon", "flutter splash screen", "flutter localization"]
 
 [[group.section.command]]
 note = "Generates app icons"
@@ -283,7 +283,7 @@ title = "Build & Release"
 
 [[group.section]]
 title = "Build for Android"
-aliases = []
+aliases = ["build android apk", "flutter apk", "flutter app bundle"]
 
 [[group.section.command]]
 note = "Builds a release APK"
@@ -311,7 +311,7 @@ cmd = "flutter install"
 
 [[group.section]]
 title = "Build for iOS (macOS Only)"
-aliases = []
+aliases = ["build ios app", "flutter ios build", "create ios ipa"]
 
 [[group.section.command]]
 note = "Builds the iOS app"
@@ -331,7 +331,7 @@ macos = "open ios/Runner.xcworkspace"
 
 [[group.section]]
 title = "Build for Web & Desktop"
-aliases = []
+aliases = ["build flutter web", "build desktop app", "flutter windows build"]
 
 [[group.section.command]]
 note = "Builds the web app"
@@ -355,7 +355,7 @@ cmd = "flutter build macos"
 
 [[group.section]]
 title = "Android Signing Keys"
-aliases = []
+aliases = ["android signing key", "flutter keystore", "android app signing"]
 
 [[group.section.command]]
 note = "Creates a release keystore"
@@ -375,7 +375,7 @@ title = "Quality & Troubleshooting"
 
 [[group.section]]
 title = "Test & Analyze"
-aliases = []
+aliases = ["flutter test", "analyze flutter code", "format dart code"]
 
 [[group.section.command]]
 note = "Checks the code for errors and lint issues"
@@ -407,7 +407,7 @@ cmd = "dart fix --apply"
 
 [[group.section]]
 title = "Clean & Reset"
-aliases = []
+aliases = ["flutter clean", "reset flutter project", "clear flutter build"]
 
 [[group.section.command]]
 note = "Deletes build artifacts and caches"
@@ -431,7 +431,7 @@ cmd = "flutter doctor --android-licenses"
 
 [[group.section]]
 title = "Debug & Logs"
-aliases = []
+aliases = ["flutter debug logs", "flutter devtools", "inspect flutter app"]
 
 [[group.section.command]]
 note = "Streams logs from a running app"

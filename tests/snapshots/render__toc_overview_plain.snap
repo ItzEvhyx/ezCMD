@@ -17,5 +17,12 @@ JavaScript & Web
   -vercel      Vercel CLI                     4 sections
   -netlify     Netlify CLI                    3 sections
 
+Mobile Development
+  -flutter     Flutter                        15 sections
+  -dart        Dart                           4 sections
+  -expo        React Native & Expo            8 sections
+  -adb         Android (ADB & SDK)            7 sections
+  -gradle      Gradle                         4 sections
+
 Linux & System Tools
   -shell       Shell Basics (CMD & Terminal)  10 sections

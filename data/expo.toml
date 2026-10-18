@@ -3,14 +3,14 @@ name = "React Native & Expo"
 category = "Mobile Development"
 order = 3
 aliases = ["react-native", "rn", "eas"]
-draft = true
+draft = false
 
 [[group]]
 title = "Expo"
 
 [[group.section]]
 title = "Create an Expo App"
-aliases = []
+aliases = ["create expo app", "new expo project", "scaffold react native app"]
 
 [[group.section.command]]
 note = "Creates a new Expo app"
@@ -34,7 +34,7 @@ cmd = "npx expo-doctor"
 
 [[group.section]]
 title = "Run & Develop (Expo)"
-aliases = []
+aliases = ["run expo app", "start expo dev server", "open expo app"]
 
 [[group.section.command]]
 note = "Starts the dev server"
@@ -66,7 +66,7 @@ cmd = "npx expo prebuild --clean"
 
 [[group.section]]
 title = "Dev Server Keys (While Running)"
-aliases = []
+aliases = ["expo dev keys", "expo reload key", "expo developer menu"]
 
 [[group.section.command]]
 note = "Opens the app on Android"
@@ -97,7 +97,7 @@ title = "Builds & Updates (EAS)"
 
 [[group.section]]
 title = "Set Up EAS"
-aliases = []
+aliases = ["setup eas", "configure expo build", "eas project init"]
 
 [[group.section.command]]
 note = "Installs the EAS CLI"
@@ -121,7 +121,7 @@ cmd = "eas build:configure"
 
 [[group.section]]
 title = "Build & Submit"
-aliases = []
+aliases = ["eas build", "submit expo app", "build react native app"]
 
 [[group.section.command]]
 note = "Builds the Android app in the cloud"
@@ -153,7 +153,7 @@ cmd = "eas submit --platform ios"
 
 [[group.section]]
 title = "OTA Updates & Builds"
-aliases = []
+aliases = ["expo ota update", "eas update", "rollback expo update"]
 
 [[group.section.command]]
 note = "Publishes an over-the-air update"
@@ -184,7 +184,7 @@ title = "React Native CLI"
 
 [[group.section]]
 title = "Create & Run"
-aliases = []
+aliases = ["create react native app", "run react native", "start rn app"]
 
 [[group.section.command]]
 note = "Creates a new React Native app"
@@ -212,7 +212,7 @@ cmd = "npx react-native doctor"
 
 [[group.section]]
 title = "Clean & Fix Builds"
-aliases = []
+aliases = ["clean expo build", "fix react native build", "reset expo project"]
 
 [[group.section.command]]
 note = "Cleans the Android build"

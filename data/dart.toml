@@ -3,14 +3,14 @@ name = "Dart"
 category = "Mobile Development"
 order = 2
 aliases = ["dart-sdk"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Dart"
 
 [[group.section]]
 title = "Create & Run"
-aliases = []
+aliases = ["create dart project", "run dart file", "new dart app"]
 
 [[group.section.command]]
 note = "Creates a new Dart project"
@@ -34,7 +34,7 @@ cmd = "dart --version"
 
 [[group.section]]
 title = "Manage Packages"
-aliases = []
+aliases = ["dart pub add", "dart package", "update dart dependency"]
 
 [[group.section.command]]
 note = "Downloads packages"
@@ -66,7 +66,7 @@ cmd = "dart pub global activate <pkg>"
 
 [[group.section]]
 title = "Compile"
-aliases = []
+aliases = ["compile dart", "build dart executable", "dart native binary"]
 
 [[group.section.command]]
 note = "Compiles to a native executable"
@@ -86,7 +86,7 @@ cmd = "dart compile kernel <file.dart>"
 
 [[group.section]]
 title = "Test, Analyze & Format"
-aliases = []
+aliases = ["dart test", "analyze dart code", "format dart code"]
 
 [[group.section.command]]
 note = "Runs tests"
