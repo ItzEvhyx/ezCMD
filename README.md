@@ -1,12 +1,7 @@
-<p align="center">
-  <img src="assets/banners/ezcmd_banner.png" alt="ezCMD Banner" width="100%">
-</p>
-
 <div align="center">
 
-  <img src="assets/logos/ezcmd_logo.png" alt="ezCMD Logo" width="110" height="110">
+  <img src="assets/banners/ezcmd_ascii.png" alt="ezCMD" width="600">
 
-  <h1>ezCMD</h1>
   <p><b>Type what you want to do. Get the commands, in order.</b><br>
   <i>A fast, offline, OS-aware terminal cheatsheet that remembers so you don't have to.</i></p>
 
@@ -19,10 +14,6 @@
   </p>
 
 </div>
-
-<p align="center">
-  <img src="assets/banners/ezcmd_ascii.png" alt="ezCMD ASCII Art" width="600">
-</p>
 
 <p align="center">
   <a href="#preview"><b>Preview</b></a> &nbsp;|&nbsp;
