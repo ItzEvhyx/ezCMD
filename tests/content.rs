@@ -1,5 +1,6 @@
 use ezcmd::content::{all_tools, CATEGORIES};
 use ezcmd::os::Os;
+use ezcmd::shell::Shell;
 use std::collections::HashSet;
 
 #[test]
@@ -283,13 +284,21 @@ fn test_section_rules() {
             }
 
             assert!(
-                Os::ALL.iter().any(|&os| sec.available_on(os)),
+                Os::ALL.iter().any(|&os| {
+                    [Shell::Cmd, Shell::PowerShell]
+                        .into_iter()
+                        .any(|shell| sec.available_for(os, shell))
+                }),
                 "section {} is not available on any OS",
                 sec.title
             );
         }
         assert!(
-            Os::ALL.iter().any(|&os| tool.available_on(os)),
+            Os::ALL.iter().any(|&os| {
+                [Shell::Cmd, Shell::PowerShell]
+                    .into_iter()
+                    .any(|shell| tool.available_for(os, shell))
+            }),
             "tool {} is not available on any OS",
             tool.slug
         );

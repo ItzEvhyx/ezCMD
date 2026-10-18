@@ -143,3 +143,4 @@ unix = "TF_LOG=DEBUG terraform plan"
 [[group.section.command]]
 note = "Turns on debug logging for this terminal"
 windows = "set TF_LOG=DEBUG"
+powershell = "$env:TF_LOG = \"DEBUG\""

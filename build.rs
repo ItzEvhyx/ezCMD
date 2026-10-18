@@ -55,6 +55,7 @@ struct RawCommand {
     cmd: Option<String>,
     unix: Option<String>,
     windows: Option<String>,
+    powershell: Option<String>,
     linux: Option<String>,
     macos: Option<String>,
 }
@@ -77,6 +78,7 @@ fn section_spec(section: &RawSection) -> SectionSpec {
                 cmd: command.cmd.clone(),
                 unix: command.unix.clone(),
                 windows: command.windows.clone(),
+                powershell: command.powershell.clone(),
                 linux: command.linux.clone(),
                 macos: command.macos.clone(),
             })
@@ -160,6 +162,7 @@ fn emit_section(section: &RawSection, indent: &str, out: &mut String) {
             ("cmd", &command.cmd),
             ("unix", &command.unix),
             ("windows", &command.windows),
+            ("powershell", &command.powershell),
             ("linux", &command.linux),
             ("macos", &command.macos),
         ] {

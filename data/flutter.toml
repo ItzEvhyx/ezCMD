@@ -369,6 +369,7 @@ cmd = "keytool -list -v -keystore <keystore.jks> -alias <alias>"
 note = "Shows debug fingerprints (password: android)"
 unix = "keytool -list -v -alias androiddebugkey -keystore ~/.android/debug.keystore"
 windows = "keytool -list -v -alias androiddebugkey -keystore %USERPROFILE%\\.android\\debug.keystore"
+powershell = "keytool -list -v -alias androiddebugkey -keystore $env:USERPROFILE\\.android\\debug.keystore"
 
 [[group]]
 title = "Quality & Troubleshooting"

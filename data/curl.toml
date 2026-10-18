@@ -45,6 +45,7 @@ aliases = ["curl post json", "send json api request", "http post body"]
 note = "Sends a JSON body"
 unix = "curl -X POST <url> -H \"Content-Type: application/json\" -d '{\"key\":\"value\"}'"
 windows = "curl -X POST <url> -H \"Content-Type: application/json\" -d \"{\\\"key\\\":\\\"value\\\"}\""
+powershell = "curl.exe -X POST <url> -H \"Content-Type: application/json\" -d '{\"key\":\"value\"}'"
 
 [[group.section.command]]
 note = "Sends form data"

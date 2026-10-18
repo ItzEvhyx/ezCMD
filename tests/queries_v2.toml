@@ -1642,6 +1642,7 @@ query = "powershell zip archive"
 tool = "archive"
 expect = "PowerShell Zip (Windows)"
 os = "windows"
+shell = "powershell"
 
 [[q]]
 kind = "tool"

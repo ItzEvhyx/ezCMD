@@ -159,6 +159,45 @@ fn test_help_windows_view() {
 }
 
 #[test]
+fn test_windows_shell_override_selects_powershell_syntax() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args([
+        "--plain",
+        "--help",
+        "-windows",
+        "-shell",
+        "-remove",
+        "folder",
+        "--shell",
+        "powershell",
+    ])
+    .assert()
+    .success()
+    .stdout(predicate::str::contains(
+        "Remove-Item -Recurse -Force <folder>",
+    ))
+    .stdout(predicate::str::contains("rmdir /s /q <folder>").not());
+}
+
+#[test]
+fn test_windows_shell_override_selects_cmd_syntax() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args([
+        "--plain",
+        "--help",
+        "-windows",
+        "-shell",
+        "-remove",
+        "folder",
+        "--shell=cmd",
+    ])
+    .assert()
+    .success()
+    .stdout(predicate::str::contains("rmdir /s /q <folder>"))
+    .stdout(predicate::str::contains("Remove-Item -Recurse -Force <folder>").not());
+}
+
+#[test]
 fn test_help_linux_view() {
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.args(["--help", "-linux"])

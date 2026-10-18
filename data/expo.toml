@@ -218,6 +218,7 @@ aliases = ["clean expo build", "fix react native build", "reset expo project"]
 note = "Cleans the Android build"
 unix = "cd android && ./gradlew clean"
 windows = "cd android && gradlew clean"
+powershell = "Set-Location android; .\\gradlew clean"
 
 [[group.section.command]]
 note = "Reinstalls iOS native pods"

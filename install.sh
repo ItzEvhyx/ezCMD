@@ -60,12 +60,12 @@ else
 
     # Fallback to direct download URLs
     if [ -z "$TAR_URL" ]; then
-        TAR_URL="https://github.com/${REPO}/releases/download/v2.1.0/ezcmd-v2.1.0-${ASSET_TARGET}.tar.gz"
+        TAR_URL="https://github.com/${REPO}/releases/download/v2.1.1/ezcmd-v2.1.1-${ASSET_TARGET}.tar.gz"
     fi
 
     echo "Downloading ${TAR_URL}..."
     if ! curl -fsSL "${TAR_URL}" -o "${TMP_DIR}/ezcmd.tar.gz" 2>/dev/null; then
-        FALLBACK_URL="https://github.com/${REPO}/releases/download/v2.1.0/ezcmd-v2.1.0-${ASSET_TARGET}.tar.gz"
+        FALLBACK_URL="https://github.com/${REPO}/releases/download/v2.1.1/ezcmd-v2.1.1-${ASSET_TARGET}.tar.gz"
         echo "Trying fallback ${FALLBACK_URL}..."
         curl -fsSL "${FALLBACK_URL}" -o "${TMP_DIR}/ezcmd.tar.gz"
     fi

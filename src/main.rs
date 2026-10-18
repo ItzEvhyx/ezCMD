@@ -4,6 +4,7 @@ use ezcmd::matcher::{self, SearchResult};
 use ezcmd::os::Os;
 use ezcmd::prompt;
 use ezcmd::render::{self, RenderCtx};
+use ezcmd::shell::Shell;
 use ezcmd::term;
 use std::io::{self, IsTerminal, Write};
 
@@ -29,12 +30,14 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
     };
 
     let is_plain = invocation.plain;
+    let shell = invocation.shell.unwrap_or_else(Shell::detect);
     let is_color = term::color_enabled(is_plain);
     let width = term::width();
     let render_ctx = RenderCtx {
         color: is_color,
         plain: is_plain,
         width,
+        shell,
     };
 
     match invocation.action {
@@ -63,6 +66,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                 &query,
                 matcher::SearchOpts {
                     tool_tokens: true,
+                    shell,
                     ..Default::default()
                 },
             );
@@ -136,7 +140,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
             let target_os = request.os.unwrap_or_else(Os::current);
             if let Some(tool_name) = request.tool {
                 if let Some(tool) = all_tools().find(|tool| tool.slug == tool_name) {
-                    if !tool.available_on(target_os) {
+                    if !tool.available_for(target_os, shell) {
                         let supported = if tool.platforms.is_empty() {
                             Os::ALL
                                 .iter()
@@ -169,6 +173,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                     &sec_query,
                     matcher::SearchOpts {
                         only_tool: request.tool,
+                        shell,
                         tool_tokens: false,
                     },
                 );

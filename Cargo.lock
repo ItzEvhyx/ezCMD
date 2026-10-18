@@ -149,7 +149,7 @@ dependencies = [
 
 [[package]]
 name = "ezcmd"
-version = "2.1.0"
+version = "2.1.1"
 dependencies = [
  "assert_cmd",
  "enable-ansi-support",
@@ -160,6 +160,7 @@ dependencies = [
  "strsim",
  "terminal_size",
  "toml",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]

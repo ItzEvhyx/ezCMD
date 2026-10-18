@@ -2,6 +2,7 @@ use ezcmd::content::{all_tools, CATEGORIES};
 use ezcmd::model::{Command, Section, Tool};
 use ezcmd::os::Os;
 use ezcmd::render::{render_section, toc_overview, toc_tool, usage_guide, RenderCtx};
+use ezcmd::shell::Shell;
 
 fn get_tool(tool_name: &str) -> &'static Tool {
     all_tools()
@@ -23,6 +24,7 @@ fn test_snapshot_wide_layout() {
         color: false,
         plain: false,
         width: 100,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
@@ -38,6 +40,7 @@ fn test_snapshot_wide_layout_colored() {
         color: true,
         plain: false,
         width: 100,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
@@ -53,6 +56,7 @@ fn test_snapshot_narrow_layout() {
         color: false,
         plain: false,
         width: 60,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
@@ -68,6 +72,7 @@ fn test_snapshot_plain_mode() {
         color: false,
         plain: true,
         width: 80,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
@@ -83,6 +88,7 @@ fn test_snapshot_omits_unavailable_commands() {
             cmd: None,
             unix: None,
             windows: Some("cd /d D:\\<folder>"),
+            powershell: None,
             linux: None,
             macos: None,
         },
@@ -91,6 +97,7 @@ fn test_snapshot_omits_unavailable_commands() {
             cmd: Some("cd <folder>"),
             unix: None,
             windows: None,
+            powershell: None,
             linux: None,
             macos: None,
         },
@@ -115,6 +122,7 @@ fn test_snapshot_omits_unavailable_commands() {
         color: false,
         plain: false,
         width: 80,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     render_section(&mut buf, &tool, &sec, Os::Linux, &ctx).expect("render");
@@ -130,6 +138,7 @@ fn test_snapshot_placeholder_highlighting() {
         color: true,
         plain: false,
         width: 80,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
@@ -145,6 +154,7 @@ fn test_snapshot_per_os_output() {
         color: false,
         plain: false,
         width: 80,
+        shell: Shell::Cmd,
     };
 
     let mut buf_win = Vec::new();
@@ -159,11 +169,29 @@ fn test_snapshot_per_os_output() {
 }
 
 #[test]
+fn test_powershell_uses_powershell_command_variants() {
+    let tool = get_tool("shell");
+    let sec = get_section(tool, "Removing Folders & Files");
+    let ctx = RenderCtx {
+        color: false,
+        plain: true,
+        width: 80,
+        shell: Shell::PowerShell,
+    };
+    let mut buf = Vec::new();
+    render_section(&mut buf, tool, sec, Os::Windows, &ctx).expect("render PowerShell");
+    let output = String::from_utf8(buf).expect("utf8");
+    assert!(output.contains("Remove-Item -Recurse -Force <folder>"));
+    assert!(!output.contains("rmdir /s /q <folder>"));
+}
+
+#[test]
 fn test_snapshot_toc_overview_plain() {
     let ctx = RenderCtx {
         color: false,
         plain: false,
         width: 100,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     toc_overview(&mut buf, CATEGORIES, Os::Linux, &ctx).expect("render overview");
@@ -180,6 +208,7 @@ fn test_snapshot_toc_tool_single_group_plain() {
         color: false,
         plain: false,
         width: 100,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     toc_tool(&mut buf, tool, Os::Linux, &ctx).expect("render tool toc");
@@ -195,6 +224,7 @@ fn test_usage_guide_narrow_drops_examples() {
         color: false,
         plain: false,
         width: 60,
+        shell: Shell::Cmd,
     };
     let mut buf = Vec::new();
     usage_guide(&mut buf, &ctx).expect("render guide");

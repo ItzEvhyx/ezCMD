@@ -1,10 +1,12 @@
 use crate::content::all_tools;
 use crate::os::Os;
+use crate::shell::Shell;
 use std::fmt;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct Invocation {
     pub plain: bool,
+    pub shell: Option<Shell>,
     pub action: Action,
 }
 
@@ -54,6 +56,8 @@ pub enum CliError {
     StrayWord(String),
     SelectorAfterText(String),
     EmptyQuery,
+    InvalidShell(String),
+    ShellSpecifiedTwice,
 }
 
 impl fmt::Display for CliError {
@@ -68,6 +72,13 @@ impl fmt::Display for CliError {
                 write!(f, "selector \"{selector}\" appears after section text")
             }
             CliError::EmptyQuery => write!(f, "query cannot be empty"),
+            CliError::InvalidShell(value) if value.is_empty() => {
+                write!(f, "--shell needs a value: cmd or powershell")
+            }
+            CliError::InvalidShell(value) => {
+                write!(f, "unknown shell \"{value}\". Available: cmd, powershell")
+            }
+            CliError::ShellSpecifiedTwice => write!(f, "--shell can only be provided once"),
         }
     }
 }
@@ -82,9 +93,45 @@ fn find_tool_name(candidate: &str) -> Option<&'static str> {
 
 /// Parse command-line arguments (excluding program name).
 pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
+    let (shell, remaining) = take_shell_flag(args)?;
+    let mut invocation = parse_without_shell(&remaining)?;
+    invocation.shell = shell;
+    Ok(invocation)
+}
+
+/// Extract `--shell <cmd|powershell>` before normal parsing. Anything after a
+/// bare `--` stays literal query text, consistent with the existing grammar.
+fn take_shell_flag<S: AsRef<str>>(args: &[S]) -> Result<(Option<Shell>, Vec<String>), CliError> {
+    let mut shell = None;
+    let mut remaining = Vec::with_capacity(args.len());
+    let mut values = args.iter().map(AsRef::as_ref);
+    while let Some(arg) = values.next() {
+        if arg == "--" {
+            remaining.push(arg.to_owned());
+            remaining.extend(values.map(str::to_owned));
+            break;
+        }
+        let value = if arg == "--shell" {
+            values.next().unwrap_or("")
+        } else if let Some(value) = arg.strip_prefix("--shell=") {
+            value
+        } else {
+            remaining.push(arg.to_owned());
+            continue;
+        };
+        if shell.is_some() {
+            return Err(CliError::ShellSpecifiedTwice);
+        }
+        shell = Some(Shell::from_flag(value).ok_or_else(|| CliError::InvalidShell(value.into()))?);
+    }
+    Ok((shell, remaining))
+}
+
+fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
     if args.is_empty() {
         return Ok(Invocation {
             plain: false,
+            shell: None,
             action: Action::Usage,
         });
     }
@@ -106,6 +153,7 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
         if arg.as_ref() == "--version" {
             return Ok(Invocation {
                 plain,
+                shell: None,
                 action: Action::Version,
             });
         }
@@ -122,6 +170,7 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
             .any(|a| a.as_ref() == "-y" || a.as_ref() == "--yes");
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Uninstall { yes },
         });
     }
@@ -133,6 +182,7 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
     if has_welcome {
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Welcome,
         });
     }
@@ -144,6 +194,7 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
     if has_install {
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Install,
         });
     }
@@ -155,6 +206,7 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
     if has_update {
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Update,
         });
     }
@@ -193,12 +245,14 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
         if query_parts.is_empty() {
             return Ok(Invocation {
                 plain,
+                shell: None,
                 action: Action::Usage,
             });
         }
 
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Query(query_parts.join(" ")),
         });
     }
@@ -219,6 +273,7 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
     if query_parts.is_empty() {
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Usage,
         });
     }
@@ -228,12 +283,14 @@ pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
     if query_parts.len() == 1 && query_parts[0].eq_ignore_ascii_case("update") {
         return Ok(Invocation {
             plain,
+            shell: None,
             action: Action::Update,
         });
     }
 
     Ok(Invocation {
         plain,
+        shell: None,
         action: Action::Query(query_parts.join(" ")),
     })
 }
@@ -316,6 +373,7 @@ fn parse_help<S: AsRef<str>>(args: &[S], mut plain: bool) -> Result<Invocation, 
     }
     Ok(Invocation {
         plain,
+        shell: None,
         action: Action::Help(HelpRequest {
             os,
             tool,
@@ -393,6 +451,41 @@ mod tests {
         let inv = parse(&["--plain", "--update"]).expect("parse update flag");
         assert!(inv.plain);
         assert_eq!(inv.action, Action::Update);
+    }
+
+    #[test]
+    fn test_shell_flag_is_extracted_before_normal_parsing() {
+        let inv = parse(&["--shell", "powershell", "--help", "-windows", "-shell"])
+            .expect("parse PowerShell help");
+        assert_eq!(inv.shell, Some(Shell::PowerShell));
+        assert_eq!(
+            inv.action,
+            help(Some(Os::Windows), Some("shell"), None, false)
+        );
+
+        let inv = parse(&["delete", "folder", "--shell=cmd"]).expect("parse CMD query");
+        assert_eq!(inv.shell, Some(Shell::Cmd));
+        assert_eq!(inv.action, Action::Query("delete folder".into()));
+
+        let inv = parse(&["--", "--shell", "cmd"]).expect("literal shell query");
+        assert_eq!(inv.shell, None);
+        assert_eq!(inv.action, Action::Query("--shell cmd".into()));
+    }
+
+    #[test]
+    fn test_shell_flag_errors_are_specific() {
+        assert_eq!(
+            parse(&["--shell"]).unwrap_err(),
+            CliError::InvalidShell(String::new())
+        );
+        assert_eq!(
+            parse(&["--shell", "bash"]).unwrap_err(),
+            CliError::InvalidShell("bash".into())
+        );
+        assert_eq!(
+            parse(&["--shell", "cmd", "--shell", "powershell"]).unwrap_err(),
+            CliError::ShellSpecifiedTwice
+        );
     }
 
     #[test]

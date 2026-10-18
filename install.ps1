@@ -30,7 +30,7 @@ if ($ScriptDir -and (Test-Path "$ScriptDir\target\release\ezcmd.exe")) {
         # ignore api error/rate limit
     }
     if (-not $ZipUrl) {
-        $ZipUrl = "https://github.com/$Repo/releases/download/v2.1.0/ezcmd-v2.1.0-$AssetTarget.zip"
+        $ZipUrl = "https://github.com/$Repo/releases/download/v2.1.1/ezcmd-v2.1.1-$AssetTarget.zip"
     }
 
     $TempZip = "$env:TEMP\ezcmd.zip"
@@ -60,7 +60,10 @@ if ($UserPath -notlike "*$InstallDir*") {
 }
 
 Write-Host ""
-Write-Host "✓ ezcmd was successfully installed to $ExePath!" -ForegroundColor Green
+# Keep the source ASCII-only: Windows PowerShell 5.1 reads a BOM-less script
+# using the active ANSI code page, so literal Unicode can cause parse errors.
+$Check = [char]0x2713
+Write-Host "$Check ezcmd was successfully installed to $ExePath!" -ForegroundColor Green
 Write-Host ""
 
 try {

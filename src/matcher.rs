@@ -1,5 +1,6 @@
 use crate::model::{Section, Tool};
 use crate::os::Os;
+use crate::shell::Shell;
 
 pub const W_TITLE: f32 = 1.00;
 pub const W_ALIAS: f32 = 0.95;
@@ -15,6 +16,7 @@ pub const HINT_BONUS: f32 = 0.05;
 #[derive(Debug, Clone, Copy, Default)]
 pub struct SearchOpts<'a> {
     pub only_tool: Option<&'a str>,
+    pub shell: Shell,
     /// Interpret exact tool slugs, flag aliases, and shadowed aliases in a query.
     /// Help section selectors intentionally leave this off.
     pub tool_tokens: bool,
@@ -162,7 +164,7 @@ fn field_score(query_tokens: &[String], field_tokens: &[String]) -> f32 {
     sum / query_tokens.len() as f32
 }
 
-fn score_section(section: &Section, os: Os, query_tokens: &[String]) -> f32 {
+fn score_section(section: &Section, os: Os, shell: Shell, query_tokens: &[String]) -> f32 {
     let title_tokens = tokenize(section.title);
     let title_score = field_score(query_tokens, &title_tokens);
 
@@ -175,7 +177,7 @@ fn score_section(section: &Section, os: Os, query_tokens: &[String]) -> f32 {
     let joined_cmds = section
         .commands
         .iter()
-        .filter_map(|command| command.resolve(os))
+        .filter_map(|command| command.resolve_for(os, shell))
         .collect::<Vec<_>>()
         .join(" ");
     let cmd_score = field_score(query_tokens, &tokenize(&joined_cmds));
@@ -224,10 +226,10 @@ fn is_hint_tool_token(tool: &Tool, token: &str) -> bool {
     shadowed_alias || has_token(&[tool.name], token)
 }
 
-fn tool_has_scoring_section(tool: &Tool, os: Os, tokens: &[String]) -> bool {
+fn tool_has_scoring_section(tool: &Tool, os: Os, shell: Shell, tokens: &[String]) -> bool {
     tool.sections()
-        .filter(|section| section.available_on(os))
-        .any(|section| score_section(section, os, tokens) >= MATCH_THRESHOLD)
+        .filter(|section| section.available_for(os, shell))
+        .any(|section| score_section(section, os, shell, tokens) >= MATCH_THRESHOLD)
 }
 
 /// Search sections across tools for the given OS.
@@ -303,7 +305,7 @@ pub fn search<'a>(
         if !without_named.is_empty()
             && named_tools
                 .iter()
-                .any(|tool| tool_has_scoring_section(tool, os, &without_named))
+                .any(|tool| tool_has_scoring_section(tool, os, opts.shell, &without_named))
         {
             effective_tokens = without_named;
             named_narrowing = true;
@@ -336,7 +338,7 @@ pub fn search<'a>(
         if !without_hints.is_empty()
             && hint_tools
                 .iter()
-                .any(|tool| tool_has_scoring_section(tool, os, &without_hints))
+                .any(|tool| tool_has_scoring_section(tool, os, opts.shell, &without_hints))
         {
             effective_tokens = without_hints;
             hint_narrowing = true;
@@ -347,11 +349,11 @@ pub fn search<'a>(
 
     for tool in tools {
         for (section_idx, section) in tool.sections().enumerate() {
-            if !section.available_on(os) {
+            if !section.available_for(os, opts.shell) {
                 continue;
             }
 
-            let mut score = score_section(section, os, &effective_tokens);
+            let mut score = score_section(section, os, opts.shell, &effective_tokens);
             let is_named_tool = named_tools
                 .iter()
                 .any(|candidate| candidate.slug == tool.slug);

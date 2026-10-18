@@ -106,7 +106,7 @@ ezcmd --update
 
 `ezcmd update` works too. The updater downloads the matching GitHub Release for your OS and CPU, verifies its published SHA-256 checksum, and replaces the installed executable. Regular searches remain offline.
 
-If you are on v1 or v2.0.0, run the installer below once to get v2.1.0. After that, use `ezcmd --update` for later releases.
+If you are on v1 or v2.0.0, run the installer below once to get v2.1.1. After that, use `ezcmd --update` for later releases.
 
 ---
 
@@ -136,7 +136,7 @@ curl -fsSL https://raw.githubusercontent.com/ItzEvhyx/ezCMD/main/install.sh | ba
 
 #### Windows (PowerShell)
 
-Open PowerShell as Administrator and run:
+Open PowerShell and run:
 
 ```powershell
 irm https://raw.githubusercontent.com/ItzEvhyx/ezCMD/main/install.ps1 | iex
@@ -239,7 +239,7 @@ setx PATH "%PATH%;%USERPROFILE%\.local\bin"
 
 ```bash
 ezcmd --version
-# → ezcmd 2.1.0
+# → ezcmd 2.1.1
 ```
 
 ---
@@ -256,6 +256,7 @@ ezcmd --version
 | `ezcmd --help -<tool> -<section>` | Show the matching section's commands |
 | `ezcmd --help -<section>` | Search matching sections across every tool |
 | `ezcmd --help -<os>` | Browse as Linux, macOS, or Windows |
+| `ezcmd --shell <cmd\|powershell> <query>` | Choose Windows command syntax explicitly |
 | `ezcmd --plain <query>` | Raw plain output (no ANSI, no box frames) |
 | `ezcmd --install` | Install ezcmd to PATH + show welcome |
 | `ezcmd update` / `ezcmd --update` | Download and install the latest published release |
@@ -285,6 +286,9 @@ ezcmd --help -initialize
 # Tool aliases and OS-specific exploration
 ezcmd --help -rebase
 ezcmd --help -windows -winget
+
+# Use PowerShell syntax when browsing Windows commands (cmd is also available)
+ezcmd --help -windows -shell -remove folder --shell powershell
 ```
 
 ### Tool aliases

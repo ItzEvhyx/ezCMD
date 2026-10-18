@@ -1,4 +1,5 @@
 use crate::os::Os;
+use crate::shell::Shell;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct Category {
@@ -37,6 +38,7 @@ pub struct Command {
     pub cmd: Option<&'static str>,  // all OSes
     pub unix: Option<&'static str>, // linux + macos
     pub windows: Option<&'static str>,
+    pub powershell: Option<&'static str>,
     pub linux: Option<&'static str>,
     pub macos: Option<&'static str>,
 }
@@ -44,8 +46,17 @@ pub struct Command {
 impl Command {
     /// Precedence: exact OS key > unix (linux/macos only) > cmd.
     pub fn resolve(&self, os: Os) -> Option<&'static str> {
+        self.resolve_for(os, Shell::Cmd)
+    }
+
+    /// Resolve a command for an OS and (on Windows) a selected shell.
+    /// A PowerShell-specific entry wins over the existing Windows/CMD entry.
+    pub fn resolve_for(&self, os: Os, shell: Shell) -> Option<&'static str> {
         match os {
-            Os::Windows => self.windows.or(self.cmd),
+            Os::Windows => match shell {
+                Shell::Cmd => self.windows.or(self.cmd),
+                Shell::PowerShell => self.powershell.or(self.windows).or(self.cmd),
+            },
             Os::Linux => self.linux.or(self.unix).or(self.cmd),
             Os::Macos => self.macos.or(self.unix).or(self.cmd),
         }
@@ -54,14 +65,22 @@ impl Command {
 
 impl Section {
     pub fn visible_commands(&self, os: Os) -> impl Iterator<Item = &Command> {
+        self.visible_commands_for(os, Shell::Cmd)
+    }
+
+    pub fn visible_commands_for(&self, os: Os, shell: Shell) -> impl Iterator<Item = &Command> {
         self.commands
             .iter()
-            .filter(move |command| command.resolve(os).is_some())
+            .filter(move |command| command.resolve_for(os, shell).is_some())
     }
 
     /// True if at least one command resolves for `os`.
     pub fn available_on(&self, os: Os) -> bool {
         self.visible_commands(os).next().is_some()
+    }
+
+    pub fn available_for(&self, os: Os, shell: Shell) -> bool {
+        self.visible_commands_for(os, shell).next().is_some()
     }
 }
 
@@ -71,8 +90,14 @@ impl Tool {
     }
 
     pub fn available_on(&self, os: Os) -> bool {
+        self.available_for(os, Shell::Cmd)
+    }
+
+    pub fn available_for(&self, os: Os, shell: Shell) -> bool {
         (self.platforms.is_empty() || self.platforms.contains(&os))
-            && self.sections().any(|section| section.available_on(os))
+            && self
+                .sections()
+                .any(|section| section.available_for(os, shell))
     }
 
     pub fn matches_flag(&self, name: &str) -> bool {
@@ -95,6 +120,7 @@ mod tests {
             cmd: Some("generic-cmd"),
             unix: None,
             windows: None,
+            powershell: None,
             linux: None,
             macos: None,
         };
@@ -110,6 +136,7 @@ mod tests {
             cmd: Some("generic-cmd"),
             unix: Some("unix-cmd"),
             windows: None,
+            powershell: None,
             linux: None,
             macos: None,
         };
@@ -125,6 +152,7 @@ mod tests {
             cmd: Some("generic-cmd"),
             unix: Some("unix-cmd"),
             windows: Some("win-cmd"),
+            powershell: None,
             linux: Some("linux-cmd"),
             macos: Some("macos-cmd"),
         };
@@ -140,6 +168,7 @@ mod tests {
             cmd: None,
             unix: None,
             windows: Some("win-only"),
+            powershell: None,
             linux: None,
             macos: None,
         };
@@ -155,6 +184,7 @@ mod tests {
             cmd: None,
             unix: None,
             windows: Some("win-only"),
+            powershell: None,
             linux: None,
             macos: None,
         }];
@@ -175,6 +205,7 @@ mod tests {
             cmd: None,
             unix: None,
             windows: None,
+            powershell: None,
             linux: None,
             macos: Some("mac-tool"),
         }];
@@ -203,5 +234,48 @@ mod tests {
         assert!(!tool.matches_flag("pod"));
         assert!(tool.available_on(Os::Macos));
         assert!(!tool.available_on(Os::Linux));
+    }
+
+    #[test]
+    fn powershell_command_wins_on_windows() {
+        let command = Command {
+            note: "shell-specific",
+            cmd: Some("generic"),
+            unix: None,
+            windows: Some("cmd-command"),
+            powershell: Some("powershell-command"),
+            linux: None,
+            macos: None,
+        };
+
+        assert_eq!(
+            command.resolve_for(Os::Windows, Shell::Cmd),
+            Some("cmd-command")
+        );
+        assert_eq!(
+            command.resolve_for(Os::Windows, Shell::PowerShell),
+            Some("powershell-command")
+        );
+    }
+
+    #[test]
+    fn powershell_only_section_is_not_exposed_to_cmd() {
+        static COMMANDS: [Command; 1] = [Command {
+            note: "PowerShell only",
+            cmd: None,
+            unix: None,
+            windows: None,
+            powershell: Some("Get-ChildItem"),
+            linux: None,
+            macos: None,
+        }];
+        let section = Section {
+            title: "PowerShell",
+            aliases: &[],
+            commands: &COMMANDS,
+        };
+
+        assert!(!section.available_for(Os::Windows, Shell::Cmd));
+        assert!(section.available_for(Os::Windows, Shell::PowerShell));
     }
 }

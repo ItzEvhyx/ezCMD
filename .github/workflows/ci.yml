@@ -35,6 +35,11 @@ jobs:
       - name: Build release
         run: cargo build --release
 
+      - name: Test Windows PowerShell 5.1 installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File .\install.ps1
+
       - name: Size gate (Unix)
         if: runner.os != 'Windows'
         run: |

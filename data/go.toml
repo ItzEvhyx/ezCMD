@@ -87,10 +87,12 @@ unix = "GOOS=darwin GOARCH=arm64 go build"
 [[group.section.command]]
 note = "Sets the target OS for this terminal"
 windows = "set GOOS=linux"
+powershell = "$env:GOOS = \"linux\""
 
 [[group.section.command]]
 note = "Sets the target CPU for this terminal"
 windows = "set GOARCH=amd64"
+powershell = "$env:GOARCH = \"amd64\""
 
 [[group.section.command]]
 note = "Lists every supported OS and CPU pair"

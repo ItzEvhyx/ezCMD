@@ -1,6 +1,7 @@
 use ezcmd::content::all_tools;
 use ezcmd::matcher::{search, SearchOpts, SearchResult};
 use ezcmd::os::Os;
+use ezcmd::shell::Shell;
 use serde::Deserialize;
 use std::collections::{BTreeMap, HashMap};
 
@@ -29,6 +30,7 @@ struct V2QueryCase {
     expect: Option<String>,
     choices: Option<Vec<String>>,
     os: Option<String>,
+    shell: Option<String>,
 }
 
 fn targets(os: Option<&str>) -> Vec<Os> {
@@ -48,6 +50,27 @@ fn search_query(query: &str, os: Os) -> SearchResult<'static> {
         query,
         SearchOpts {
             tool_tokens: true,
+            ..Default::default()
+        },
+    )
+}
+
+fn shell_for_query(shell: Option<&str>) -> Shell {
+    match shell {
+        None | Some("cmd") => Shell::Cmd,
+        Some("powershell") => Shell::PowerShell,
+        Some(value) => panic!("unknown query shell {value:?}"),
+    }
+}
+
+fn search_v2_query(query: &str, os: Os, shell: Option<&str>) -> SearchResult<'static> {
+    search(
+        all_tools(),
+        os,
+        query,
+        SearchOpts {
+            tool_tokens: true,
+            shell: shell_for_query(shell),
             ..Default::default()
         },
     )
@@ -206,7 +229,7 @@ fn test_v2_seed_query_accuracy() {
     for case in &suite.q {
         for os in targets(case.os.as_deref()) {
             total += 1;
-            let result = search_query(&case.query, os);
+            let result = search_v2_query(&case.query, os, case.shell.as_deref());
             let expected_tool = case.tool.as_deref();
             let expected_section = case.expect.as_deref();
             let section_matches = |hit: &ezcmd::matcher::Hit<'_>| {

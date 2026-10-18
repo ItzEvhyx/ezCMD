@@ -53,6 +53,7 @@ unix = "ssh-copy-id <user>@<host>"
 note = "Prints your public key"
 unix = "cat ~/.ssh/id_ed25519.pub"
 windows = "type %USERPROFILE%\\.ssh\\id_ed25519.pub"
+powershell = "Get-Content $env:USERPROFILE\\.ssh\\id_ed25519.pub"
 
 [[group.section.command]]
 note = "Tests your GitHub SSH connection"

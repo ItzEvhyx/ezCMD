@@ -25,7 +25,8 @@ cmd = "pip --version"
 [[group.section.command]]
 note = "Shows where Python is installed"
 unix = "which python3"
-windows = "where python"
+windows = "where.exe python"
+powershell = "Get-Command python"
 
 [[group.section]]
 title = "Virtual Environments"
@@ -46,7 +47,7 @@ windows = ".venv\\Scripts\\activate"
 
 [[group.section.command]]
 note = "Activates the environment in PowerShell"
-windows = ".venv\\Scripts\\Activate.ps1"
+powershell = ". .venv\\Scripts\\Activate.ps1"
 
 [[group.section.command]]
 note = "Leaves the environment"
@@ -56,6 +57,7 @@ cmd = "deactivate"
 note = "Deletes the environment"
 unix = "rm -rf .venv"
 windows = "rmdir /s /q .venv"
+powershell = "Remove-Item -Recurse -Force .venv"
 
 [[group]]
 title = "Packages"

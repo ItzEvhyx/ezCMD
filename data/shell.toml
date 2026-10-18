@@ -9,6 +9,7 @@ aliases = ["change directory", "cd commands", "switch directory", "navigate fold
   [[section.command]]
   note    = "Shows current working directory"
   windows = "cd"
+  powershell = "Get-Location"
   unix    = "pwd"
 
   [[section.command]]
@@ -22,15 +23,18 @@ aliases = ["change directory", "cd commands", "switch directory", "navigate fold
   [[section.command]]
   note    = "Moves to root directory"
   windows = "cd \\"
+  powershell = "Set-Location C:\\"
   unix    = "cd /"
 
   [[section.command]]
   note    = "Switches active drive and enters folder"
   windows = "cd /d D:\\<folder>"
+  powershell = "Set-Location D:\\<folder>"
 
   [[section.command]]
   note    = "Lists files and details in directory"
   windows = "dir"
+  powershell = "Get-ChildItem"
   unix    = "ls -la"
 
   [[section.command]]
@@ -40,6 +44,7 @@ aliases = ["change directory", "cd commands", "switch directory", "navigate fold
   [[section.command]]
   note    = "Clears the terminal screen"
   windows = "cls"
+  powershell = "Clear-Host"
   unix    = "clear"
 
 [[section]]
@@ -53,6 +58,7 @@ aliases = ["create folder", "make file", "create file", "new folder", "touch fil
   [[section.command]]
   note    = "Creates a new empty file"
   windows = "type nul > <file>"
+  powershell = "New-Item -ItemType File <file>"
   unix    = "touch <file>"
 
 [[section]]
@@ -62,15 +68,18 @@ aliases = ["delete folder", "remove directory", "delete file", "remove files"]
   [[section.command]]
   note = "Removes an empty folder"
   cmd  = "rmdir <folder>"
+  powershell = "Remove-Item <folder>"
 
   [[section.command]]
   note    = "Removes a folder and all its contents"
   windows = "rmdir /s /q <folder>"
+  powershell = "Remove-Item -Recurse -Force <folder>"
   unix    = "rm -rf <folder>"
 
   [[section.command]]
   note    = "Deletes a file"
   windows = "del <file>"
+  powershell = "Remove-Item <file>"
   unix    = "rm <file>"
 
 [[section]]
@@ -80,21 +89,25 @@ aliases = ["copy file", "move file", "rename file", "copy directory", "transfer 
   [[section.command]]
   note    = "Copies a file to a new destination"
   windows = "copy <src> <dest>"
+  powershell = "Copy-Item <src> <dest>"
   unix    = "cp <src> <dest>"
 
   [[section.command]]
   note    = "Copies a folder and all subfolders"
   windows = "xcopy <src> <dest> /e /i"
+  powershell = "Copy-Item -Recurse <src> <dest>"
   unix    = "cp -r <src> <dest>"
 
   [[section.command]]
   note    = "Moves a file to a new destination"
   windows = "move <src> <dest>"
+  powershell = "Move-Item <src> <dest>"
   unix    = "mv <src> <dest>"
 
   [[section.command]]
   note    = "Renames a file or folder"
   windows = "ren <old> <new>"
+  powershell = "Rename-Item <old> <new>"
   unix    = "mv <old> <new>"
 
 [[section]]
@@ -104,6 +117,7 @@ aliases = ["view file", "cat file", "read file", "search in file", "print file c
   [[section.command]]
   note    = "Outputs entire content of a file"
   windows = "type <file>"
+  powershell = "Get-Content <file>"
   unix    = "cat <file>"
 
   [[section.command]]
@@ -123,6 +137,7 @@ aliases = ["system info", "os version", "check hostname", "whoami", "system spec
   [[section.command]]
   note    = "Displays operating system version information"
   windows = "ver"
+  powershell = "cmd /c ver"
   linux   = "uname -a"
   macos   = "sw_vers"
 
@@ -189,16 +204,19 @@ aliases = ["env variables", "show path", "set variable", "export variable", "pri
   [[section.command]]
   note    = "Prints all current environment variables"
   windows = "set"
+  powershell = "Get-ChildItem Env:"
   unix    = "printenv"
 
   [[section.command]]
   note    = "Displays configured executable search paths"
   windows = "echo %PATH%"
+  powershell = "$env:Path"
   unix    = "echo $PATH"
 
   [[section.command]]
   note    = "Sets an environment variable for current session"
   windows = "set <NAME>=<value>"
+  powershell = "$env:<NAME> = \"<value>\""
   unix    = "export <NAME>=<value>"
 
 [[section]]

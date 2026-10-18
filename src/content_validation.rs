@@ -33,6 +33,7 @@ pub struct CommandSpec {
     pub cmd: Option<String>,
     pub unix: Option<String>,
     pub windows: Option<String>,
+    pub powershell: Option<String>,
     pub linux: Option<String>,
     pub macos: Option<String>,
 }
@@ -143,6 +144,7 @@ pub fn validate_tool(tool: &ToolSpec) -> Result<(), String> {
                     &command.cmd,
                     &command.unix,
                     &command.windows,
+                    &command.powershell,
                     &command.linux,
                     &command.macos,
                 ];
@@ -278,6 +280,7 @@ fn section_visible_anywhere(section: &SectionSpec) -> bool {
     section.commands.iter().any(|command| {
         command.cmd.is_some()
             || command.windows.is_some()
+            || command.powershell.is_some()
             || command.unix.is_some()
             || command.linux.is_some()
             || command.macos.is_some()
@@ -337,6 +340,7 @@ mod tests {
                             cmd: Some("fixture run <file>".into()),
                             unix: None,
                             windows: None,
+                            powershell: None,
                             linux: None,
                             macos: None,
                         },
@@ -345,6 +349,7 @@ mod tests {
                             cmd: Some("fixture check".into()),
                             unix: None,
                             windows: None,
+                            powershell: None,
                             linux: None,
                             macos: None,
                         },

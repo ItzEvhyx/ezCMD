@@ -80,6 +80,7 @@ aliases = ["clear next cache", "reset next app", "delete next build"]
 note = "Deletes the Next.js build cache"
 unix = "rm -rf .next"
 windows = "rmdir /s /q .next"
+powershell = "Remove-Item -Recurse -Force .next"
 
 [[group.section.command]]
 note = "Turns off anonymous telemetry"

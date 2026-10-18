@@ -1,5 +1,6 @@
 use crate::model::{Category, Section, Tool};
 use crate::os::Os;
+use crate::shell::Shell;
 use crate::term;
 use std::io::{self, Write};
 
@@ -8,6 +9,7 @@ pub struct RenderCtx {
     pub color: bool,
     pub plain: bool,
     pub width: usize,
+    pub shell: Shell,
 }
 
 impl Default for RenderCtx {
@@ -16,6 +18,7 @@ impl Default for RenderCtx {
             color: false,
             plain: false,
             width: 80,
+            shell: Shell::Cmd,
         }
     }
 }
@@ -120,7 +123,7 @@ pub fn toc_overview<W: Write>(
     let visible_tools: Vec<&Tool> = categories
         .iter()
         .flat_map(|category| category.tools.iter())
-        .filter(|tool| tool.available_on(os))
+        .filter(|tool| tool.available_for(os, ctx.shell))
         .collect();
     let slug_width = visible_tools
         .iter()
@@ -138,7 +141,7 @@ pub fn toc_overview<W: Write>(
         let tools: Vec<&Tool> = category
             .tools
             .iter()
-            .filter(|tool| tool.available_on(os))
+            .filter(|tool| tool.available_for(os, ctx.shell))
             .collect();
         if tools.is_empty() {
             continue;
@@ -154,7 +157,7 @@ pub fn toc_overview<W: Write>(
         for tool in tools {
             let count = tool
                 .sections()
-                .filter(|section| section.available_on(os))
+                .filter(|section| section.available_for(os, ctx.shell))
                 .count();
             if ctx.color {
                 write!(out, "  {}-{}{}", term::BOLD, tool.slug, term::RESET)?;
@@ -202,7 +205,7 @@ pub fn toc_tool<W: Write>(out: &mut W, tool: &Tool, os: Os, ctx: &RenderCtx) -> 
             group
                 .sections
                 .iter()
-                .any(|section| section.available_on(os))
+                .any(|section| section.available_for(os, ctx.shell))
         })
         .collect();
     let show_group_titles = groups.len() > 1;
@@ -218,7 +221,7 @@ pub fn toc_tool<W: Write>(out: &mut W, tool: &Tool, os: Os, ctx: &RenderCtx) -> 
         for section in group
             .sections
             .iter()
-            .filter(|section| section.available_on(os))
+            .filter(|section| section.available_for(os, ctx.shell))
         {
             if ctx.color {
                 writeln!(out, "  {}-{} {}", term::DIM, term::RESET, section.title)?;
@@ -251,17 +254,19 @@ pub fn render_section<W: Write>(
     ctx: &RenderCtx,
 ) -> io::Result<()> {
     // If no command resolves for the OS, omit the whole section (Section 9.4)
-    if !section.available_on(os) {
+    if !section.available_for(os, ctx.shell) {
         return Ok(());
     }
 
     let prepared: Vec<PreparedCommand> = section
-        .visible_commands(os)
+        .visible_commands_for(os, ctx.shell)
         .filter_map(|command| {
-            command.resolve(os).map(|resolved| PreparedCommand {
-                cmd_text: resolved.to_string(),
-                note_text: command.note.to_string(),
-            })
+            command
+                .resolve_for(os, ctx.shell)
+                .map(|resolved| PreparedCommand {
+                    cmd_text: resolved.to_string(),
+                    note_text: command.note.to_string(),
+                })
         })
         .collect();
 
@@ -455,7 +460,7 @@ pub fn render_sections<W: Write>(
 ) -> io::Result<()> {
     let mut first = true;
     for section in sections {
-        if !section.available_on(os) {
+        if !section.available_for(os, ctx.shell) {
             continue;
         }
         if !first {
@@ -488,6 +493,7 @@ mod tests {
             cmd: Some("git init"),
             unix: None,
             windows: None,
+            powershell: None,
             linux: None,
             macos: None,
         }];
@@ -510,6 +516,7 @@ mod tests {
             color: false,
             plain: true,
             width: 80,
+            shell: Shell::Cmd,
         };
         let mut buf = Vec::new();
         render_section(&mut buf, &tool, &sec, Os::Linux, &ctx).expect("render");

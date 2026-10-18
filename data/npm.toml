@@ -371,10 +371,12 @@ unix = "rm -rf node_modules package-lock.json"
 [[group.section.command]]
 note = "Deletes the node_modules folder"
 windows = "rmdir /s /q node_modules"
+powershell = "Remove-Item -Recurse -Force node_modules"
 
 [[group.section.command]]
 note = "Deletes the lockfile"
 windows = "del package-lock.json"
+powershell = "Remove-Item package-lock.json"
 
 [[group.section.command]]
 note = "Reinstalls everything from scratch"

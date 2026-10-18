@@ -95,8 +95,8 @@ aliases = ["powershell zip archive", "windows compress archive", "expand windows
 
 [[group.section.command]]
 note = "Creates a zip archive"
-windows = "Compress-Archive -Path <folder> -DestinationPath <archive.zip>"
+powershell = "Compress-Archive -Path <folder> -DestinationPath <archive.zip>"
 
 [[group.section.command]]
 note = "Extracts a zip archive"
-windows = "Expand-Archive -Path <archive.zip> -DestinationPath <dest>"
+powershell = "Expand-Archive -Path <archive.zip> -DestinationPath <dest>"
