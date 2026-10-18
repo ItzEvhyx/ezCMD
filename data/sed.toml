@@ -5,14 +5,14 @@ order = 3
 aliases = ["awk", "sort", "uniq", "wc", "head", "tail", "cut", "pipe"]
 platforms = ["linux", "macos"]
 notes = ["On macOS, sed -i needs an empty suffix: sed -i '' 's/<old>/<new>/g' <file>"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Text"
 
 [[group.section]]
 title = "Replace Text (sed)"
-aliases = []
+aliases = ["sed replace text", "edit file text stream", "substitute text pattern"]
 
 [[group.section.command]]
 note = "Replaces the first match on each line"
@@ -40,7 +40,7 @@ cmd = "sed '/<pattern>/d' <file>"
 
 [[group.section]]
 title = "Columns & Calculations (awk)"
-aliases = []
+aliases = ["awk columns", "awk calculation", "process text fields"]
 
 [[group.section.command]]
 note = "Prints the first column"
@@ -64,7 +64,7 @@ cmd = "awk 'NR==<n>' <file>"
 
 [[group.section]]
 title = "Sort, Count & Slice"
-aliases = []
+aliases = ["sort lines", "count unique lines", "head tail file"]
 
 [[group.section.command]]
 note = "Sorts lines alphabetically"
@@ -108,7 +108,7 @@ cmd = "diff <file1> <file2>"
 
 [[group.section]]
 title = "Pipes & Redirection"
-aliases = []
+aliases = ["shell pipe redirect", "redirect command output", "combine shell commands"]
 
 [[group.section.command]]
 note = "Sends one command's output to another"

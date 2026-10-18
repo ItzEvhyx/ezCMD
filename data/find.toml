@@ -4,14 +4,14 @@ category = "Linux & System Tools"
 order = 2
 aliases = ["grep", "rg", "ripgrep", "search-files"]
 platforms = ["linux", "macos"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Search"
 
 [[group.section]]
 title = "Find Files"
-aliases = []
+aliases = ["find file name", "find files by extension", "locate linux file"]
 
 [[group.section.command]]
 note = "Finds files by name"
@@ -51,7 +51,7 @@ cmd = "find . -empty"
 
 [[group.section]]
 title = "Search Text (grep)"
-aliases = []
+aliases = ["grep text search", "search text in files", "grep regular expression"]
 
 [[group.section.command]]
 note = "Finds lines containing text"
@@ -91,7 +91,7 @@ cmd = "grep -A 3 -B 3 \"<text>\" <file>"
 
 [[group.section]]
 title = "Search Faster (ripgrep)"
-aliases = []
+aliases = ["ripgrep code search", "rg search project", "fast text search"]
 
 [[group.section.command]]
 note = "Searches the current folder recursively"

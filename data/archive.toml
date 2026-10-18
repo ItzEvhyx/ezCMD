@@ -4,14 +4,14 @@ category = "Linux & System Tools"
 order = 4
 aliases = ["tar", "zip", "unzip", "gzip", "7z", "compress"]
 notes = ["tar is built in to Windows 10 and later. zip, unzip, gzip, and gunzip are not, so use tar or PowerShell there. 7z needs 7-Zip installed (p7zip on Linux)"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Archives"
 
 [[group.section]]
 title = "tar Archives"
-aliases = []
+aliases = ["create tar archive", "extract tar file", "compress tarball"]
 
 [[group.section.command]]
 note = "Creates a gzip-compressed archive"
@@ -39,7 +39,7 @@ cmd = "tar -xf <archive>"
 
 [[group.section]]
 title = "zip & gzip"
-aliases = []
+aliases = ["zip compression format", "unzip file", "gzip compress file"]
 
 [[group.section.command]]
 note = "Creates a zip archive"
@@ -75,7 +75,7 @@ windows = "tar -xf <archive.zip>"
 
 [[group.section]]
 title = "7-Zip"
-aliases = []
+aliases = ["7zip archive", "extract 7z file", "compress with 7zip"]
 
 [[group.section.command]]
 note = "Creates a 7z archive"
@@ -91,7 +91,7 @@ cmd = "7z l <archive>"
 
 [[group.section]]
 title = "PowerShell Zip (Windows)"
-aliases = []
+aliases = ["powershell zip archive", "windows compress archive", "expand windows zip"]
 
 [[group.section.command]]
 note = "Creates a zip archive"

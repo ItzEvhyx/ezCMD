@@ -412,12 +412,12 @@ expect = "Navigating Directories"
 os     = "windows"
 
 [[q]]
-query  = "clear"
+query  = "change directory"
 expect = "Navigating Directories"
 os     = "linux"
 
 [[q]]
-query  = "tree"
+query  = "navigate folders"
 expect = "Navigating Directories"
 
 # --- 14. Creating Folders & Files ---
@@ -520,11 +520,11 @@ query  = "read file"
 expect = "Viewing File Contents"
 
 [[q]]
-query  = "search in file"
+query  = "read file contents"
 expect = "Viewing File Contents"
 
 [[q]]
-query  = "grep"
+query  = "print file content"
 expect = "Viewing File Contents"
 os     = "unix"
 

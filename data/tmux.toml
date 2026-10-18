@@ -4,14 +4,14 @@ category = "Linux & System Tools"
 order = 9
 aliases = ["terminal-multiplexer", "sessions", "panes"]
 platforms = ["linux", "macos"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything tmux"
 
 [[group.section]]
 title = "Sessions"
-aliases = []
+aliases = ["tmux session", "create terminal session", "attach tmux session"]
 
 [[group.section.command]]
 note = "Starts a named session"
@@ -39,7 +39,7 @@ cmd = "Ctrl+b d"
 
 [[group.section]]
 title = "Windows & Panes (Keys)"
-aliases = []
+aliases = ["tmux pane", "tmux window", "split terminal pane"]
 
 [[group.section.command]]
 note = "Creates a new window"
@@ -83,7 +83,7 @@ cmd = "Ctrl+b ["
 
 [[group.section]]
 title = "Config & Help"
-aliases = []
+aliases = ["tmux config", "tmux help", "reload tmux config"]
 
 [[group.section.command]]
 note = "Reloads your tmux config"

@@ -4,14 +4,14 @@ category = "Linux & System Tools"
 order = 12
 aliases = ["wget", "http", "api-request", "download"]
 notes = ["In Windows PowerShell, curl is an alias for Invoke-WebRequest. Use curl.exe instead"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything curl"
 
 [[group.section]]
 title = "Send GET Requests"
-aliases = []
+aliases = ["curl get request", "fetch url", "http api get"]
 
 [[group.section.command]]
 note = "Fetches a URL and prints the response"
@@ -39,7 +39,7 @@ cmd = "curl -v <url>"
 
 [[group.section]]
 title = "Send POST & JSON Requests"
-aliases = []
+aliases = ["curl post json", "send json api request", "http post body"]
 
 [[group.section.command]]
 note = "Sends a JSON body"
@@ -64,7 +64,7 @@ cmd = "curl -X DELETE <url>"
 
 [[group.section]]
 title = "Headers & Authentication"
-aliases = []
+aliases = ["curl auth header", "send http headers", "curl bearer token"]
 
 [[group.section.command]]
 note = "Sends a bearer token"
@@ -88,7 +88,7 @@ cmd = "curl -b <cookie-file> <url>"
 
 [[group.section]]
 title = "Download Files (curl)"
-aliases = []
+aliases = ["curl download file", "save url file", "curl resume download"]
 
 [[group.section.command]]
 note = "Saves the response to a named file"
@@ -112,7 +112,7 @@ cmd = "curl -k <url>"
 
 [[group.section]]
 title = "Download Files (wget)"
-aliases = []
+aliases = ["wget website mirror", "wget recursive download", "download with wget"]
 
 [[group.section.command]]
 note = "Downloads a file"

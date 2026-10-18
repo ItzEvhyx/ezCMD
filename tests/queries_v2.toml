@@ -997,7 +997,7 @@ expect = "Lambda & Logs"
 
 [[q]]
 kind = "tool"
-query = "aws lambda tail logs"
+query = "aws cloudwatch follow log group"
 tool = "aws"
 expect = "Lambda & Logs"
 
@@ -1504,3 +1504,417 @@ kind = "tool"
 query = "redis admin"
 tool = "redis"
 expect = "Admin & Debug"
+
+[[q]]
+kind = "tool"
+query = "chmod file permission"
+tool = "perms"
+expect = "Set File Permissions"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "chown file owner"
+tool = "perms"
+expect = "Change Ownership"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "view file permissions"
+tool = "perms"
+expect = "Inspect Permissions"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "manage linux users"
+tool = "perms"
+expect = "Users & Groups"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "create linux group"
+tool = "perms"
+expect = "Users & Groups"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "find file name"
+tool = "find"
+expect = "Find Files"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "find files by extension"
+tool = "find"
+expect = "Find Files"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "grep text search"
+tool = "find"
+expect = "Search Text (grep)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "ripgrep code search"
+tool = "find"
+expect = "Search Faster (ripgrep)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "rg search project"
+tool = "find"
+expect = "Search Faster (ripgrep)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "sed replace text"
+tool = "sed"
+expect = "Replace Text (sed)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "substitute text pattern"
+tool = "sed"
+expect = "Replace Text (sed)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "awk columns"
+tool = "sed"
+expect = "Columns & Calculations (awk)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "sort lines"
+tool = "sed"
+expect = "Sort, Count & Slice"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "shell pipe redirect"
+tool = "sed"
+expect = "Pipes & Redirection"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "create tar archive"
+tool = "archive"
+expect = "tar Archives"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "extract tar file"
+tool = "archive"
+expect = "tar Archives"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "zip compression format"
+tool = "archive"
+expect = "zip & gzip"
+
+[[q]]
+kind = "tool"
+query = "7zip archive"
+tool = "archive"
+expect = "7-Zip"
+
+[[q]]
+kind = "tool"
+query = "powershell zip archive"
+tool = "archive"
+expect = "PowerShell Zip (Windows)"
+os = "windows"
+
+[[q]]
+kind = "tool"
+query = "systemctl restart unit"
+tool = "systemd"
+expect = "Control Services"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "debug systemd service"
+tool = "systemd"
+expect = "List & Debug Services"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "create systemd unit"
+tool = "systemd"
+expect = "Create a Service"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "journalctl logs"
+tool = "systemd"
+expect = "Read Logs (journalctl)"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "systemd log space"
+tool = "systemd"
+expect = "Log Space & Power"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "create cron job"
+tool = "cron"
+expect = "Manage Cron Jobs"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "edit crontab"
+tool = "cron"
+expect = "Manage Cron Jobs"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "cron schedule format"
+tool = "cron"
+expect = "Schedule Formats"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "cron every day"
+tool = "cron"
+expect = "Schedule Formats"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "debug cron job"
+tool = "cron"
+expect = "Debug Cron"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "check disk free space"
+tool = "disk"
+expect = "Check Free Space"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "disk usage folder"
+tool = "disk"
+expect = "Check Free Space"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "list disk partitions"
+tool = "disk"
+expect = "Drives & Partitions"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "disk attach volume"
+tool = "disk"
+expect = "Mount & Unmount"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "format disk partition"
+tool = "disk"
+expect = "Format & Check"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "bash history"
+tool = "bash"
+expect = "History & Shortcuts"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "bash command shortcut"
+tool = "bash"
+expect = "Aliases, Variables & Config"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "bash background job"
+tool = "bash"
+expect = "Jobs & Background Tasks"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "bash command help"
+tool = "bash"
+expect = "Help & Timing"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "bash measure command time"
+tool = "bash"
+expect = "Help & Timing"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "tmux session"
+tool = "tmux"
+expect = "Sessions"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "create terminal session"
+tool = "tmux"
+expect = "Sessions"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "tmux pane"
+tool = "tmux"
+expect = "Windows & Panes (Keys)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "tmux window"
+tool = "tmux"
+expect = "Windows & Panes (Keys)"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "tmux config"
+tool = "tmux"
+expect = "Config & Help"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "vim save file"
+tool = "vim"
+expect = "Save & Quit"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "vim move cursor"
+tool = "vim"
+expect = "Move Around"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "vim edit text"
+tool = "vim"
+expect = "Edit Text"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "vim search text"
+tool = "vim"
+expect = "Search & Replace"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "vim select text"
+tool = "vim"
+expect = "Select, Windows & Files"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nano open file"
+tool = "nano"
+expect = "Open & Save"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nano save file"
+tool = "nano"
+expect = "Open & Save"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nano edit text"
+tool = "nano"
+expect = "Edit Text"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nano search text"
+tool = "nano"
+expect = "Search & Navigate"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "nano cursor position"
+tool = "nano"
+expect = "Search & Navigate"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "curl get request"
+tool = "curl"
+expect = "Send GET Requests"
+
+[[q]]
+kind = "tool"
+query = "curl post json"
+tool = "curl"
+expect = "Send POST & JSON Requests"
+
+[[q]]
+kind = "tool"
+query = "curl auth header"
+tool = "curl"
+expect = "Headers & Authentication"
+
+[[q]]
+kind = "tool"
+query = "curl download file"
+tool = "curl"
+expect = "Download Files (curl)"
+
+[[q]]
+kind = "tool"
+query = "wget website mirror"
+tool = "curl"
+expect = "Download Files (wget)"
+os = "unix"

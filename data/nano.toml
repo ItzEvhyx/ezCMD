@@ -5,14 +5,14 @@ order = 11
 aliases = ["pico"]
 platforms = ["linux", "macos"]
 notes = ["nano is not built in to Windows. Use it through Git Bash or WSL. The nano that ships with macOS is old, so Alt shortcuts may not work until you run brew install nano"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything nano"
 
 [[group.section]]
 title = "Open & Save"
-aliases = []
+aliases = ["nano open file", "nano save file", "exit nano editor"]
 
 [[group.section.command]]
 note = "Opens a file in nano"
@@ -32,7 +32,7 @@ cmd = "Ctrl+g"
 
 [[group.section]]
 title = "Edit Text"
-aliases = []
+aliases = ["nano edit text", "nano cut line", "nano paste text"]
 
 [[group.section.command]]
 note = "Cuts the current line"
@@ -60,7 +60,7 @@ cmd = "Alt+e"
 
 [[group.section]]
 title = "Search & Navigate"
-aliases = []
+aliases = ["nano search text", "nano cursor position", "nano navigate file"]
 
 [[group.section.command]]
 note = "Searches for text"

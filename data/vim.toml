@@ -3,14 +3,14 @@ name = "Vim"
 category = "Linux & System Tools"
 order = 10
 aliases = ["vi", "neovim", "nvim"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Vim"
 
 [[group.section]]
 title = "Save & Quit"
-aliases = []
+aliases = ["vim save file", "quit vim", "write and exit vim"]
 
 [[group.section.command]]
 note = "Saves the file"
@@ -42,7 +42,7 @@ cmd = "Esc"
 
 [[group.section]]
 title = "Move Around"
-aliases = []
+aliases = ["vim move cursor", "navigate vim file", "vim jump line"]
 
 [[group.section.command]]
 note = "Moves left, down, up, right"
@@ -90,7 +90,7 @@ cmd = "Ctrl+b"
 
 [[group.section]]
 title = "Edit Text"
-aliases = []
+aliases = ["vim edit text", "insert vim mode", "delete vim line"]
 
 [[group.section.command]]
 note = "Deletes the current line"
@@ -130,7 +130,7 @@ cmd = "."
 
 [[group.section]]
 title = "Search & Replace"
-aliases = []
+aliases = ["vim search text", "vim replace text", "substitute vim pattern"]
 
 [[group.section.command]]
 note = "Searches forward"
@@ -162,7 +162,7 @@ cmd = ":noh"
 
 [[group.section]]
 title = "Select, Windows & Files"
-aliases = []
+aliases = ["vim select text", "vim split window", "open vim file"]
 
 [[group.section.command]]
 note = "Starts character selection"

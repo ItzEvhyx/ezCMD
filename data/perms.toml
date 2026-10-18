@@ -5,14 +5,14 @@ order = 1
 aliases = ["chmod", "chown", "sudo", "users", "groups"]
 platforms = ["linux", "macos"]
 notes = ["The Users & Groups commands are Linux-specific. macOS manages users differently"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Permissions"
 
 [[group.section]]
 title = "Set File Permissions"
-aliases = []
+aliases = ["chmod file permission", "set executable permission", "change linux file mode"]
 
 [[group.section.command]]
 note = "Makes a file executable"
@@ -40,7 +40,7 @@ cmd = "chmod u+rwx,go-rwx <file>"
 
 [[group.section]]
 title = "Change Ownership"
-aliases = []
+aliases = ["chown file owner", "change file ownership", "set linux file group"]
 
 [[group.section.command]]
 note = "Changes a file's owner"
@@ -64,7 +64,7 @@ cmd = "chgrp <group> <file>"
 
 [[group.section]]
 title = "Inspect Permissions"
-aliases = []
+aliases = ["view file permissions", "check linux file mode", "list file owner"]
 
 [[group.section.command]]
 note = "Lists files with their permissions"
@@ -88,7 +88,7 @@ cmd = "umask"
 
 [[group.section]]
 title = "Users & Groups"
-aliases = []
+aliases = ["manage linux users", "create linux group", "sudo user command"]
 
 [[group.section.command]]
 note = "Creates a user with a home folder"

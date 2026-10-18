@@ -5,14 +5,14 @@ order = 8
 aliases = ["terminal", "zsh", "history", "alias"]
 platforms = ["linux", "macos"]
 notes = ["macOS uses zsh by default, so its config file is ~/.zshrc. watch is not preinstalled on macOS. tldr is a separate install on both systems"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Shell"
 
 [[group.section]]
 title = "History & Shortcuts"
-aliases = []
+aliases = ["bash history", "terminal keyboard shortcut", "repeat shell command"]
 
 [[group.section.command]]
 note = "Lists your command history"
@@ -52,7 +52,7 @@ cmd = "Ctrl+e"
 
 [[group.section]]
 title = "Aliases, Variables & Config"
-aliases = []
+aliases = ["bash command shortcut", "shell environment variable", "edit bash config"]
 
 [[group.section.command]]
 note = "Creates a shortcut for a command"
@@ -84,7 +84,7 @@ cmd = "type <command>"
 
 [[group.section]]
 title = "Jobs & Background Tasks"
-aliases = []
+aliases = ["bash background job", "stop shell job", "run command in background"]
 
 [[group.section.command]]
 note = "Runs a command in the background"
@@ -112,7 +112,7 @@ cmd = "disown"
 
 [[group.section]]
 title = "Help & Timing"
-aliases = []
+aliases = ["bash command help", "bash measure command time", "find bash manual"]
 
 [[group.section.command]]
 note = "Opens a command's manual"

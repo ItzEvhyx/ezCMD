@@ -152,6 +152,30 @@ fn test_databases_v8f_tools_are_complete() {
 }
 
 #[test]
+fn test_linux_system_tools_v8g_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Linux & System Tools")
+        .expect("Linux & System Tools category present");
+    let expected = [
+        "perms", "find", "sed", "archive", "systemd", "cron", "disk", "bash", "tmux", "vim",
+        "nano", "curl",
+    ];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(&actual[..expected.len()], expected);
+    assert_eq!(actual.last(), Some(&"shell"));
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .take(expected.len())
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        47
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

@@ -59,4 +59,16 @@ Databases
   -redis       Redis                          4 sections
 
 Linux & System Tools
+  -perms       Permissions & Users            4 sections
+  -find        Find & Search Text             3 sections
+  -sed         sed, awk & Text Tools          4 sections
+  -archive     Archives (tar & zip)           3 sections
+  -systemd     systemd & journalctl           5 sections
+  -cron        Cron                           3 sections
+  -disk        Disk & Storage                 4 sections
+  -bash        Shell Productivity (Bash)      4 sections
+  -tmux        tmux                           3 sections
+  -vim         Vim                            5 sections
+  -nano        nano                           3 sections
+  -curl        curl & wget                    5 sections
   -shell       Shell Basics (CMD & Terminal)  10 sections

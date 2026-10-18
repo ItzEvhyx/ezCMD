@@ -5,14 +5,14 @@ order = 7
 aliases = ["df", "du", "lsblk", "mount", "ncdu", "diskutil", "free-space"]
 platforms = ["linux", "macos"]
 notes = ["Drive and partition tools differ. Linux uses lsblk, fdisk, and mkfs. macOS uses diskutil. ncdu is a separate install"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Disk"
 
 [[group.section]]
 title = "Check Free Space"
-aliases = []
+aliases = ["check disk free space", "disk usage folder", "show storage capacity"]
 
 [[group.section.command]]
 note = "Shows free space on each drive"
@@ -37,7 +37,7 @@ cmd = "ncdu <folder>"
 
 [[group.section]]
 title = "Drives & Partitions"
-aliases = []
+aliases = ["list disk partitions", "show linux drives", "inspect block device"]
 
 [[group.section.command]]
 note = "Lists drives and partitions"
@@ -65,7 +65,7 @@ macos = "diskutil info <disk>"
 
 [[group.section]]
 title = "Mount & Unmount"
-aliases = []
+aliases = ["mount linux drive", "unmount disk", "attach disk volume"]
 
 [[group.section.command]]
 note = "Mounts a drive on a folder"
@@ -93,7 +93,7 @@ cmd = "mount"
 
 [[group.section]]
 title = "Format & Check"
-aliases = []
+aliases = ["format disk partition", "check disk filesystem", "repair linux disk"]
 
 [[group.section.command]]
 note = "Formats a drive as ext4 (erases it)"

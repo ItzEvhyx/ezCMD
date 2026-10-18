@@ -4,14 +4,14 @@ category = "Linux & System Tools"
 order = 6
 aliases = ["crontab", "scheduled-tasks", "schedule"]
 platforms = ["linux", "macos"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Cron"
 
 [[group.section]]
 title = "Manage Cron Jobs"
-aliases = []
+aliases = ["create cron job", "edit crontab", "delete scheduled task"]
 
 [[group.section.command]]
 note = "Edits your cron jobs"
@@ -31,7 +31,7 @@ cmd = "sudo crontab -u <user> -l"
 
 [[group.section]]
 title = "Schedule Formats"
-aliases = []
+aliases = ["cron schedule format", "cron every day", "crontab time syntax"]
 
 [[group.section.command]]
 note = "Runs every minute"
@@ -63,7 +63,7 @@ cmd = "@reboot <command>"
 
 [[group.section]]
 title = "Debug Cron"
-aliases = []
+aliases = ["debug cron job", "cron log error", "test scheduled task"]
 
 [[group.section.command]]
 note = "Shows cron activity (Debian and Ubuntu)"

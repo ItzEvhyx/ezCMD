@@ -4,14 +4,14 @@ category = "Linux & System Tools"
 order = 5
 aliases = ["systemctl", "journalctl", "service", "daemon"]
 platforms = ["linux"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything systemd"
 
 [[group.section]]
 title = "Control Services"
-aliases = []
+aliases = ["systemctl service", "start systemd service", "restart linux service"]
 
 [[group.section.command]]
 note = "Shows a service's status"
@@ -43,7 +43,7 @@ cmd = "sudo systemctl disable <service>"
 
 [[group.section]]
 title = "List & Debug Services"
-aliases = []
+aliases = ["debug systemd service", "list linux services", "failed systemd service"]
 
 [[group.section.command]]
 note = "Lists running services"
@@ -71,7 +71,7 @@ cmd = "systemctl list-timers"
 
 [[group.section]]
 title = "Create a Service"
-aliases = []
+aliases = ["create systemd unit", "write linux service file", "enable custom service"]
 
 [[group.section.command]]
 note = "Creates or edits a service file"
@@ -95,7 +95,7 @@ cmd = "systemctl --user enable --now <service>"
 
 [[group.section]]
 title = "Read Logs (journalctl)"
-aliases = []
+aliases = ["journalctl logs", "read systemd log", "follow linux service log"]
 
 [[group.section.command]]
 note = "Shows a service's logs"
@@ -127,7 +127,7 @@ cmd = "journalctl -k"
 
 [[group.section]]
 title = "Log Space & Power"
-aliases = []
+aliases = ["systemd log space", "systemd power command", "vacuum journal logs"]
 
 [[group.section.command]]
 note = "Shows how much space logs use"
