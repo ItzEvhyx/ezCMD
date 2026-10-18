@@ -3,14 +3,14 @@ name = "SQLite"
 category = "Databases"
 order = 3
 aliases = ["sqlite3"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything SQLite"
 
 [[group.section]]
 title = "Open & Query"
-aliases = []
+aliases = ["open sqlite database", "sqlite query", "sqlite shell"]
 
 [[group.section.command]]
 note = "Opens or creates a database"
@@ -30,7 +30,7 @@ cmd = ".quit"
 
 [[group.section]]
 title = "Inspect (Dot Commands)"
-aliases = []
+aliases = ["sqlite tables", "sqlite schema", "sqlite dot command"]
 
 [[group.section.command]]
 note = "Lists tables"
@@ -54,7 +54,7 @@ cmd = ".mode column"
 
 [[group.section]]
 title = "Import & Export"
-aliases = []
+aliases = ["import sqlite csv", "export sqlite data", "sqlite database dump"]
 
 [[group.section.command]]
 note = "Switches to CSV format"
@@ -74,7 +74,7 @@ cmd = ".output stdout"
 
 [[group.section]]
 title = "Backup"
-aliases = []
+aliases = ["backup sqlite database", "restore sqlite backup", "copy sqlite database"]
 
 [[group.section.command]]
 note = "Prints the whole database as SQL"

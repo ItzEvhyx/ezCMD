@@ -1354,3 +1354,153 @@ kind = "tool"
 query = "inspect maven dependencies"
 tool = "maven"
 expect = "Dependencies & Plugins"
+
+[[q]]
+kind = "tool"
+query = "psql connect database"
+tool = "postgres"
+expect = "Connect"
+
+[[q]]
+kind = "tool"
+query = "postgres query"
+tool = "postgres"
+expect = "Connect"
+
+[[q]]
+kind = "tool"
+query = "postgres meta commands"
+tool = "postgres"
+expect = "Inside psql"
+
+[[q]]
+kind = "tool"
+query = "manage postgres users"
+tool = "postgres"
+expect = "Users & Databases"
+
+[[q]]
+kind = "tool"
+query = "pg dump database"
+tool = "postgres"
+expect = "Backup & Restore"
+
+[[q]]
+kind = "tool"
+query = "connect mysql server"
+tool = "mysql"
+expect = "Connect"
+
+[[q]]
+kind = "tool"
+query = "mysql command line"
+tool = "mysql"
+expect = "Connect"
+
+[[q]]
+kind = "tool"
+query = "mysql show tables"
+tool = "mysql"
+expect = "Inside mysql"
+
+[[q]]
+kind = "tool"
+query = "manage mysql users"
+tool = "mysql"
+expect = "Users & Databases"
+
+[[q]]
+kind = "tool"
+query = "mysql dump database"
+tool = "mysql"
+expect = "Backup & Restore"
+
+[[q]]
+kind = "tool"
+query = "open sqlite database"
+tool = "sqlite"
+expect = "Open & Query"
+
+[[q]]
+kind = "tool"
+query = "sqlite query"
+tool = "sqlite"
+expect = "Open & Query"
+
+[[q]]
+kind = "tool"
+query = "sqlite tables"
+tool = "sqlite"
+expect = "Inspect (Dot Commands)"
+
+[[q]]
+kind = "tool"
+query = "import sqlite csv"
+tool = "sqlite"
+expect = "Import & Export"
+
+[[q]]
+kind = "tool"
+query = "backup sqlite database"
+tool = "sqlite"
+expect = "Backup"
+
+[[q]]
+kind = "tool"
+query = "connect mongodb"
+tool = "mongodb"
+expect = "Connect & Browse"
+
+[[q]]
+kind = "tool"
+query = "mongosh shell"
+tool = "mongodb"
+expect = "Connect & Browse"
+
+[[q]]
+kind = "tool"
+query = "mongodb query"
+tool = "mongodb"
+expect = "Query & Edit Documents"
+
+[[q]]
+kind = "tool"
+query = "mongodb index"
+tool = "mongodb"
+expect = "Indexes & Cleanup"
+
+[[q]]
+kind = "tool"
+query = "mongodump backup"
+tool = "mongodb"
+expect = "Backup & Restore"
+
+[[q]]
+kind = "tool"
+query = "connect redis"
+tool = "redis"
+expect = "Connect & Basics"
+
+[[q]]
+kind = "tool"
+query = "redis command line"
+tool = "redis"
+expect = "Connect & Basics"
+
+[[q]]
+kind = "tool"
+query = "redis key"
+tool = "redis"
+expect = "Keys & Expiry"
+
+[[q]]
+kind = "tool"
+query = "redis data type"
+tool = "redis"
+expect = "Data Types"
+
+[[q]]
+kind = "tool"
+query = "redis admin"
+tool = "redis"
+expect = "Admin & Debug"

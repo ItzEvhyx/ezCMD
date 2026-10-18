@@ -3,14 +3,14 @@ name = "MongoDB"
 category = "Databases"
 order = 4
 aliases = ["mongo", "mongosh", "mongodump"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything MongoDB"
 
 [[group.section]]
 title = "Connect & Browse"
-aliases = []
+aliases = ["connect mongodb", "mongosh shell", "browse mongo database"]
 
 [[group.section.command]]
 note = "Connects to a local server"
@@ -34,7 +34,7 @@ cmd = "show collections"
 
 [[group.section]]
 title = "Query & Edit Documents"
-aliases = []
+aliases = ["mongodb query", "edit mongo document", "mongo collection data"]
 
 [[group.section.command]]
 note = "Returns all documents"
@@ -66,7 +66,7 @@ cmd = "db.<collection>.countDocuments()"
 
 [[group.section]]
 title = "Indexes & Cleanup"
-aliases = []
+aliases = ["mongodb index", "mongo cleanup", "analyze mongo query"]
 
 [[group.section.command]]
 note = "Creates an index"
@@ -86,7 +86,7 @@ cmd = "db.dropDatabase()"
 
 [[group.section]]
 title = "Backup & Restore"
-aliases = []
+aliases = ["mongodump backup", "restore mongodb backup", "mongo database export"]
 
 [[group.section.command]]
 note = "Exports a database to a folder"

@@ -3,14 +3,14 @@ name = "MySQL & MariaDB"
 category = "Databases"
 order = 2
 aliases = ["mariadb", "mysqldump"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything MySQL"
 
 [[group.section]]
 title = "Connect"
-aliases = []
+aliases = ["connect mysql server", "mysql command line", "connect mariadb"]
 
 [[group.section.command]]
 note = "Connects to the server"
@@ -30,7 +30,7 @@ cmd = "mysql -u <user> -p -e \"<sql>\""
 
 [[group.section]]
 title = "Inside mysql"
-aliases = []
+aliases = ["mysql query", "mysql show tables", "mysql describe table"]
 
 [[group.section.command]]
 note = "Lists databases"
@@ -58,7 +58,7 @@ cmd = "EXIT;"
 
 [[group.section]]
 title = "Users & Databases"
-aliases = []
+aliases = ["manage mysql users", "create mysql database", "change mysql password"]
 
 [[group.section.command]]
 note = "Creates a database"
@@ -86,7 +86,7 @@ cmd = "DROP DATABASE <name>;"
 
 [[group.section]]
 title = "Backup & Restore"
-aliases = []
+aliases = ["mysql dump database", "restore mysql backup", "mysql backup file"]
 
 [[group.section.command]]
 note = "Exports a database to a SQL file"

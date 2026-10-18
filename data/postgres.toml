@@ -3,14 +3,14 @@ name = "PostgreSQL (psql)"
 category = "Databases"
 order = 1
 aliases = ["psql", "postgresql", "pg_dump"]
-draft = true
+draft = false
 
 [[group]]
 title = "Connect & Query"
 
 [[group.section]]
 title = "Connect"
-aliases = []
+aliases = ["psql connect database", "postgres query", "open psql shell"]
 
 [[group.section.command]]
 note = "Connects to a database"
@@ -38,7 +38,7 @@ cmd = "pg_isready"
 
 [[group.section]]
 title = "Inside psql"
-aliases = []
+aliases = ["psql meta commands", "list postgres tables", "describe postgres table"]
 
 [[group.section.command]]
 note = "Lists databases"
@@ -81,7 +81,7 @@ title = "Admin & Backup"
 
 [[group.section]]
 title = "Users & Databases"
-aliases = []
+aliases = ["manage postgres users", "create postgres database", "change postgres password"]
 
 [[group.section.command]]
 note = "Creates a database"
@@ -109,7 +109,7 @@ cmd = "DROP DATABASE <name>;"
 
 [[group.section]]
 title = "Command-Line Tools"
-aliases = []
+aliases = ["postgres command line tools", "create database command", "delete postgres database"]
 
 [[group.section.command]]
 note = "Creates a database from the shell"
@@ -129,7 +129,7 @@ cmd = "psql --version"
 
 [[group.section]]
 title = "Backup & Restore"
-aliases = []
+aliases = ["pg dump database", "restore postgres backup", "postgres backup file"]
 
 [[group.section.command]]
 note = "Exports a database to a SQL file"

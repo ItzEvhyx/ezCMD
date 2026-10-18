@@ -51,5 +51,12 @@ Languages & Package Tools
   -java        Java                           2 sections
   -maven       Maven                          2 sections
 
+Databases
+  -postgres    PostgreSQL (psql)              5 sections
+  -mysql       MySQL & MariaDB                4 sections
+  -sqlite      SQLite                         4 sections
+  -mongodb     MongoDB                        4 sections
+  -redis       Redis                          4 sections
+
 Linux & System Tools
   -shell       Shell Basics (CMD & Terminal)  10 sections

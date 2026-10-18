@@ -133,6 +133,25 @@ fn test_languages_package_tools_v8e_are_complete() {
 }
 
 #[test]
+fn test_databases_v8f_tools_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Databases")
+        .expect("Databases category present");
+    let expected = ["postgres", "mysql", "sqlite", "mongodb", "redis"];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        21
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

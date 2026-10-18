@@ -5,14 +5,14 @@ order = 5
 aliases = ["redis-cli", "cache"]
 platforms = ["linux", "macos"]
 notes = ["Redis has no official native Windows build. On Windows, run it through WSL or Docker"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Redis"
 
 [[group.section]]
 title = "Connect & Basics"
-aliases = []
+aliases = ["connect redis", "redis command line", "redis ping server"]
 
 [[group.section.command]]
 note = "Connects to a local server"
@@ -36,7 +36,7 @@ cmd = "SELECT <db>"
 
 [[group.section]]
 title = "Keys & Expiry"
-aliases = []
+aliases = ["redis key", "redis expiry", "delete redis key"]
 
 [[group.section.command]]
 note = "Stores a value"
@@ -72,7 +72,7 @@ cmd = "TYPE <key>"
 
 [[group.section]]
 title = "Data Types"
-aliases = []
+aliases = ["redis data type", "redis list set hash", "redis string value"]
 
 [[group.section.command]]
 note = "Adds 1 to a number"
@@ -104,7 +104,7 @@ cmd = "SMEMBERS <key>"
 
 [[group.section]]
 title = "Admin & Debug"
-aliases = []
+aliases = ["redis admin", "debug redis", "redis server info"]
 
 [[group.section.command]]
 note = "Shows server information"
