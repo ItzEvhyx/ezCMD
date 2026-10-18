@@ -167,17 +167,17 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         )?;
         writeln!(
             w,
-            "  {}|{}  {}ezcmd --help{}             {}---{} Explore all sections for your current OS {}|{}",
+            "  {}|{}  {}ezcmd --help{}             {}---{} Browse categories and tools for your OS   {}|{}",
             C_CYAN, term::RESET, term::CMD_COLOR, term::RESET, term::DIM, term::RESET, C_CYAN, term::RESET
         )?;
         writeln!(
             w,
-            "  {}|{}  {}ezcmd --help -git{}        {}---{} View Git workflow cheat sheet            {}|{}",
+            "  {}|{}  {}ezcmd --help -git{}        {}---{} View Git groups and section titles        {}|{}",
             C_CYAN, term::RESET, term::CMD_COLOR, term::RESET, term::DIM, term::RESET, C_CYAN, term::RESET
         )?;
         writeln!(
             w,
-            "  {}|{}  {}ezcmd --help -shell{}      {}---{} View Shell commands & filesystem         {}|{}",
+            "  {}|{}  {}ezcmd --help -shell{}      {}---{} View Shell groups and section titles      {}|{}",
             C_CYAN, term::RESET, term::CMD_COLOR, term::RESET, term::DIM, term::RESET, C_CYAN, term::RESET
         )?;
         writeln!(
@@ -265,15 +265,15 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         )?;
         writeln!(
             w,
-            "  |  ezcmd --help             --- Explore all sections for your current OS |"
+            "  |  ezcmd --help             --- Browse categories and tools for your OS   |"
         )?;
         writeln!(
             w,
-            "  |  ezcmd --help -git        --- View Git workflow cheat sheet            |"
+            "  |  ezcmd --help -git        --- View Git groups and section titles        |"
         )?;
         writeln!(
             w,
-            "  |  ezcmd --help -shell      --- View Shell commands & filesystem         |"
+            "  |  ezcmd --help -shell      --- View Shell groups and section titles      |"
         )?;
         writeln!(
             w,

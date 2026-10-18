@@ -111,7 +111,7 @@ dependencies = [
 
 [[package]]
 name = "ezcmd"
-version = "0.2.1"
+version = "2.0.0"
 dependencies = [
  "assert_cmd",
  "enable-ansi-support",

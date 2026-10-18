@@ -30,7 +30,7 @@ if ($ScriptDir -and (Test-Path "$ScriptDir\target\release\ezcmd.exe")) {
         # ignore api error/rate limit
     }
     if (-not $ZipUrl) {
-        $ZipUrl = "https://github.com/$Repo/releases/download/v0.2.1/ezcmd-v0.2.1-$AssetTarget.zip"
+        $ZipUrl = "https://github.com/$Repo/releases/download/v2.0.0/ezcmd-v2.0.0-$AssetTarget.zip"
     }
 
     $TempZip = "$env:TEMP\ezcmd.zip"
@@ -81,9 +81,9 @@ try {
 
   QUICK START / HOW TO USE:
     ezcmd <query>                   Search for workflows or commands
-    ezcmd --help                    Show all sections for your OS
-    ezcmd --help -git               Show Git workflow cheatsheet
-    ezcmd --help -shell             Show Shell command cheatsheet
+    ezcmd --help                    Browse categories and tools for your OS
+    ezcmd --help -git               Show Git groups and sections
+    ezcmd --help -git -worktree     Show one Git section
     ezcmd --uninstall               Uninstall ezcmd from your machine
 
   WORKFLOWS TO TRY:

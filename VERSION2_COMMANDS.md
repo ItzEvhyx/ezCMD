@@ -1,7 +1,7 @@
 # ezCMD Version 2: Command Library Plan
 
-**Status:** Draft  
-**Purpose:** Section-by-section outline and command content for the v2 library. This file is the source for `IMPLEMENTATIONV2.md`.
+**Status:** Archived — imported for ezCMD 2.0.0
+**Purpose:** Historical source for the v2 command library. The imported runtime data now lives in `data/*.toml`; implementation notes remain in `IMPLEMENTATIONV2.md`.
 
 ---
 

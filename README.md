@@ -69,6 +69,8 @@ $ ezcmd initializing repo
 |:---:|:---|:---|
 | <img src="https://api.iconify.design/lucide/target.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Task-Oriented Search** | Search for what you intend to accomplish (`initializing repo`, `undo last commit`, `delete files`) rather than trying to remember syntax. |
 | <img src="https://api.iconify.design/lucide/search.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Intelligent Fuzzy Matcher** | Handles typos, transposed words, and natural phrasing using custom token-stemming and Damerau-Levenshtein distance. |
+| <img src="https://api.iconify.design/lucide/library.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Browsable Command Library** | Browse categories, tool tables of contents, and focused sections without dumping every command at once. |
+| <img src="https://api.iconify.design/lucide/tags.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Tool Aliases** | Reach tools by their short flag or a non-shadowed alternate name, such as `-rebase` for Git. |
 | <img src="https://api.iconify.design/lucide/monitor.svg?color=%2300b0ff" width="22" height="22" alt=""> | **OS-Aware Resolution** | Automatically detects whether you are on Linux, macOS, or Windows CMD and presents commands that work for your operating system. |
 | <img src="https://api.iconify.design/lucide/package.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Fully Offline & Self-Contained** | Cheatsheet data is compiled directly into the binary at build time. Zero network requests, zero telemetry, zero background daemons. |
 | <img src="https://api.iconify.design/lucide/zap.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Blazing Performance** | Launches, matches, formats, and terminates in **under 15 milliseconds** with less than 1.2 MB footprint. |
@@ -219,7 +221,7 @@ setx PATH "%PATH%;%USERPROFILE%\.local\bin"
 
 ```bash
 ezcmd --version
-# → ezcmd 0.2.1
+# → ezcmd 2.0.0
 ```
 
 ---
@@ -231,10 +233,11 @@ ezcmd --version
 | Command | Description |
 |:---|:---|
 | `ezcmd <query>` | Find a workflow or command |
-| `ezcmd --help` | Show all sections for your current OS |
-| `ezcmd --help -<tool>` | Show all sections for a tool (e.g. -git, -shell) |
-| `ezcmd --help -<tool> -<section>` | Show a specific section |
-| `ezcmd --help -<os>` | View cheatsheet as Linux, macOS, or Windows |
+| `ezcmd --help` | Browse OS-filtered categories and tools |
+| `ezcmd --help -<tool>` | Show a tool's groups and section titles (e.g. `-git`, `-docker`) |
+| `ezcmd --help -<tool> -<section>` | Show the matching section's commands |
+| `ezcmd --help -<section>` | Search matching sections across every tool |
+| `ezcmd --help -<os>` | Browse as Linux, macOS, or Windows |
 | `ezcmd --plain <query>` | Raw plain output (no ANSI, no box frames) |
 | `ezcmd --install` | Install ezcmd to PATH + show welcome |
 | `ezcmd --welcome` | Display ASCII welcome banner & quickstart |
@@ -254,11 +257,20 @@ ezcmd delete folder
 # Search by exact command syntax
 ezcmd -- reset --hard
 
-# OS-specific exploration
-ezcmd --help -git
-ezcmd --help -shell
-ezcmd --help -windows -shell
+# Browse the command library
+ezcmd --help
+ezcmd --help -docker
+ezcmd --help -docker -logs
+ezcmd --help -initialize
+
+# Tool aliases and OS-specific exploration
+ezcmd --help -rebase
+ezcmd --help -windows -winget
 ```
+
+### Tool aliases
+
+Each tool has a canonical flag such as `-docker` and may have alternate names shown in its `Also matches` line. Non-shadowed aliases can be used as tool flags, so `ezcmd --help -rebase` opens Git. If an alias is also meaningful as a section search, select the tool first: `ezcmd --help -git -worktree`.
 
 ### Handling Ambiguous Queries
 
