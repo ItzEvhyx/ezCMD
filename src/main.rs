@@ -1,5 +1,5 @@
 use ezcmd::cli::{self, Action};
-use ezcmd::content::all_tools;
+use ezcmd::content::{all_tools, CATEGORIES};
 use ezcmd::matcher::{self, SearchResult};
 use ezcmd::os::Os;
 use ezcmd::prompt;
@@ -8,48 +8,7 @@ use ezcmd::term;
 use std::io::{self, IsTerminal, Write};
 
 fn print_usage_header<W: Write>(w: &mut W, ctx: &RenderCtx) -> io::Result<()> {
-    writeln!(w, "ezcmd {}", env!("CARGO_PKG_VERSION"))?;
-    writeln!(w, "Find the right command, in order.\n")?;
-
-    if ctx.color {
-        writeln!(w, "{}USAGE:{}", term::CYAN_BOLD, term::RESET)?;
-    } else {
-        writeln!(w, "USAGE:")?;
-    }
-
-    writeln!(
-        w,
-        "  ezcmd <query>                          Find a section or command"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --help                           Show every section (this OS)"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --help -<tool>                   Show one tool's sections"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --help -<tool> -<section>        Show one section"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --help -<os>                     Show everything for another OS"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --install                        Install ezcmd to PATH"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --uninstall                      Uninstall ezcmd from machine"
-    )?;
-    writeln!(
-        w,
-        "  ezcmd --welcome                        Show welcome banner & quickstart"
-    )?;
-    Ok(())
+    render::usage_guide(w, ctx)
 }
 
 fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
@@ -82,7 +41,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
         Action::Usage => {
             print_usage_header(out, &render_ctx)?;
             writeln!(out)?;
-            writeln!(out, "Run 'ezcmd --help' to see all commands.")?;
+            writeln!(out, "Run 'ezcmd --help' to browse all tools.")?;
             Ok(0)
         }
         Action::Install => ezcmd::welcome::run_install(out, render_ctx.color),
@@ -208,51 +167,17 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                     }
                 }
             } else {
-                // Whole help output or single tool's help output
-                print_usage_header(out, &render_ctx)?;
-                writeln!(out)?;
-
-                let target_tools: Vec<_> = if let Some(tool_name) = request.tool {
-                    all_tools()
-                        .filter(|tool| tool.slug.eq_ignore_ascii_case(tool_name))
-                        .collect()
+                if let Some(tool_name) = request.tool {
+                    if let Some(tool) =
+                        all_tools().find(|tool| tool.slug.eq_ignore_ascii_case(tool_name))
+                    {
+                        render::toc_tool(out, tool, target_os, &render_ctx)?;
+                    }
                 } else {
-                    all_tools().collect()
-                };
-
-                let mut first_tool = true;
-                for tool in target_tools {
-                    let available_sections: Vec<_> = tool
-                        .sections()
-                        .filter(|s| s.available_on(target_os))
-                        .collect();
-
-                    if available_sections.is_empty() {
-                        continue;
-                    }
-
-                    if !first_tool {
-                        writeln!(out)?;
-                    }
-
-                    if request.tool.is_none() {
-                        if render_ctx.color {
-                            writeln!(
-                                out,
-                                "{}TOOL: {}{}\n",
-                                term::CYAN_BOLD,
-                                tool.slug,
-                                term::RESET
-                            )?;
-                        } else {
-                            writeln!(out, "TOOL: {}\n", tool.slug)?;
-                        }
-                    }
-
-                    render::render_sections(out, &available_sections, target_os, &render_ctx)?;
-                    first_tool = false;
+                    render::usage_guide(out, &render_ctx)?;
+                    writeln!(out)?;
+                    render::toc_overview(out, CATEGORIES, target_os, &render_ctx)?;
                 }
-
                 Ok(0)
             }
         }

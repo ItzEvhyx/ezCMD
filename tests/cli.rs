@@ -18,7 +18,7 @@ fn test_usage_no_args() {
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.assert()
         .success()
-        .stdout(predicate::str::contains("USAGE:"))
+        .stdout(predicate::str::contains("HOW TO USE"))
         .stdout(predicate::str::contains("ezcmd <query>"));
 }
 
@@ -87,11 +87,12 @@ fn test_help_all() {
     cmd.arg("--help")
         .assert()
         .success()
-        .stdout(predicate::str::contains("USAGE:"))
-        .stdout(predicate::str::contains("TOOL: git"))
-        .stdout(predicate::str::contains("TOOL: shell"))
-        .stdout(predicate::str::contains("Initializing a Repo"))
-        .stdout(predicate::str::contains("Navigating Directories"));
+        .stdout(predicate::str::contains("HOW TO USE"))
+        .stdout(predicate::str::contains("Version Control"))
+        .stdout(predicate::str::contains("Linux & System Tools"))
+        .stdout(predicate::str::contains("-git"))
+        .stdout(predicate::str::contains("-shell"))
+        .stdout(predicate::str::contains("git init").not());
 }
 
 #[test]
@@ -100,10 +101,11 @@ fn test_help_tool_git_only() {
     cmd.args(["--help", "-git"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("USAGE:"))
+        .stdout(predicate::str::contains("Git  (-git)"))
         .stdout(predicate::str::contains("Initializing a Repo"))
+        .stdout(predicate::str::contains("git init").not())
         .stdout(predicate::str::contains("Navigating Directories").not())
-        .stdout(predicate::str::contains("TOOL: shell").not());
+        .stdout(predicate::str::contains("Shell Basics").not());
 }
 
 #[test]
@@ -112,10 +114,13 @@ fn test_help_tool_shell_only() {
     cmd.args(["--help", "-shell"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("USAGE:"))
+        .stdout(predicate::str::contains(
+            "Shell Basics (CMD & Terminal)  (-shell)",
+        ))
         .stdout(predicate::str::contains("Navigating Directories"))
+        .stdout(predicate::str::contains("pwd").not())
         .stdout(predicate::str::contains("Initializing a Repo").not())
-        .stdout(predicate::str::contains("TOOL: git").not());
+        .stdout(predicate::str::contains("Git  (-git)").not());
 }
 
 #[test]
@@ -124,9 +129,9 @@ fn test_help_windows_view() {
     cmd.args(["--help", "-windows"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("rmdir /s /q <folder>"))
-        .stdout(predicate::str::contains("type nul > <file>"))
-        .stdout(predicate::str::contains("cls"));
+        .stdout(predicate::str::contains("HOW TO USE"))
+        .stdout(predicate::str::contains("-shell"))
+        .stdout(predicate::str::contains("rmdir /s /q <folder>").not());
 }
 
 #[test]
@@ -135,9 +140,9 @@ fn test_help_linux_view() {
     cmd.args(["--help", "-linux"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("rm -rf <folder>"))
-        .stdout(predicate::str::contains("touch <file>"))
-        .stdout(predicate::str::contains("clear"));
+        .stdout(predicate::str::contains("HOW TO USE"))
+        .stdout(predicate::str::contains("-shell"))
+        .stdout(predicate::str::contains("rm -rf <folder>").not());
 }
 
 #[test]
@@ -188,7 +193,9 @@ fn test_help_plain_mode() {
     cmd.args(["--plain", "--help", "-git"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("# ---Initializing a Repo---"))
+        .stdout(predicate::str::contains("Git  (-git)"))
+        .stdout(predicate::str::contains("-Initializing a Repo"))
+        .stdout(predicate::str::contains("git init").not())
         .stdout(predicate::str::contains("\x1b[").not());
 }
 

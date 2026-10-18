@@ -1,0 +1,10 @@
+---
+source: tests/render.rs
+assertion_line: 152
+expression: output
+---
+Version Control
+  -git    Git                            12 sections
+
+Linux & System Tools
+  -shell  Shell Basics (CMD & Terminal)  10 sections

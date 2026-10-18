@@ -1,0 +1,23 @@
+---
+source: tests/render.rs
+assertion_line: 168
+expression: output
+---
+Git  (-git)
+Also matches: rebase, submodule, worktree, reflog, git-advanced
+
+  -Setup & Config
+  -Initializing a Repo
+  -Cloning a Repo
+  -Daily Workflow
+  -Branching
+  -Remotes
+  -Undo & Rollback
+  -Stash
+  -Tags
+  -History & Diff
+  -Cleanup & Maintenance
+  -Finding a Bad Commit (bisect)
+
+View a section:  ezcmd --help -git -<section>
+The section name can be shortened or misspelled. It is fuzzy-matched.

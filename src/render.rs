@@ -1,4 +1,4 @@
-use crate::model::Section;
+use crate::model::{Category, Section, Tool};
 use crate::os::Os;
 use crate::term;
 use std::io::{self, Write};
@@ -58,6 +58,187 @@ fn colorize_command(cmd_text: &str) -> String {
 struct PreparedCommand {
     cmd_text: String,
     note_text: String,
+}
+
+pub fn usage_guide<W: Write>(out: &mut W, ctx: &RenderCtx) -> io::Result<()> {
+    writeln!(out, "ezcmd {}", env!("CARGO_PKG_VERSION"))?;
+    writeln!(out, "Find the right command, in order.\n")?;
+    if ctx.color {
+        writeln!(out, "{}HOW TO USE{}", term::CYAN_BOLD, term::RESET)?;
+    } else {
+        writeln!(out, "HOW TO USE")?;
+    }
+
+    let rows = [
+        ("ezcmd <query>", "Search for a task or a command", None),
+        (
+            "ezcmd --help -<tool>",
+            "List a tool's sections",
+            Some("ezcmd --help -docker"),
+        ),
+        (
+            "ezcmd --help -<tool> -<section>",
+            "Show a section's commands",
+            Some("ezcmd --help -docker -logs"),
+        ),
+        (
+            "ezcmd --help -<section>",
+            "Search every tool",
+            Some("ezcmd --help -initialize"),
+        ),
+        (
+            "ezcmd --help -<os>",
+            "Browse as another OS",
+            Some("ezcmd --help -windows"),
+        ),
+    ];
+    for (command, description, example) in rows {
+        if ctx.width >= 80 {
+            write!(out, "  {command:<36} {description:<30}")?;
+            if let Some(example) = example {
+                if ctx.color {
+                    write!(out, "{}{}{}", term::DIM, example, term::RESET)?;
+                } else {
+                    write!(out, "{example}")?;
+                }
+            }
+            writeln!(out)?;
+        } else {
+            writeln!(out, "  {command:<36} {description}")?;
+        }
+    }
+    Ok(())
+}
+
+pub fn toc_overview<W: Write>(
+    out: &mut W,
+    categories: &[Category],
+    os: Os,
+    ctx: &RenderCtx,
+) -> io::Result<()> {
+    let visible_tools: Vec<&Tool> = categories
+        .iter()
+        .flat_map(|category| category.tools.iter())
+        .filter(|tool| tool.available_on(os))
+        .collect();
+    let slug_width = visible_tools
+        .iter()
+        .map(|tool| tool.slug.chars().count())
+        .max()
+        .unwrap_or(0);
+    let name_width = visible_tools
+        .iter()
+        .map(|tool| tool.name.chars().count())
+        .max()
+        .unwrap_or(0);
+
+    let mut first_category = true;
+    for category in categories {
+        let tools: Vec<&Tool> = category
+            .tools
+            .iter()
+            .filter(|tool| tool.available_on(os))
+            .collect();
+        if tools.is_empty() {
+            continue;
+        }
+        if !first_category {
+            writeln!(out)?;
+        }
+        if ctx.color {
+            writeln!(out, "{}{}{}", term::CYAN_BOLD, category.name, term::RESET)?;
+        } else {
+            writeln!(out, "{}", category.name)?;
+        }
+        for tool in tools {
+            let count = tool
+                .sections()
+                .filter(|section| section.available_on(os))
+                .count();
+            if ctx.color {
+                write!(out, "  {}-{}{}", term::BOLD, tool.slug, term::RESET)?;
+            } else {
+                write!(out, "  -{}", tool.slug)?;
+            }
+            let slug_padding = " ".repeat(slug_width.saturating_sub(tool.slug.chars().count()) + 2);
+            let name_padding = " ".repeat(name_width.saturating_sub(tool.name.chars().count()) + 2);
+            write!(out, "{slug_padding}{}{name_padding}", tool.name)?;
+            if ctx.color {
+                writeln!(out, "{}{} sections{}", term::DIM, count, term::RESET)?;
+            } else {
+                writeln!(out, "{count} sections")?;
+            }
+        }
+        first_category = false;
+    }
+    Ok(())
+}
+
+pub fn toc_tool<W: Write>(out: &mut W, tool: &Tool, os: Os, ctx: &RenderCtx) -> io::Result<()> {
+    if ctx.color {
+        writeln!(
+            out,
+            "{}{}{}  (-{})",
+            term::CYAN_BOLD,
+            tool.name,
+            term::RESET,
+            tool.slug
+        )?;
+    } else {
+        writeln!(out, "{}  (-{})", tool.name, tool.slug)?;
+    }
+    if !tool.aliases.is_empty() {
+        writeln!(out, "Also matches: {}", tool.aliases.join(", "))?;
+    }
+    for note in tool.notes {
+        writeln!(out, "Note: {note}")?;
+    }
+
+    let groups: Vec<_> = tool
+        .groups
+        .iter()
+        .filter(|group| {
+            group
+                .sections
+                .iter()
+                .any(|section| section.available_on(os))
+        })
+        .collect();
+    let show_group_titles = groups.len() > 1;
+    for (group_index, group) in groups.iter().enumerate() {
+        writeln!(out)?;
+        if show_group_titles {
+            if ctx.color {
+                writeln!(out, "{}{}{}", term::BOLD, group.title, term::RESET)?;
+            } else {
+                writeln!(out, "{}", group.title)?;
+            }
+        }
+        for section in group
+            .sections
+            .iter()
+            .filter(|section| section.available_on(os))
+        {
+            if ctx.color {
+                writeln!(out, "  {}-{} {}", term::DIM, term::RESET, section.title)?;
+            } else {
+                writeln!(out, "  -{}", section.title)?;
+            }
+        }
+        if group_index + 1 == groups.len() {
+            writeln!(out)?;
+        }
+    }
+    writeln!(
+        out,
+        "View a section:  ezcmd --help -{} -<section>",
+        tool.slug
+    )?;
+    writeln!(
+        out,
+        "The section name can be shortened or misspelled. It is fuzzy-matched."
+    )?;
+    Ok(())
 }
 
 /// Render a single section for the given OS.

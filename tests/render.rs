@@ -1,7 +1,7 @@
-use ezcmd::content::all_tools;
+use ezcmd::content::{all_tools, CATEGORIES};
 use ezcmd::model::{Command, Section};
 use ezcmd::os::Os;
-use ezcmd::render::{render_section, RenderCtx};
+use ezcmd::render::{render_section, toc_overview, toc_tool, usage_guide, RenderCtx};
 
 fn get_section<'a>(tool_name: &str, title: &str) -> &'a Section {
     let tool = all_tools()
@@ -137,4 +137,49 @@ fn test_snapshot_per_os_output() {
     render_section(&mut buf_linux, sec, Os::Linux, &ctx).expect("render linux");
     let out_linux = String::from_utf8(buf_linux).expect("utf8");
     insta::assert_snapshot!("navigating_directories_linux", out_linux);
+}
+
+#[test]
+fn test_snapshot_toc_overview_plain() {
+    let ctx = RenderCtx {
+        color: false,
+        plain: false,
+        width: 100,
+    };
+    let mut buf = Vec::new();
+    toc_overview(&mut buf, CATEGORIES, Os::Linux, &ctx).expect("render overview");
+    let output = String::from_utf8(buf).expect("utf8");
+    insta::assert_snapshot!("toc_overview_plain", output);
+}
+
+#[test]
+fn test_snapshot_toc_tool_single_group_plain() {
+    let tool = all_tools()
+        .find(|tool| tool.slug == "git")
+        .expect("git tool");
+    let ctx = RenderCtx {
+        color: false,
+        plain: false,
+        width: 100,
+    };
+    let mut buf = Vec::new();
+    toc_tool(&mut buf, tool, Os::Linux, &ctx).expect("render tool toc");
+    let output = String::from_utf8(buf).expect("utf8");
+    insta::assert_snapshot!("toc_tool_single_group_plain", output);
+    assert!(!output.contains("git init"));
+    assert!(!output.contains("Git\n"));
+}
+
+#[test]
+fn test_usage_guide_narrow_drops_examples() {
+    let ctx = RenderCtx {
+        color: false,
+        plain: false,
+        width: 60,
+    };
+    let mut buf = Vec::new();
+    usage_guide(&mut buf, &ctx).expect("render guide");
+    let output = String::from_utf8(buf).expect("utf8");
+    assert!(output.contains("HOW TO USE"));
+    assert!(!output.contains("ezcmd --help -docker"));
 }
