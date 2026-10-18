@@ -115,9 +115,26 @@ pub fn token_match_score(q: &str, t: &str) -> f32 {
         return 0.80;
     }
 
-    // 4. Damerau-Levenshtein distance ≤ 1 (length 4..=7) or ≤ 2 (length ≥ 8)
+    // 4. Damerau-Levenshtein distance ≤ 1 (length 4..=7) or ≤ 2 (length ≥ 8).
+    //
+    // The edit distance cannot be less than the difference in string lengths.
+    // Avoiding the two comparatively expensive distance calculations for impossible
+    // pairs matters here: every query scans the complete command library.
+    let max_distance = if (4..=7).contains(&q_len) {
+        1
+    } else if q_len >= 8 {
+        2
+    } else {
+        return 0.00;
+    };
+    let stem_q_len = stem_q.chars().count();
+    let stem_t_len = stem_t.chars().count();
+    if q_len.abs_diff(t_len) > max_distance && stem_q_len.abs_diff(stem_t_len) > max_distance {
+        return 0.00;
+    }
+
     let dist = strsim::damerau_levenshtein(q, t).min(strsim::damerau_levenshtein(stem_q, stem_t));
-    if ((4..=7).contains(&q_len) && dist <= 1) || (q_len >= 8 && dist <= 2) {
+    if dist <= max_distance {
         return 0.70;
     }
 
@@ -436,6 +453,8 @@ mod tests {
         assert_eq!(token_match_score("initalize", "initialize"), 0.70);
         // No match
         assert_eq!(token_match_score("git", "docker"), 0.00);
+        // A permitted edit distance cannot bridge a large length difference.
+        assert_eq!(token_match_score("repo", "unrelated"), 0.00);
     }
 
     #[test]

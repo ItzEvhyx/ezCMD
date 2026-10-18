@@ -26,12 +26,12 @@ The specification's final-library statement says 307 sections and 1,639 command 
 
 | Check | Target | Result |
 |:---|:---|:---|
-| Release binary | < 3 MB | 865,168 bytes (pass) |
+| Release binary | < 3 MB | 865,248 bytes (pass) |
 | Startup: `ezcmd --help` | < 20 ms | 1.38 ms mean across 50 local wall-clock runs (pass) |
-| Startup: `ezcmd initializing repo` | < 20 ms | 45.22 ms mean across 50 local wall-clock runs (miss) |
-| Peak memory | < 10 MB | Not measured: `/usr/bin/time` is unavailable |
+| Startup: `ezcmd initializing repo` | < 20 ms | 19.75 ms mean across 50 local wall-clock runs (pass) |
+| Peak memory | < 10 MB | 11.88 MiB mean peak resident memory across 50 isolated searches (miss) |
 
-`hyperfine` is unavailable in this environment, as it was at V0, so startup timings use `date +%s%N` around the release binary and are not directly comparable with a hyperfine baseline. The query result exceeds the documented target. The V0 baseline has no startup timing, so the plan's “more than 5 ms from baseline” condition for indexing cannot be evaluated. Profile and index the matcher before claiming the startup budget is met.
+`hyperfine` is unavailable in this environment, as it was at V0, so startup timings use `date +%s%N` around the release binary and are not directly comparable with a hyperfine baseline. The V0 baseline has no startup timing, so the plan's “more than 5 ms from baseline” condition for indexing cannot be evaluated. The matcher now avoids edit-distance calculations that cannot meet the permitted distance threshold, bringing the tested query below the startup budget. Peak memory was sampled with Linux child-process resource accounting because `/usr/bin/time` is unavailable; it remains above the documented budget.
 
 ## Help shape and platform coverage
 
