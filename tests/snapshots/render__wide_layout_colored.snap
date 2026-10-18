@@ -2,7 +2,7 @@
 source: tests/render.rs
 expression: output
 ---
- [90m___[[0m [1;36mInitializing a Repo[0m [90m]_________________________________________________________[90m|[0m
+ [90m___[[0m [1;36mGit: Initializing a Repo[0m [90m]____________________________________________________[90m|[0m
 [90m|                                                                                   [90m|[0m
 [90m|[0m  [1;38;2;150;208;251mgit init[0m                          [90m---[0m Initializes a repo in the current folder   [90m|[0m
 [90m|[0m  [1;38;2;150;208;251mgit add .[0m                         [90m---[0m Stages all new and changed files           [90m|[0m

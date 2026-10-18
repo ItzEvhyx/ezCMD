@@ -2,7 +2,7 @@
 source: tests/render.rs
 expression: output
 ---
- ___[ Initializing a Repo ]_________________________________________________________|
+ ___[ Git: Initializing a Repo ]____________________________________________________|
 |                                                                                   |
 |  git init                          --- Initializes a repo in the current folder   |
 |  git add .                         --- Stages all new and changed files           |

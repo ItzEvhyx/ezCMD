@@ -1,12 +1,15 @@
 use ezcmd::content::{all_tools, CATEGORIES};
-use ezcmd::model::{Command, Section};
+use ezcmd::model::{Command, Section, Tool};
 use ezcmd::os::Os;
 use ezcmd::render::{render_section, toc_overview, toc_tool, usage_guide, RenderCtx};
 
-fn get_section<'a>(tool_name: &str, title: &str) -> &'a Section {
-    let tool = all_tools()
+fn get_tool(tool_name: &str) -> &'static Tool {
+    all_tools()
         .find(|tool| tool.slug == tool_name)
-        .unwrap_or_else(|| panic!("tool {tool_name} not found"));
+        .unwrap_or_else(|| panic!("tool {tool_name} not found"))
+}
+
+fn get_section<'a>(tool: &'a Tool, title: &str) -> &'a Section {
     tool.sections()
         .find(|s| s.title == title)
         .unwrap_or_else(|| panic!("section {title} not found"))
@@ -14,56 +17,60 @@ fn get_section<'a>(tool_name: &str, title: &str) -> &'a Section {
 
 #[test]
 fn test_snapshot_wide_layout() {
-    let sec = get_section("git", "Initializing a Repo");
+    let tool = get_tool("git");
+    let sec = get_section(tool, "Initializing a Repo");
     let ctx = RenderCtx {
         color: false,
         plain: false,
         width: 100,
     };
     let mut buf = Vec::new();
-    render_section(&mut buf, sec, Os::Linux, &ctx).expect("render");
+    render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("wide_layout_no_color", output);
 }
 
 #[test]
 fn test_snapshot_wide_layout_colored() {
-    let sec = get_section("git", "Initializing a Repo");
+    let tool = get_tool("git");
+    let sec = get_section(tool, "Initializing a Repo");
     let ctx = RenderCtx {
         color: true,
         plain: false,
         width: 100,
     };
     let mut buf = Vec::new();
-    render_section(&mut buf, sec, Os::Linux, &ctx).expect("render");
+    render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("wide_layout_colored", output);
 }
 
 #[test]
 fn test_snapshot_narrow_layout() {
-    let sec = get_section("git", "Initializing a Repo");
+    let tool = get_tool("git");
+    let sec = get_section(tool, "Initializing a Repo");
     let ctx = RenderCtx {
         color: false,
         plain: false,
         width: 60,
     };
     let mut buf = Vec::new();
-    render_section(&mut buf, sec, Os::Linux, &ctx).expect("render");
+    render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("narrow_layout", output);
 }
 
 #[test]
 fn test_snapshot_plain_mode() {
-    let sec = get_section("git", "Initializing a Repo");
+    let tool = get_tool("git");
+    let sec = get_section(tool, "Initializing a Repo");
     let ctx = RenderCtx {
         color: false,
         plain: true,
         width: 80,
     };
     let mut buf = Vec::new();
-    render_section(&mut buf, sec, Os::Linux, &ctx).expect("render");
+    render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("plain_mode", output);
 }
@@ -93,6 +100,16 @@ fn test_snapshot_omits_unavailable_commands() {
         aliases: &["switch drive", "change drive", "drive letter"],
         commands: &CMDS,
     };
+    let tool = Tool {
+        slug: "test",
+        name: "Test Tool",
+        category: "Test",
+        aliases: &[],
+        flag_aliases: &[],
+        platforms: &[],
+        notes: &[],
+        groups: &[],
+    };
 
     let ctx = RenderCtx {
         color: false,
@@ -100,28 +117,30 @@ fn test_snapshot_omits_unavailable_commands() {
         width: 80,
     };
     let mut buf = Vec::new();
-    render_section(&mut buf, &sec, Os::Linux, &ctx).expect("render");
+    render_section(&mut buf, &tool, &sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("omits_unavailable_commands_linux", output);
 }
 
 #[test]
 fn test_snapshot_placeholder_highlighting() {
-    let sec = get_section("git", "Cloning a Repo");
+    let tool = get_tool("git");
+    let sec = get_section(tool, "Cloning a Repo");
     let ctx = RenderCtx {
         color: true,
         plain: false,
         width: 80,
     };
     let mut buf = Vec::new();
-    render_section(&mut buf, sec, Os::Linux, &ctx).expect("render");
+    render_section(&mut buf, tool, sec, Os::Linux, &ctx).expect("render");
     let output = String::from_utf8(buf).expect("utf8");
     insta::assert_snapshot!("placeholder_highlighting_colored", output);
 }
 
 #[test]
 fn test_snapshot_per_os_output() {
-    let sec = get_section("shell", "Navigating Directories");
+    let tool = get_tool("shell");
+    let sec = get_section(tool, "Navigating Directories");
     let ctx = RenderCtx {
         color: false,
         plain: false,
@@ -129,12 +148,12 @@ fn test_snapshot_per_os_output() {
     };
 
     let mut buf_win = Vec::new();
-    render_section(&mut buf_win, sec, Os::Windows, &ctx).expect("render windows");
+    render_section(&mut buf_win, tool, sec, Os::Windows, &ctx).expect("render windows");
     let out_win = String::from_utf8(buf_win).expect("utf8");
     insta::assert_snapshot!("navigating_directories_windows", out_win);
 
     let mut buf_linux = Vec::new();
-    render_section(&mut buf_linux, sec, Os::Linux, &ctx).expect("render linux");
+    render_section(&mut buf_linux, tool, sec, Os::Linux, &ctx).expect("render linux");
     let out_linux = String::from_utf8(buf_linux).expect("utf8");
     insta::assert_snapshot!("navigating_directories_linux", out_linux);
 }

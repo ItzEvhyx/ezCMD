@@ -39,7 +39,7 @@ fn test_plain_output_no_ansi() {
     cmd.args(["--plain", "initializing", "repo"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("# ---Initializing a Repo---"))
+        .stdout(predicate::str::contains("# ---Git: Initializing a Repo---"))
         .stdout(predicate::str::contains(
             "git init --- Initializes a repo in the current folder",
         ))
@@ -79,6 +79,17 @@ fn test_unknown_flag_exit_code_2() {
 fn test_piped_stdin_does_not_block() {
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.args(["repo"]).assert().success();
+}
+
+#[test]
+fn test_bare_tool_query_renders_tool_toc() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.arg("git")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Git  (-git)"))
+        .stdout(predicate::str::contains("Initializing a Repo"))
+        .stdout(predicate::str::contains("git init").not());
 }
 
 #[test]

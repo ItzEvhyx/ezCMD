@@ -1,0 +1,171 @@
+# V6 seed corpus. The remaining v2 tool queries are imported with their tools in V8.
+
+[[q]]
+kind = "tool"
+query = "git"
+tool = "git"
+
+[[q]]
+kind = "tool"
+query = "shell"
+tool = "shell"
+
+[[q]]
+kind = "task"
+query = "initialize repository"
+tool = "git"
+expect = "Initializing a Repo"
+
+[[q]]
+kind = "task"
+query = "clone repository"
+tool = "git"
+expect = "Cloning a Repo"
+
+[[q]]
+kind = "task"
+query = "commit changes"
+tool = "git"
+expect = "Daily Workflow"
+
+[[q]]
+kind = "task"
+query = "create branch"
+tool = "git"
+expect = "Branching"
+
+[[q]]
+kind = "task"
+query = "add remote"
+tool = "git"
+expect = "Remotes"
+
+[[q]]
+kind = "task"
+query = "undo commit"
+tool = "git"
+expect = "Undo & Rollback"
+
+[[q]]
+kind = "task"
+query = "stash changes"
+tool = "git"
+expect = "Stash"
+
+[[q]]
+kind = "task"
+query = "create tag"
+tool = "git"
+expect = "Tags"
+
+[[q]]
+kind = "task"
+query = "view commit history"
+tool = "git"
+expect = "History & Diff"
+
+[[q]]
+kind = "task"
+query = "clean repository"
+tool = "git"
+expect = "Cleanup & Maintenance"
+
+[[q]]
+kind = "task"
+query = "find bad commit"
+tool = "git"
+expect = "Finding a Bad Commit (bisect)"
+
+[[q]]
+kind = "task"
+query = "navigate directories"
+tool = "shell"
+expect = "Navigating Directories"
+
+[[q]]
+kind = "task"
+query = "create folder"
+tool = "shell"
+expect = "Creating Folders & Files"
+
+[[q]]
+kind = "task"
+query = "remove file"
+tool = "shell"
+expect = "Removing Folders & Files"
+
+[[q]]
+kind = "task"
+query = "rename file"
+tool = "shell"
+expect = "Copying, Moving & Renaming"
+
+[[q]]
+kind = "task"
+query = "view file contents"
+tool = "shell"
+expect = "Viewing File Contents"
+
+[[q]]
+kind = "task"
+query = "network configuration"
+tool = "shell"
+expect = "Networking"
+
+[[q]]
+kind = "task"
+query = "list processes"
+tool = "shell"
+expect = "Processes"
+
+[[q]]
+kind = "task"
+query = "environment variable"
+tool = "shell"
+expect = "Environment Variables"
+
+[[q]]
+kind = "task"
+query = "uninstall ezcmd"
+tool = "shell"
+expect = "Uninstalling ezcmd"
+
+[[q]]
+kind = "guard"
+query = "git initialize repo"
+tool = "git"
+expect = "Initializing a Repo"
+
+[[q]]
+kind = "guard"
+query = "git reset hard"
+tool = "git"
+expect = "Undo & Rollback"
+
+[[q]]
+kind = "guard"
+query = "shell create folder"
+tool = "shell"
+expect = "Creating Folders & Files"
+
+[[q]]
+kind = "guard"
+query = "shell display processes"
+tool = "shell"
+expect = "Processes"
+
+[[q]]
+kind = "none"
+query = "xyznonexistentrandomquery123"
+
+[[q]]
+kind = "none"
+query = "quantum banana telescope"
+
+[[q]]
+kind = "none"
+query = "flibbertigibbet zorp"
+
+[[q]]
+kind = "none"
+query = "unrelated cryptographic nebula"

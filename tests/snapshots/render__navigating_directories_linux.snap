@@ -1,9 +1,8 @@
 ---
 source: tests/render.rs
-assertion_line: 139
 expression: out_linux
 ---
- ___[ Navigating Directories ]__________________________________|
+ ___[ Shell Basics (CMD & Terminal): Navigating Directories ]___|
 |                                                               |
 |  pwd          --- Shows current working directory             |
 |  cd <folder>  --- Changes to specified folder                 |

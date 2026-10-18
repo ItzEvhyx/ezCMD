@@ -244,6 +244,7 @@ pub fn toc_tool<W: Write>(out: &mut W, tool: &Tool, os: Os, ctx: &RenderCtx) -> 
 /// Render a single section for the given OS.
 pub fn render_section<W: Write>(
     w: &mut W,
+    tool: &Tool,
     section: &Section,
     os: Os,
     ctx: &RenderCtx,
@@ -263,9 +264,11 @@ pub fn render_section<W: Write>(
         })
         .collect();
 
-    // Plain mode (--plain): `# ---Title---` then `command --- note`
+    let title = format!("{}: {}", tool.name, section.title);
+
+    // Plain mode (--plain): `# ---Tool: Section---` then `command --- note`
     if ctx.plain {
-        writeln!(w, "# ---{}---", section.title)?;
+        writeln!(w, "# ---{}---", title)?;
         for p in prepared {
             writeln!(w, "{} --- {}", p.cmd_text, p.note_text)?;
         }
@@ -291,7 +294,7 @@ pub fn render_section<W: Write>(
     let is_wide = (3 + cmd_w + 6 + longest_note) <= ctx.width;
 
     // Calculate widest line
-    let title_line_len = 8 + section.title.chars().count();
+    let title_line_len = 8 + title.chars().count();
     let mut widest_line = title_line_len;
 
     if is_wide {
@@ -322,8 +325,7 @@ pub fn render_section<W: Write>(
     // Top rule: ` ___[ ` + title + ` ]` + `_` to fill width, ending with `|`
     let prefix = " ___[ ";
     let suffix = " ]";
-    let fixed_title_len =
-        prefix.chars().count() + section.title.chars().count() + suffix.chars().count();
+    let fixed_title_len = prefix.chars().count() + title.chars().count() + suffix.chars().count();
     let trailing_underscores = frame_width.saturating_sub(fixed_title_len + 1);
 
     if ctx.color {
@@ -333,7 +335,7 @@ pub fn render_section<W: Write>(
             term::DIM,
             term::RESET,
             term::CYAN_BOLD,
-            section.title,
+            title,
             term::RESET,
             term::DIM,
             "_".repeat(trailing_underscores),
@@ -349,12 +351,7 @@ pub fn render_section<W: Write>(
             term::RESET
         )?;
     } else {
-        writeln!(
-            w,
-            " ___[ {} ]{}|",
-            section.title,
-            "_".repeat(trailing_underscores)
-        )?;
+        writeln!(w, " ___[ {} ]{}|", title, "_".repeat(trailing_underscores))?;
         writeln!(w, "|{}|", " ".repeat(frame_width.saturating_sub(2)))?;
     }
 
@@ -450,6 +447,7 @@ pub fn render_section<W: Write>(
 /// Render multiple sections, separated by a blank line.
 pub fn render_sections<W: Write>(
     w: &mut W,
+    tool: &Tool,
     sections: &[&Section],
     os: Os,
     ctx: &RenderCtx,
@@ -462,7 +460,7 @@ pub fn render_sections<W: Write>(
         if !first {
             writeln!(w)?;
         }
-        render_section(w, section, os, ctx)?;
+        render_section(w, tool, section, os, ctx)?;
         first = false;
     }
     Ok(())
@@ -497,14 +495,24 @@ mod tests {
             aliases: &["init"],
             commands: &CMD,
         };
+        let tool = Tool {
+            slug: "git",
+            name: "Git",
+            category: "Test",
+            aliases: &[],
+            flag_aliases: &[],
+            platforms: &[],
+            notes: &[],
+            groups: &[],
+        };
         let ctx = RenderCtx {
             color: false,
             plain: true,
             width: 80,
         };
         let mut buf = Vec::new();
-        render_section(&mut buf, &sec, Os::Linux, &ctx).expect("render");
+        render_section(&mut buf, &tool, &sec, Os::Linux, &ctx).expect("render");
         let output = String::from_utf8(buf).expect("utf8");
-        assert_eq!(output, "# ---Init---\ngit init --- Initialize repo\n");
+        assert_eq!(output, "# ---Git: Init---\ngit init --- Initialize repo\n");
     }
 }

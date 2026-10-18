@@ -2,7 +2,7 @@
 source: tests/render.rs
 expression: out_win
 ---
- ___[ Navigating Directories ]________________________________________|
+ ___[ Shell Basics (CMD & Terminal): Navigating Directories ]_________|
 |                                                                     |
 |  cd                 --- Shows current working directory             |
 |  cd <folder>        --- Changes to specified folder                 |

@@ -2,7 +2,7 @@
 source: tests/render.rs
 expression: output
 ---
-# ---Initializing a Repo---
+# ---Git: Initializing a Repo---
 git init --- Initializes a repo in the current folder
 git add . --- Stages all new and changed files
 git commit -m "Initial commit" --- Saves the staged files as the first commit

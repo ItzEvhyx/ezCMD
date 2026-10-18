@@ -7,7 +7,18 @@ pub const W_CMD: f32 = 0.70;
 pub const W_NOTE: f32 = 0.50;
 pub const MATCH_THRESHOLD: f32 = 0.45; // below this: not a match
 pub const AMBIGUITY_RATIO: f32 = 0.85; // candidates within 85% of the top score
-pub const MAX_CHOICES: usize = 3;
+pub const MAX_CHOICES: usize = 5;
+pub const OTHER_TOOL_FACTOR: f32 = 0.55;
+pub const TOOL_BONUS: f32 = 0.10;
+pub const HINT_BONUS: f32 = 0.05;
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct SearchOpts<'a> {
+    pub only_tool: Option<&'a str>,
+    /// Interpret exact tool slugs, flag aliases, and shadowed aliases in a query.
+    /// Help section selectors intentionally leave this off.
+    pub tool_tokens: bool,
+}
 
 const STOPWORDS: &[&str] = &[
     "a", "an", "the", "to", "how", "do", "i", "my", "in", "on", "of", "for", "with", "and",
@@ -31,9 +42,10 @@ impl<'a> PartialEq for Hit<'a> {
 
 #[derive(Debug, PartialEq)]
 pub enum SearchResult<'a> {
+    ToolOnly(&'a Tool),
     Single(Hit<'a>),
     Ambiguous(Vec<Hit<'a>>), // 2..=MAX_CHOICES
-    NoMatch(Vec<Hit<'a>>),   // up to 3 closest, may be empty
+    NoMatch(Vec<Hit<'a>>),   // up to MAX_CHOICES closest, may be empty
 }
 
 /// Light stemmer: strip first matching suffix from ing, ed, es, s, e
@@ -133,70 +145,208 @@ fn field_score(query_tokens: &[String], field_tokens: &[String]) -> f32 {
     sum / query_tokens.len() as f32
 }
 
+fn score_section(section: &Section, os: Os, query_tokens: &[String]) -> f32 {
+    let title_tokens = tokenize(section.title);
+    let title_score = field_score(query_tokens, &title_tokens);
+
+    let best_alias_score = section
+        .aliases
+        .iter()
+        .map(|alias| field_score(query_tokens, &tokenize(alias)))
+        .fold(0.0, f32::max);
+
+    let joined_cmds = section
+        .commands
+        .iter()
+        .filter_map(|command| command.resolve(os))
+        .collect::<Vec<_>>()
+        .join(" ");
+    let cmd_score = field_score(query_tokens, &tokenize(&joined_cmds));
+
+    let joined_notes = section
+        .commands
+        .iter()
+        .map(|command| command.note)
+        .collect::<Vec<_>>()
+        .join(" ");
+    let note_score = field_score(query_tokens, &tokenize(&joined_notes));
+
+    (W_TITLE * title_score)
+        .max(W_ALIAS * best_alias_score)
+        .max(W_CMD * cmd_score)
+        .max(W_NOTE * note_score)
+}
+
+fn has_token(values: &[&str], token: &str) -> bool {
+    values
+        .iter()
+        .flat_map(|value| tokenize(value))
+        .any(|value| value == token)
+}
+
+fn is_named_tool_token(tool: &Tool, token: &str) -> bool {
+    tool.slug.eq_ignore_ascii_case(token) || has_token(tool.flag_aliases, token)
+}
+
+fn is_hint_tool_token(tool: &Tool, token: &str) -> bool {
+    let shadowed_alias = tool
+        .aliases
+        .iter()
+        .filter(|alias| {
+            !tool
+                .flag_aliases
+                .iter()
+                .any(|flag| flag.eq_ignore_ascii_case(alias))
+        })
+        .flat_map(|alias| tokenize(alias))
+        .any(|alias| alias == token);
+    shadowed_alias || has_token(&[tool.name], token)
+}
+
+fn tool_has_scoring_section(tool: &Tool, os: Os, tokens: &[String]) -> bool {
+    tool.sections()
+        .filter(|section| section.available_on(os))
+        .any(|section| score_section(section, os, tokens) >= MATCH_THRESHOLD)
+}
+
 /// Search sections across tools for the given OS.
 pub fn search<'a>(
     tools: impl IntoIterator<Item = &'a Tool>,
     os: Os,
     query: &str,
-    only_tool: Option<&str>,
+    opts: SearchOpts<'_>,
 ) -> SearchResult<'a> {
     let q_tokens = tokenize_query(query);
     if q_tokens.is_empty() {
         return SearchResult::NoMatch(Vec::new());
     }
 
-    let mut hits = Vec::new();
+    let tools: Vec<&Tool> = tools
+        .into_iter()
+        .filter(|tool| {
+            opts.only_tool
+                .is_none_or(|target| tool.slug.eq_ignore_ascii_case(target))
+        })
+        .collect();
 
-    for tool in tools {
-        if let Some(target) = only_tool {
-            if !tool.slug.eq_ignore_ascii_case(target) {
-                continue;
+    let mut effective_tokens = q_tokens.clone();
+    let mut named_tools: Vec<&Tool> = Vec::new();
+    let mut named_tokens = Vec::new();
+    let mut named_narrowing = false;
+    let mut hint_tools: Vec<&Tool> = Vec::new();
+    let mut hint_narrowing = false;
+
+    if opts.tool_tokens {
+        for token in &q_tokens {
+            let matches: Vec<&Tool> = tools
+                .iter()
+                .copied()
+                .filter(|tool| is_named_tool_token(tool, token))
+                .collect();
+            if !matches.is_empty() {
+                named_tokens.push(token.as_str());
+                for tool in matches {
+                    if !named_tools
+                        .iter()
+                        .any(|candidate| candidate.slug == tool.slug)
+                    {
+                        named_tools.push(tool);
+                    }
+                }
             }
         }
 
+        // A bare, non-shadowed tool token opens that tool's table of contents.
+        if named_tokens.len() == q_tokens.len() {
+            if named_tools.len() == 1 {
+                return SearchResult::ToolOnly(named_tools[0]);
+            }
+            let name_matches: Vec<&Tool> = named_tools
+                .iter()
+                .copied()
+                .filter(|tool| {
+                    let name_tokens = tokenize(tool.name);
+                    q_tokens.iter().all(|token| name_tokens.contains(token))
+                })
+                .collect();
+            if name_matches.len() == 1 {
+                return SearchResult::ToolOnly(name_matches[0]);
+            }
+        }
+
+        let without_named: Vec<String> = q_tokens
+            .iter()
+            .filter(|token| !named_tokens.contains(&token.as_str()))
+            .cloned()
+            .collect();
+        if !without_named.is_empty()
+            && named_tools
+                .iter()
+                .any(|tool| tool_has_scoring_section(tool, os, &without_named))
+        {
+            effective_tokens = without_named;
+            named_narrowing = true;
+        }
+
+        let mut hint_tokens = Vec::new();
+        for token in &effective_tokens {
+            let matches: Vec<&Tool> = tools
+                .iter()
+                .copied()
+                .filter(|tool| is_hint_tool_token(tool, token))
+                .collect();
+            if !matches.is_empty() {
+                hint_tokens.push(token.as_str());
+                for tool in matches {
+                    if !hint_tools
+                        .iter()
+                        .any(|candidate| candidate.slug == tool.slug)
+                    {
+                        hint_tools.push(tool);
+                    }
+                }
+            }
+        }
+        let without_hints: Vec<String> = effective_tokens
+            .iter()
+            .filter(|token| !hint_tokens.contains(&token.as_str()))
+            .cloned()
+            .collect();
+        if !without_hints.is_empty()
+            && hint_tools
+                .iter()
+                .any(|tool| tool_has_scoring_section(tool, os, &without_hints))
+        {
+            effective_tokens = without_hints;
+            hint_narrowing = true;
+        }
+    }
+
+    let mut hits = Vec::new();
+
+    for tool in tools {
         for (section_idx, section) in tool.sections().enumerate() {
             if !section.available_on(os) {
                 continue;
             }
 
-            // 1. Title
-            let title_tokens = tokenize(section.title);
-            let title_score = field_score(&q_tokens, &title_tokens);
-
-            // 2. Each alias separately (take max)
-            let mut best_alias_score = 0.0f32;
-            for alias in section.aliases {
-                let alias_tokens = tokenize(alias);
-                let a_score = field_score(&q_tokens, &alias_tokens);
-                if a_score > best_alias_score {
-                    best_alias_score = a_score;
+            let mut score = score_section(section, os, &effective_tokens);
+            let is_named_tool = named_tools
+                .iter()
+                .any(|candidate| candidate.slug == tool.slug);
+            let is_hint_tool = hint_tools
+                .iter()
+                .any(|candidate| candidate.slug == tool.slug);
+            if named_narrowing {
+                if is_named_tool {
+                    score += TOOL_BONUS;
+                } else {
+                    score *= OTHER_TOOL_FACTOR;
                 }
             }
-
-            // 3. Command text (resolved for OS only)
-            let resolved_cmds: Vec<&str> = section
-                .commands
-                .iter()
-                .filter_map(|c| c.resolve(os))
-                .collect();
-            let joined_cmds = resolved_cmds.join(" ");
-            let cmd_tokens = tokenize(&joined_cmds);
-            let cmd_score = field_score(&q_tokens, &cmd_tokens);
-
-            // 4. Notes
-            let joined_notes = section
-                .commands
-                .iter()
-                .map(|c| c.note)
-                .collect::<Vec<_>>()
-                .join(" ");
-            let note_tokens = tokenize(&joined_notes);
-            let note_score = field_score(&q_tokens, &note_tokens);
-
-            let score = (W_TITLE * title_score)
-                .max(W_ALIAS * best_alias_score)
-                .max(W_CMD * cmd_score)
-                .max(W_NOTE * note_score);
+            if hint_narrowing && is_hint_tool {
+                score += HINT_BONUS;
+            }
 
             hits.push(Hit {
                 tool,
@@ -244,6 +394,7 @@ pub fn search<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::content::all_tools;
 
     #[test]
     fn test_stemmer() {
@@ -281,5 +432,58 @@ mod tests {
         assert_eq!(token_match_score("initalize", "initialize"), 0.70);
         // No match
         assert_eq!(token_match_score("git", "docker"), 0.00);
+    }
+
+    #[test]
+    fn bare_tool_token_returns_tool_only() {
+        let result = search(
+            all_tools(),
+            Os::Linux,
+            "git",
+            SearchOpts {
+                tool_tokens: true,
+                ..Default::default()
+            },
+        );
+        assert!(matches!(result, SearchResult::ToolOnly(tool) if tool.slug == "git"));
+    }
+
+    #[test]
+    fn named_tool_token_narrows_only_when_remaining_words_match() {
+        let result = search(
+            all_tools(),
+            Os::Linux,
+            "git initialize repo",
+            SearchOpts {
+                tool_tokens: true,
+                ..Default::default()
+            },
+        );
+        assert!(matches!(result, SearchResult::Single(hit)
+            if hit.tool.slug == "git" && hit.section.title == "Initializing a Repo"));
+    }
+
+    #[test]
+    fn help_search_does_not_interpret_tool_tokens() {
+        let result = search(all_tools(), Os::Linux, "git", SearchOpts::default());
+        assert!(!matches!(result, SearchResult::ToolOnly(_)));
+    }
+
+    #[test]
+    fn shadowed_aliases_are_hints_not_bare_tool_tokens() {
+        let tool = Tool {
+            slug: "example",
+            name: "Example Tool",
+            category: "Test",
+            aliases: &["shared"],
+            flag_aliases: &[],
+            platforms: &[],
+            notes: &[],
+            groups: &[],
+        };
+
+        assert!(is_hint_tool_token(&tool, "shared"));
+        assert!(!is_named_tool_token(&tool, "shared"));
+        assert_eq!(MAX_CHOICES, 5);
     }
 }

@@ -56,11 +56,23 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
         }
         Action::Query(query) => {
             let os = Os::current();
-            let search_res = matcher::search(all_tools(), os, &query, None);
+            let search_res = matcher::search(
+                all_tools(),
+                os,
+                &query,
+                matcher::SearchOpts {
+                    tool_tokens: true,
+                    ..Default::default()
+                },
+            );
 
             match search_res {
+                SearchResult::ToolOnly(tool) => {
+                    render::toc_tool(out, tool, os, &render_ctx)?;
+                    Ok(0)
+                }
                 SearchResult::Single(hit) => {
-                    render::render_section(out, hit.section, os, &render_ctx)?;
+                    render::render_section(out, hit.tool, hit.section, os, &render_ctx)?;
                     Ok(0)
                 }
                 SearchResult::Ambiguous(hits) => {
@@ -74,14 +86,26 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                         match prompt::choose(&mut stdin, out, &hits)? {
                             Some(idx) => {
                                 writeln!(out)?;
-                                render::render_section(out, hits[idx].section, os, &render_ctx)?;
+                                render::render_section(
+                                    out,
+                                    hits[idx].tool,
+                                    hits[idx].section,
+                                    os,
+                                    &render_ctx,
+                                )?;
                                 Ok(0)
                             }
                             None => Ok(1), // User aborted or invalid input
                         }
                     } else {
                         // Non-interactive or piped: output best match and exit 0
-                        render::render_section(out, hits[0].section, os, &render_ctx)?;
+                        render::render_section(
+                            out,
+                            hits[0].tool,
+                            hits[0].section,
+                            os,
+                            &render_ctx,
+                        )?;
                         Ok(0)
                     }
                 }
@@ -138,11 +162,23 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
 
             // If a specific section query is requested: `--help -<tool> -<section>`
             if let Some(sec_query) = request.section {
-                let search_res = matcher::search(all_tools(), target_os, &sec_query, request.tool);
+                let search_res = matcher::search(
+                    all_tools(),
+                    target_os,
+                    &sec_query,
+                    matcher::SearchOpts {
+                        only_tool: request.tool,
+                        tool_tokens: false,
+                    },
+                );
 
                 match search_res {
+                    SearchResult::ToolOnly(tool) => {
+                        render::toc_tool(out, tool, target_os, &render_ctx)?;
+                        Ok(0)
+                    }
                     SearchResult::Single(hit) => {
-                        render::render_section(out, hit.section, target_os, &render_ctx)?;
+                        render::render_section(out, hit.tool, hit.section, target_os, &render_ctx)?;
                         Ok(0)
                     }
                     SearchResult::Ambiguous(hits) => {
@@ -158,6 +194,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                                     writeln!(out)?;
                                     render::render_section(
                                         out,
+                                        hits[idx].tool,
                                         hits[idx].section,
                                         target_os,
                                         &render_ctx,
@@ -167,7 +204,13 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                                 None => Ok(1),
                             }
                         } else {
-                            render::render_section(out, hits[0].section, target_os, &render_ctx)?;
+                            render::render_section(
+                                out,
+                                hits[0].tool,
+                                hits[0].section,
+                                target_os,
+                                &render_ctx,
+                            )?;
                             Ok(0)
                         }
                     }

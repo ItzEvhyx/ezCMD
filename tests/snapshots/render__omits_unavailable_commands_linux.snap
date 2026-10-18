@@ -1,9 +1,8 @@
 ---
 source: tests/render.rs
-assertion_line: 105
 expression: output
 ---
- ___[ Drive Switching ]____________________________________|
+ ___[ Test Tool: Drive Switching ]_________________________|
 |                                                          |
 |  cd <folder>  --- Standard folder enter                  |
 |__________________________________________________________|
