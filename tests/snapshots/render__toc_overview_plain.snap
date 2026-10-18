@@ -72,3 +72,10 @@ Linux & System Tools
   -nano        nano                           3 sections
   -curl        curl & wget                    5 sections
   -shell       Shell Basics (CMD & Terminal)  10 sections
+
+Package Managers
+  -apt         apt (Debian & Ubuntu)          3 sections
+  -pacman      pacman & paru (Arch)           3 sections
+  -dnf         dnf (Fedora & RHEL)            3 sections
+  -brew        Homebrew                       4 sections
+  -flatpak     Flatpak & Snap                 2 sections

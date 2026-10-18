@@ -4,14 +4,14 @@ category = "Package Managers"
 order = 2
 aliases = ["paru", "aur", "arch", "cachyos", "manjaro"]
 platforms = ["linux"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything pacman"
 
 [[group.section]]
 title = "Install & Remove"
-aliases = []
+aliases = ["pacman install package", "paru install aur package", "remove arch package"]
 
 [[group.section.command]]
 note = "Installs a package"
@@ -31,7 +31,7 @@ cmd = "paru -Rns <pkg>"
 
 [[group.section]]
 title = "Update & Clean"
-aliases = []
+aliases = ["pacman update system", "clean pacman cache", "update arch packages"]
 
 [[group.section.command]]
 note = "Updates the whole system"
@@ -51,7 +51,7 @@ cmd = "pacman -Qdtq | sudo pacman -Rns -"
 
 [[group.section]]
 title = "Search & Inspect"
-aliases = []
+aliases = ["pacman search package", "inspect arch package", "list installed arch packages"]
 
 [[group.section.command]]
 note = "Searches the repositories"

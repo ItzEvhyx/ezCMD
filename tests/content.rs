@@ -176,6 +176,25 @@ fn test_linux_system_tools_v8g_are_complete() {
 }
 
 #[test]
+fn test_package_managers_v8h_tools_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Package Managers")
+        .expect("Package Managers category present");
+    let expected = ["apt", "pacman", "dnf", "brew", "winget", "flatpak"];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        18
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

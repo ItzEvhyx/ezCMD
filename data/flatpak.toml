@@ -4,14 +4,14 @@ category = "Package Managers"
 order = 6
 aliases = ["snap", "flathub"]
 platforms = ["linux"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Flatpak"
 
 [[group.section]]
 title = "Flatpak"
-aliases = []
+aliases = ["flatpak flathub app", "flatpak runtime cleanup", "update flatpak apps"]
 
 [[group.section.command]]
 note = "Installs an app from Flathub"
@@ -39,7 +39,7 @@ cmd = "flatpak uninstall --unused"
 
 [[group.section]]
 title = "Snap"
-aliases = []
+aliases = ["snap package manager", "snap refresh packages", "find snap package"]
 
 [[group.section.command]]
 note = "Installs a snap"

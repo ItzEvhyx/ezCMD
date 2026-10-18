@@ -4,14 +4,14 @@ category = "Package Managers"
 order = 1
 aliases = ["dpkg", "ubuntu", "debian"]
 platforms = ["linux"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything apt"
 
 [[group.section]]
 title = "Install & Remove"
-aliases = []
+aliases = ["apt install package", "apt remove package", "ubuntu package install"]
 
 [[group.section.command]]
 note = "Refreshes the package list"
@@ -35,7 +35,7 @@ cmd = "sudo apt autoremove"
 
 [[group.section]]
 title = "Update the System"
-aliases = []
+aliases = ["apt update system", "apt upgrade packages", "update ubuntu packages"]
 
 [[group.section.command]]
 note = "Installs available updates"
@@ -55,7 +55,7 @@ cmd = "sudo apt clean"
 
 [[group.section]]
 title = "Search & Inspect"
-aliases = []
+aliases = ["apt search package", "show apt package", "list installed ubuntu packages"]
 
 [[group.section.command]]
 note = "Searches for packages"

@@ -4,14 +4,14 @@ category = "Package Managers"
 order = 5
 aliases = ["windows-package-manager"]
 platforms = ["windows"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything winget"
 
 [[group.section]]
 title = "Install & Remove"
-aliases = []
+aliases = ["winget install package", "winget uninstall package", "install windows app"]
 
 [[group.section.command]]
 note = "Installs a package"
@@ -31,7 +31,7 @@ cmd = "winget uninstall <pkg>"
 
 [[group.section]]
 title = "Update"
-aliases = []
+aliases = ["winget update", "upgrade windows apps", "update winget packages"]
 
 [[group.section.command]]
 note = "Lists packages with updates"
@@ -51,7 +51,7 @@ cmd = "winget source update"
 
 [[group.section]]
 title = "Search & Inspect"
-aliases = []
+aliases = ["winget search package", "show winget package", "list installed windows apps"]
 
 [[group.section.command]]
 note = "Searches for packages"

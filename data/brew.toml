@@ -4,14 +4,14 @@ category = "Package Managers"
 order = 4
 aliases = ["homebrew", "cask"]
 platforms = ["linux", "macos"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Homebrew"
 
 [[group.section]]
 title = "Install & Remove"
-aliases = []
+aliases = ["brew install package", "brew remove package", "install homebrew cask"]
 
 [[group.section.command]]
 note = "Installs a package"
@@ -31,7 +31,7 @@ cmd = "brew cleanup"
 
 [[group.section]]
 title = "Update"
-aliases = []
+aliases = ["brew update", "brew upgrade packages", "update homebrew"]
 
 [[group.section.command]]
 note = "Updates Homebrew's package list"
@@ -55,7 +55,7 @@ cmd = "brew doctor"
 
 [[group.section]]
 title = "Search & Inspect"
-aliases = []
+aliases = ["brew search package", "brew info package", "list installed brew packages"]
 
 [[group.section.command]]
 note = "Searches for packages"
@@ -75,7 +75,7 @@ cmd = "brew deps --tree <pkg>"
 
 [[group.section]]
 title = "Background Services"
-aliases = []
+aliases = ["brew service", "start homebrew service", "stop brew service"]
 
 [[group.section.command]]
 note = "Lists managed services"

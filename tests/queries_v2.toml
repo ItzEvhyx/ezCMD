@@ -1918,3 +1918,213 @@ query = "wget website mirror"
 tool = "curl"
 expect = "Download Files (wget)"
 os = "unix"
+
+[[q]]
+kind = "tool"
+query = "apt install package"
+tool = "apt"
+expect = "Install & Remove"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "apt remove package"
+tool = "apt"
+expect = "Install & Remove"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "apt update system"
+tool = "apt"
+expect = "Update the System"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "apt upgrade packages"
+tool = "apt"
+expect = "Update the System"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "apt search package"
+tool = "apt"
+expect = "Search & Inspect"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "pacman install package"
+tool = "pacman"
+expect = "Install & Remove"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "paru install aur package"
+tool = "pacman"
+expect = "Install & Remove"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "pacman update system"
+tool = "pacman"
+expect = "Update & Clean"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "clean pacman cache"
+tool = "pacman"
+expect = "Update & Clean"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "pacman search package"
+tool = "pacman"
+expect = "Search & Inspect"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "dnf install package"
+tool = "dnf"
+expect = "Install & Remove"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "dnf remove package"
+tool = "dnf"
+expect = "Install & Remove"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "dnf update system"
+tool = "dnf"
+expect = "Update the System"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "update fedora packages"
+tool = "dnf"
+expect = "Update the System"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "dnf search package"
+tool = "dnf"
+expect = "Search & Inspect"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "brew install package"
+tool = "brew"
+expect = "Install & Remove"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "brew remove package"
+tool = "brew"
+expect = "Install & Remove"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "brew update"
+tool = "brew"
+expect = "Update"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "brew search package"
+tool = "brew"
+expect = "Search & Inspect"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "brew service"
+tool = "brew"
+expect = "Background Services"
+os = "unix"
+
+[[q]]
+kind = "tool"
+query = "winget install package"
+tool = "winget"
+expect = "Install & Remove"
+os = "windows"
+
+[[q]]
+kind = "tool"
+query = "winget uninstall package"
+tool = "winget"
+expect = "Install & Remove"
+os = "windows"
+
+[[q]]
+kind = "tool"
+query = "winget update"
+tool = "winget"
+expect = "Update"
+os = "windows"
+
+[[q]]
+kind = "tool"
+query = "upgrade windows apps"
+tool = "winget"
+expect = "Update"
+os = "windows"
+
+[[q]]
+kind = "tool"
+query = "winget search package"
+tool = "winget"
+expect = "Search & Inspect"
+os = "windows"
+
+[[q]]
+kind = "tool"
+query = "flatpak flathub app"
+tool = "flatpak"
+expect = "Flatpak"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "flatpak runtime cleanup"
+tool = "flatpak"
+expect = "Flatpak"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "update flatpak apps"
+tool = "flatpak"
+expect = "Flatpak"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "snap package manager"
+tool = "flatpak"
+expect = "Snap"
+os = "linux"
+
+[[q]]
+kind = "tool"
+query = "snap refresh packages"
+tool = "flatpak"
+expect = "Snap"
+os = "linux"
