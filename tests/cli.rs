@@ -179,6 +179,37 @@ fn test_help_windows_git_single_section() {
 }
 
 #[test]
+fn test_help_cross_tool_section_search() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args(["--help", "-initialize", "repo"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Initializing a Repo"))
+        .stdout(predicate::str::contains("git init"))
+        .stdout(predicate::str::contains("HOW TO USE").not());
+}
+
+#[test]
+fn test_help_forced_section_search() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args(["--help", "--", "initialize", "repo"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Initializing a Repo"))
+        .stdout(predicate::str::contains("git init"));
+}
+
+#[test]
+fn test_help_tool_no_match_shows_tool_qualified_suggestions() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args(["--help", "-git", "-nonexistent"])
+        .assert()
+        .code(1)
+        .stdout(predicate::str::contains("Closest matches:"))
+        .stdout(predicate::str::contains("Git: "));
+}
+
+#[test]
 fn test_help_unknown_selector_searches_sections() {
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.args(["--help", "-nonexistent"])

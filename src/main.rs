@@ -100,7 +100,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                     if !closest.is_empty() {
                         writeln!(out, "\nClosest matches:")?;
                         for h in closest {
-                            writeln!(out, "  - {}", h.section.title)?;
+                            writeln!(out, "  - {}: {}", h.tool.name, h.section.title)?;
                         }
                     }
                     Ok(1)
@@ -109,6 +109,32 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
         }
         Action::Help(request) => {
             let target_os = request.os.unwrap_or_else(Os::current);
+            if let Some(tool_name) = request.tool {
+                if let Some(tool) = all_tools().find(|tool| tool.slug == tool_name) {
+                    if !tool.available_on(target_os) {
+                        let supported = if tool.platforms.is_empty() {
+                            Os::ALL
+                                .iter()
+                                .map(|os| os.display())
+                                .collect::<Vec<_>>()
+                                .join(", ")
+                        } else {
+                            tool.platforms
+                                .iter()
+                                .map(|os| os.display())
+                                .collect::<Vec<_>>()
+                                .join(", ")
+                        };
+                        eprintln!(
+                            "{} is not available on {}. It works on: {}.",
+                            tool.name,
+                            target_os.display(),
+                            supported
+                        );
+                        return Ok(1);
+                    }
+                }
+            }
 
             // If a specific section query is requested: `--help -<tool> -<section>`
             if let Some(sec_query) = request.section {
@@ -160,7 +186,7 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                         if !closest.is_empty() {
                             writeln!(out, "\nClosest matches:")?;
                             for h in closest {
-                                writeln!(out, "  - {}", h.section.title)?;
+                                writeln!(out, "  - {}: {}", h.tool.name, h.section.title)?;
                             }
                         }
                         Ok(1)

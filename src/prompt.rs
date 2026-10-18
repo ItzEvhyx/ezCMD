@@ -14,7 +14,7 @@ pub fn choose<R: BufRead, W: Write>(
     }
 
     for (i, hit) in hits.iter().enumerate() {
-        writeln!(out, "  {}. {}", i + 1, hit.section.title)?;
+        writeln!(out, "  {}. {}: {}", i + 1, hit.tool.name, hit.section.title)?;
     }
 
     let range_str = (1..=hits.len())
@@ -93,6 +93,7 @@ mod tests {
         let out_str = String::from_utf8(output).expect("utf8");
         assert!(out_str.contains("  1. "));
         assert!(out_str.contains("  2. "));
+        assert!(out_str.contains("Git: Setup & Config"));
         assert!(out_str.contains("Choose [1/2]: "));
     }
 
