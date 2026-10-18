@@ -3,14 +3,14 @@ name = "Bun"
 category = "JavaScript & Web"
 order = 4
 aliases = ["bunx"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Bun"
 
 [[group.section]]
 title = "Create & Install"
-aliases = []
+aliases = ["bun install", "create bun project", "add bun package"]
 
 [[group.section.command]]
 note = "Creates a new Bun project"
@@ -38,7 +38,7 @@ cmd = "bun update"
 
 [[group.section]]
 title = "Run Code & Scripts"
-aliases = []
+aliases = ["run bun script", "bun run", "bunx command"]
 
 [[group.section.command]]
 note = "Runs a TypeScript or JavaScript file"
@@ -62,7 +62,7 @@ cmd = "bun create <template>"
 
 [[group.section]]
 title = "Test, Build & Upgrade"
-aliases = []
+aliases = ["bun test", "build with bun", "upgrade bun"]
 
 [[group.section.command]]
 note = "Runs the test suite"

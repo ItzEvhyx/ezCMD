@@ -3,14 +3,14 @@ name = "ESLint & Prettier"
 category = "JavaScript & Web"
 order = 8
 aliases = ["prettier", "lint", "format"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Linting"
 
 [[group.section]]
 title = "ESLint"
-aliases = []
+aliases = ["lint javascript", "run eslint", "fix lint errors"]
 
 [[group.section.command]]
 note = "Sets up an ESLint config interactively"
@@ -34,7 +34,7 @@ cmd = "npx eslint . --max-warnings 0"
 
 [[group.section]]
 title = "Prettier"
-aliases = []
+aliases = ["format code", "run prettier", "fix code formatting"]
 
 [[group.section.command]]
 note = "Installs Prettier"

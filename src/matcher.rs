@@ -185,7 +185,11 @@ fn has_token(values: &[&str], token: &str) -> bool {
 }
 
 fn is_named_tool_token(tool: &Tool, token: &str) -> bool {
-    tool.slug.eq_ignore_ascii_case(token) || has_token(tool.flag_aliases, token)
+    tool.slug.eq_ignore_ascii_case(token)
+        || tool
+            .flag_aliases
+            .iter()
+            .any(|alias| alias.eq_ignore_ascii_case(token))
 }
 
 fn is_hint_tool_token(tool: &Tool, token: &str) -> bool {

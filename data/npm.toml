@@ -4,14 +4,14 @@ category = "JavaScript & Web"
 order = 1
 aliases = ["node", "nodejs", "npx", "nvm"]
 notes = ["nvm is a separate install: nvm-sh on Linux and macOS, nvm-windows on Windows"]
-draft = true
+draft = false
 
 [[group]]
 title = "Setup & Projects"
 
 [[group.section]]
 title = "Check Versions & Run Files"
-aliases = []
+aliases = ["node version", "npm version", "run javascript"]
 
 [[group.section.command]]
 note = "Prints the Node.js version"
@@ -35,7 +35,7 @@ cmd = "node"
 
 [[group.section]]
 title = "Create a Project"
-aliases = []
+aliases = ["new node project", "npm init", "scaffold javascript app"]
 
 [[group.section.command]]
 note = "Starts the package.json wizard"
@@ -59,7 +59,7 @@ cmd = "npx create-expo-app@latest"
 
 [[group.section]]
 title = "Node Versions (nvm)"
-aliases = []
+aliases = ["switch node version", "install node lts", "nvm version"]
 
 [[group.section.command]]
 note = "Installs the latest LTS Node version"
@@ -88,7 +88,7 @@ title = "Dependencies"
 
 [[group.section]]
 title = "Install Dependencies"
-aliases = []
+aliases = ["install packages", "npm install", "add dependencies"]
 
 [[group.section.command]]
 note = "Installs everything listed in package.json"
@@ -116,7 +116,7 @@ cmd = "npm install --omit=dev"
 
 [[group.section]]
 title = "Update & Remove Packages"
-aliases = []
+aliases = ["update packages", "remove package", "npm update"]
 
 [[group.section.command]]
 note = "Removes a package"
@@ -144,7 +144,7 @@ cmd = "npm prune"
 
 [[group.section]]
 title = "Global Packages"
-aliases = []
+aliases = ["global npm package", "install globally", "npm global"]
 
 [[group.section.command]]
 note = "Installs a package globally"
@@ -168,7 +168,7 @@ cmd = "npm config get prefix"
 
 [[group.section]]
 title = "Inspect Packages"
-aliases = []
+aliases = ["inspect package", "package version", "npm package info"]
 
 [[group.section.command]]
 note = "Lists top-level installed packages"
@@ -196,7 +196,7 @@ cmd = "npm repo <pkg>"
 
 [[group.section]]
 title = "Link Local Packages"
-aliases = []
+aliases = ["link local package", "npm link", "local dependency"]
 
 [[group.section.command]]
 note = "Links the current package globally"
@@ -219,7 +219,7 @@ title = "Scripts & Running"
 
 [[group.section]]
 title = "Run Scripts"
-aliases = []
+aliases = ["run npm script", "npm run", "start script"]
 
 [[group.section.command]]
 note = "Lists the scripts in package.json"
@@ -247,7 +247,7 @@ cmd = "npm run build"
 
 [[group.section]]
 title = "Run Packages Without Installing (npx)"
-aliases = []
+aliases = ["run npx package", "npx command", "temporary package"]
 
 [[group.section.command]]
 note = "Runs a package's command without installing"
@@ -267,7 +267,7 @@ cmd = "npx -p <pkg> <command>"
 
 [[group.section]]
 title = "Workspaces (Monorepos)"
-aliases = []
+aliases = ["npm workspace", "monorepo packages", "run workspace script"]
 
 [[group.section.command]]
 note = "Creates a new workspace package"
@@ -290,7 +290,7 @@ title = "Publishing & Maintenance"
 
 [[group.section]]
 title = "Publish a Package"
-aliases = []
+aliases = ["publish npm package", "release package", "npm publish"]
 
 [[group.section.command]]
 note = "Logs in to the npm registry"
@@ -330,7 +330,7 @@ cmd = "npm publish --access public"
 
 [[group.section]]
 title = "Security Audit"
-aliases = []
+aliases = ["npm audit", "fix vulnerabilities", "package security"]
 
 [[group.section.command]]
 note = "Reports known vulnerabilities"
@@ -354,7 +354,7 @@ cmd = "npm audit signatures"
 
 [[group.section]]
 title = "Cache & Clean Reinstall"
-aliases = []
+aliases = ["clear npm cache", "clean node modules", "fresh npm install"]
 
 [[group.section.command]]
 note = "Checks the cache for corruption"
@@ -386,7 +386,7 @@ cmd = "npm dedupe"
 
 [[group.section]]
 title = "Config & Registry"
-aliases = []
+aliases = ["npm registry", "set npm config", "npm login registry"]
 
 [[group.section.command]]
 note = "Shows your npm configuration"

@@ -3,14 +3,14 @@ name = "React & Vite"
 category = "JavaScript & Web"
 order = 6
 aliases = ["react", "vitest"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Vite"
 
 [[group.section]]
 title = "Create a Project"
-aliases = []
+aliases = ["create vite project", "new react app", "scaffold vite app"]
 
 [[group.section.command]]
 note = "Scaffolds a project with prompts"
@@ -38,7 +38,7 @@ cmd = "bun create vite"
 
 [[group.section]]
 title = "Dev, Build & Preview"
-aliases = []
+aliases = ["run vite dev", "build vite app", "preview vite build"]
 
 [[group.section.command]]
 note = "Starts the Vite dev server"
@@ -66,7 +66,7 @@ cmd = "npx vite build --mode <mode>"
 
 [[group.section]]
 title = "Testing (Vitest)"
-aliases = []
+aliases = ["run vitest", "vite test", "test react app"]
 
 [[group.section.command]]
 note = "Installs Vitest"

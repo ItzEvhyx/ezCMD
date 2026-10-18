@@ -3,14 +3,14 @@ name = "pnpm"
 category = "JavaScript & Web"
 order = 2
 aliases = ["pnpx"]
-draft = true
+draft = false
 
 [[group]]
 title = "Packages"
 
 [[group.section]]
 title = "Install & Add Packages"
-aliases = []
+aliases = ["pnpm install", "add pnpm package", "install pnpm dependency"]
 
 [[group.section.command]]
 note = "Installs everything in package.json"
@@ -34,7 +34,7 @@ cmd = "pnpm add -g <pkg>"
 
 [[group.section]]
 title = "Update & Remove Packages"
-aliases = []
+aliases = ["pnpm update", "remove pnpm package", "upgrade pnpm dependency"]
 
 [[group.section.command]]
 note = "Removes a package"
@@ -61,7 +61,7 @@ title = "Running & Maintenance"
 
 [[group.section]]
 title = "Run Scripts & Packages"
-aliases = []
+aliases = ["pnpm run script", "pnpm dlx", "run pnpm package"]
 
 [[group.section.command]]
 note = "Runs a script from package.json"
@@ -81,7 +81,7 @@ cmd = "pnpm create vite"
 
 [[group.section]]
 title = "Workspaces (Monorepos)"
-aliases = []
+aliases = ["pnpm workspace", "pnpm filter", "pnpm monorepo"]
 
 [[group.section.command]]
 note = "Runs a command in one workspace package"
@@ -97,7 +97,7 @@ cmd = "pnpm add <pkg> --filter <workspace>"
 
 [[group.section]]
 title = "Store & Cleanup"
-aliases = []
+aliases = ["pnpm store", "clean pnpm store", "prune pnpm store"]
 
 [[group.section.command]]
 note = "Prints the global store location"

@@ -17,6 +17,36 @@ fn test_seed_tools_present() {
 }
 
 #[test]
+fn test_javascript_web_v8a_tools_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "JavaScript & Web")
+        .expect("JavaScript & Web category present");
+    let expected = [
+        "npm",
+        "pnpm",
+        "yarn",
+        "bun",
+        "nextjs",
+        "vite",
+        "typescript",
+        "eslint",
+        "vercel",
+        "netlify",
+    ];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        47
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

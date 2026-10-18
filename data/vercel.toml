@@ -3,14 +3,14 @@ name = "Vercel CLI"
 category = "JavaScript & Web"
 order = 9
 aliases = ["vercel-cli"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Vercel"
 
 [[group.section]]
 title = "Log In & Link"
-aliases = []
+aliases = ["vercel login", "link vercel project", "connect vercel app"]
 
 [[group.section.command]]
 note = "Installs the Vercel CLI"
@@ -34,7 +34,7 @@ cmd = "vercel logout"
 
 [[group.section]]
 title = "Deploy"
-aliases = []
+aliases = ["deploy vercel app", "vercel production deploy", "publish vercel site"]
 
 [[group.section.command]]
 note = "Deploys a preview build"
@@ -62,7 +62,7 @@ cmd = "vercel promote <deployment-url>"
 
 [[group.section]]
 title = "Environment Variables"
-aliases = []
+aliases = ["vercel env", "set vercel variable", "download vercel env"]
 
 [[group.section.command]]
 note = "Lists environment variables"
@@ -86,7 +86,7 @@ cmd = "vercel env rm <name>"
 
 [[group.section]]
 title = "Logs & Domains"
-aliases = []
+aliases = ["vercel logs", "vercel domain", "debug vercel deployment"]
 
 [[group.section.command]]
 note = "Shows runtime logs for a deployment"

@@ -169,3 +169,305 @@ query = "flibbertigibbet zorp"
 [[q]]
 kind = "none"
 query = "unrelated cryptographic nebula"
+
+# JavaScript & Web (V8a): five focused cases for every enabled tool.
+
+[[q]]
+kind = "tool"
+query = "npm add dependencies"
+tool = "npm"
+expect = "Install Dependencies"
+
+[[q]]
+kind = "tool"
+query = "npm publish package"
+tool = "npm"
+expect = "Publish a Package"
+
+[[q]]
+kind = "tool"
+query = "npm audit vulnerabilities"
+tool = "npm"
+expect = "Security Audit"
+
+[[q]]
+kind = "tool"
+query = "npm clear cache"
+tool = "npm"
+expect = "Cache & Clean Reinstall"
+
+[[q]]
+kind = "tool"
+query = "npm workspace"
+tool = "npm"
+expect = "Workspaces (Monorepos)"
+
+[[q]]
+kind = "tool"
+query = "pnpm install dependency"
+tool = "pnpm"
+expect = "Install & Add Packages"
+
+[[q]]
+kind = "tool"
+query = "pnpm update package"
+tool = "pnpm"
+expect = "Update & Remove Packages"
+
+[[q]]
+kind = "tool"
+query = "pnpm run script"
+tool = "pnpm"
+expect = "Run Scripts & Packages"
+
+[[q]]
+kind = "tool"
+query = "pnpm workspace"
+tool = "pnpm"
+expect = "Workspaces (Monorepos)"
+
+[[q]]
+kind = "tool"
+query = "pnpm clean store"
+tool = "pnpm"
+expect = "Store & Cleanup"
+
+[[q]]
+kind = "tool"
+query = "yarn install dependency"
+tool = "yarn"
+expect = "Install & Add Packages"
+
+[[q]]
+kind = "tool"
+query = "yarn update package"
+tool = "yarn"
+expect = "Update & Remove Packages"
+
+[[q]]
+kind = "tool"
+query = "yarn run script"
+tool = "yarn"
+expect = "Scripts & Workspaces"
+
+[[q]]
+kind = "tool"
+query = "yarn clear cache"
+tool = "yarn"
+expect = "Global Packages & Cache"
+
+[[q]]
+kind = "tool"
+query = "yarn global package"
+tool = "yarn"
+expect = "Global Packages & Cache"
+
+[[q]]
+kind = "tool"
+query = "bun install package"
+tool = "bun"
+expect = "Create & Install"
+
+[[q]]
+kind = "tool"
+query = "bun run script"
+tool = "bun"
+expect = "Run Code & Scripts"
+
+[[q]]
+kind = "tool"
+query = "bunx command"
+tool = "bun"
+expect = "Run Code & Scripts"
+
+[[q]]
+kind = "tool"
+query = "bun test"
+tool = "bun"
+expect = "Test, Build & Upgrade"
+
+[[q]]
+kind = "tool"
+query = "bun upgrade"
+tool = "bun"
+expect = "Test, Build & Upgrade"
+
+[[q]]
+kind = "tool"
+query = "nextjs create app"
+tool = "nextjs"
+expect = "Create an App"
+
+[[q]]
+kind = "tool"
+query = "nextjs dev server"
+tool = "nextjs"
+expect = "Dev, Build & Start"
+
+[[q]]
+kind = "tool"
+query = "nextjs build app"
+tool = "nextjs"
+expect = "Dev, Build & Start"
+
+[[q]]
+kind = "tool"
+query = "nextjs clear cache"
+tool = "nextjs"
+expect = "Clean & Reset"
+
+[[q]]
+kind = "tool"
+query = "nextjs deploy"
+tool = "nextjs"
+expect = "Deploy"
+
+[[q]]
+kind = "tool"
+query = "vite create project"
+tool = "vite"
+expect = "Create a Project"
+
+[[q]]
+kind = "tool"
+query = "vite dev server"
+tool = "vite"
+expect = "Dev, Build & Preview"
+
+[[q]]
+kind = "tool"
+query = "vite build app"
+tool = "vite"
+expect = "Dev, Build & Preview"
+
+[[q]]
+kind = "tool"
+query = "vite preview build"
+tool = "vite"
+expect = "Dev, Build & Preview"
+
+[[q]]
+kind = "tool"
+query = "vite test"
+tool = "vite"
+expect = "Testing (Vitest)"
+
+[[q]]
+kind = "tool"
+query = "typescript initialize"
+tool = "typescript"
+expect = "Set Up TypeScript"
+
+[[q]]
+kind = "tool"
+query = "typescript compile"
+tool = "typescript"
+expect = "Compile & Type-Check"
+
+[[q]]
+kind = "tool"
+query = "typescript type check"
+tool = "typescript"
+expect = "Compile & Type-Check"
+
+[[q]]
+kind = "tool"
+query = "typescript run file"
+tool = "typescript"
+expect = "Run TypeScript Directly"
+
+[[q]]
+kind = "tool"
+query = "typescript show config"
+tool = "typescript"
+expect = "Inspect the Setup"
+
+[[q]]
+kind = "tool"
+query = "eslint lint javascript"
+tool = "eslint"
+expect = "ESLint"
+
+[[q]]
+kind = "tool"
+query = "eslint fix lint errors"
+tool = "eslint"
+expect = "ESLint"
+
+[[q]]
+kind = "tool"
+query = "eslint format code"
+tool = "eslint"
+expect = "Prettier"
+
+[[q]]
+kind = "tool"
+query = "eslint fix formatting"
+tool = "eslint"
+expect = "Prettier"
+
+[[q]]
+kind = "tool"
+query = "eslint fix formatting"
+tool = "eslint"
+expect = "Prettier"
+
+[[q]]
+kind = "tool"
+query = "vercel login"
+tool = "vercel"
+expect = "Log In & Link"
+
+[[q]]
+kind = "tool"
+query = "vercel deploy"
+tool = "vercel"
+expect = "Deploy"
+
+[[q]]
+kind = "tool"
+query = "vercel production deploy"
+tool = "vercel"
+expect = "Deploy"
+
+[[q]]
+kind = "tool"
+query = "vercel env"
+tool = "vercel"
+expect = "Environment Variables"
+
+[[q]]
+kind = "tool"
+query = "vercel domain"
+tool = "vercel"
+expect = "Logs & Domains"
+
+[[q]]
+kind = "tool"
+query = "netlify login"
+tool = "netlify"
+expect = "Log In & Link"
+
+[[q]]
+kind = "tool"
+query = "netlify dev"
+tool = "netlify"
+expect = "Develop & Deploy"
+
+[[q]]
+kind = "tool"
+query = "netlify deploy"
+tool = "netlify"
+expect = "Develop & Deploy"
+
+[[q]]
+kind = "tool"
+query = "netlify env"
+tool = "netlify"
+expect = "Environment & Functions"
+
+[[q]]
+kind = "tool"
+query = "netlify functions"
+tool = "netlify"
+expect = "Environment & Functions"

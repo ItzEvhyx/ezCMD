@@ -2,6 +2,7 @@ use ezcmd::content::all_tools;
 use ezcmd::matcher::{search, SearchOpts, SearchResult};
 use ezcmd::os::Os;
 use serde::Deserialize;
+use std::collections::{BTreeMap, HashMap};
 
 #[derive(Deserialize)]
 struct QuerySuite {
@@ -26,6 +27,7 @@ struct V2QueryCase {
     query: String,
     tool: Option<String>,
     expect: Option<String>,
+    choices: Option<Vec<String>>,
     os: Option<String>,
 }
 
@@ -184,6 +186,22 @@ fn test_v2_seed_query_accuracy() {
         toml::from_str(include_str!("queries_v2.toml")).expect("failed to parse queries_v2.toml");
     let mut failures = Vec::new();
     let mut total = 0;
+    let mut totals_by_kind: BTreeMap<&str, usize> = BTreeMap::new();
+    let mut passes_by_kind: BTreeMap<&str, usize> = BTreeMap::new();
+    let mut queries_by_tool: HashMap<&str, usize> = HashMap::new();
+
+    for case in &suite.q {
+        if let Some(tool) = case.tool.as_deref() {
+            *queries_by_tool.entry(tool).or_default() += 1;
+        }
+    }
+    for tool in all_tools() {
+        assert!(
+            queries_by_tool.get(tool.slug).copied().unwrap_or_default() >= 5,
+            "{} needs at least five v2 accuracy queries",
+            tool.slug
+        );
+    }
 
     for case in &suite.q {
         for os in targets(case.os.as_deref()) {
@@ -191,19 +209,34 @@ fn test_v2_seed_query_accuracy() {
             let result = search_query(&case.query, os);
             let expected_tool = case.tool.as_deref();
             let expected_section = case.expect.as_deref();
+            let section_matches = |hit: &ezcmd::matcher::Hit<'_>| {
+                expected_tool.is_none_or(|tool| hit.tool.slug == tool)
+                    && expected_section == Some(hit.section.title)
+            };
             let pass = match (case.kind.as_str(), &result) {
-                ("tool", SearchResult::ToolOnly(tool)) => expected_tool == Some(tool.slug),
-                ("task" | "guard", SearchResult::Single(hit)) => {
-                    expected_tool.is_none_or(|tool| hit.tool.slug == tool)
-                        && expected_section == Some(hit.section.title)
+                ("tool", SearchResult::ToolOnly(tool)) => {
+                    expected_section.is_none() && expected_tool == Some(tool.slug)
                 }
-                ("task", SearchResult::Ambiguous(hits)) => hits.iter().any(|hit| {
-                    expected_tool.is_none_or(|tool| hit.tool.slug == tool)
-                        && expected_section == Some(hit.section.title)
-                }),
+                ("tool" | "guard", SearchResult::Single(hit)) => section_matches(hit),
+                ("tool" | "guard", SearchResult::Ambiguous(hits)) => {
+                    hits.first().is_some_and(section_matches)
+                }
+                ("task", SearchResult::Single(hit)) => section_matches(hit),
+                ("task", SearchResult::Ambiguous(hits)) => hits.iter().take(3).any(section_matches),
+                ("ambiguous", SearchResult::Ambiguous(hits)) => {
+                    case.choices.as_ref().is_some_and(|choices| {
+                        choices
+                            .iter()
+                            .all(|tool| hits.iter().any(|hit| hit.tool.slug == tool))
+                    })
+                }
                 ("none", SearchResult::NoMatch(_)) => true,
                 _ => false,
             };
+            *totals_by_kind.entry(case.kind.as_str()).or_default() += 1;
+            if pass {
+                *passes_by_kind.entry(case.kind.as_str()).or_default() += 1;
+            }
             if !pass {
                 failures.push(format!(
                     "{} query \"{}\" on {:?}: {}",
@@ -216,11 +249,43 @@ fn test_v2_seed_query_accuracy() {
         }
     }
 
-    assert_eq!(suite.q.len(), 30, "V6 seed corpus must contain 30 queries");
+    assert!(
+        suite.q.len() >= 30,
+        "V2 corpus must not shrink below its V6 seed"
+    );
     assert!(
         failures.is_empty(),
-        "V2 seed failures:\n{}",
+        "V2 accuracy failures:\n{}",
         failures.join("\n")
     );
-    println!("V2 seed accuracy: {total} evaluations passed");
+    let rate = |kind: &str| {
+        let total = totals_by_kind.get(kind).copied().unwrap_or_default();
+        let passed = passes_by_kind.get(kind).copied().unwrap_or_default();
+        assert!(total > 0, "V2 corpus has no {kind} queries");
+        (passed as f32 / total as f32) * 100.0
+    };
+    let tool_rate = rate("tool");
+    let task_rate = rate("task");
+    let none_rate = rate("none");
+    let guard_rate = rate("guard");
+    assert!(
+        tool_rate >= 95.0,
+        "tool top-1 rate {tool_rate:.2}% is below 95%"
+    );
+    assert!(
+        task_rate >= 90.0,
+        "task top-3 rate {task_rate:.2}% is below 90%"
+    );
+    assert_eq!(none_rate, 100.0, "none rate must be 100%");
+    assert_eq!(guard_rate, 100.0, "guard top-1 rate must be 100%");
+
+    if totals_by_kind.contains_key("ambiguous") {
+        let ambiguous_rate = rate("ambiguous");
+        assert!(
+            ambiguous_rate >= 90.0,
+            "ambiguous chooser rate {ambiguous_rate:.2}% is below 90%"
+        );
+    }
+
+    println!("V2 accuracy: {total} evaluations passed");
 }

@@ -4,14 +4,14 @@ category = "JavaScript & Web"
 order = 3
 aliases = ["yarnpkg"]
 notes = ["Classic (v1) and Berry (v2+) differ. Lines are labeled where they do"]
-draft = true
+draft = false
 
 [[group]]
 title = "Packages"
 
 [[group.section]]
 title = "Install & Add Packages"
-aliases = []
+aliases = ["yarn install", "add yarn package", "install yarn dependency"]
 
 [[group.section.command]]
 note = "Installs everything in package.json"
@@ -35,7 +35,7 @@ cmd = "yarn install --immutable"
 
 [[group.section]]
 title = "Update & Remove Packages"
-aliases = []
+aliases = ["yarn update", "remove yarn package", "upgrade yarn dependency"]
 
 [[group.section.command]]
 note = "Removes a package"
@@ -62,7 +62,7 @@ title = "Running & Maintenance"
 
 [[group.section]]
 title = "Scripts & Workspaces"
-aliases = []
+aliases = ["yarn run script", "yarn workspace", "run yarn command"]
 
 [[group.section.command]]
 note = "Runs a script from package.json"
@@ -94,7 +94,7 @@ cmd = "yarn dlx create-next-app"
 
 [[group.section]]
 title = "Global Packages & Cache"
-aliases = []
+aliases = ["clear yarn cache", "yarn global package", "upgrade yarn"]
 
 [[group.section.command]]
 note = "Classic: installs a package globally"

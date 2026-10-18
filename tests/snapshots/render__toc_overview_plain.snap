@@ -1,10 +1,21 @@
 ---
 source: tests/render.rs
-assertion_line: 152
 expression: output
 ---
 Version Control
-  -git    Git                            12 sections
+  -git         Git                            12 sections
+
+JavaScript & Web
+  -npm         Node.js & npm                  15 sections
+  -pnpm        pnpm                           5 sections
+  -yarn        Yarn                           4 sections
+  -bun         Bun                            3 sections
+  -nextjs      Next.js                        4 sections
+  -vite        React & Vite                   3 sections
+  -typescript  TypeScript                     4 sections
+  -eslint      ESLint & Prettier              2 sections
+  -vercel      Vercel CLI                     4 sections
+  -netlify     Netlify CLI                    3 sections
 
 Linux & System Tools
-  -shell  Shell Basics (CMD & Terminal)  10 sections
+  -shell       Shell Basics (CMD & Terminal)  10 sections

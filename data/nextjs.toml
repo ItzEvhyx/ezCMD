@@ -3,14 +3,14 @@ name = "Next.js"
 category = "JavaScript & Web"
 order = 5
 aliases = ["next", "vercel-next"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Next.js"
 
 [[group.section]]
 title = "Create an App"
-aliases = []
+aliases = ["create next app", "new nextjs project", "scaffold next app"]
 
 [[group.section.command]]
 note = "Scaffolds an app with prompts"
@@ -38,7 +38,7 @@ cmd = "npx create-next-app@latest <name> --example <example>"
 
 [[group.section]]
 title = "Dev, Build & Start"
-aliases = []
+aliases = ["run next dev", "build next app", "start next server"]
 
 [[group.section.command]]
 note = "Starts the dev server"
@@ -74,7 +74,7 @@ cmd = "npm install next@latest react@latest react-dom@latest"
 
 [[group.section]]
 title = "Clean & Reset"
-aliases = []
+aliases = ["clear next cache", "reset next app", "delete next build"]
 
 [[group.section.command]]
 note = "Deletes the Next.js build cache"
@@ -91,7 +91,7 @@ cmd = "npx next telemetry --enable"
 
 [[group.section]]
 title = "Deploy"
-aliases = []
+aliases = ["deploy next app", "nextjs deployment", "production next app"]
 
 [[group.section.command]]
 note = "Installs the Vercel CLI"

@@ -4,14 +4,14 @@ category = "JavaScript & Web"
 order = 7
 aliases = ["ts", "tsc", "tsx"]
 notes = ["TypeScript 7 ships the native Go compiler as tsc. The @typescript/typescript6 package provides the 6.0 compiler as tsc6. In TypeScript 7, passing file paths in a folder that has a tsconfig.json fails unless you add --ignoreConfig"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything TypeScript"
 
 [[group.section]]
 title = "Set Up TypeScript"
-aliases = []
+aliases = ["initialize typescript", "create tsconfig", "setup typescript"]
 
 [[group.section.command]]
 note = "Adds TypeScript to a project"
@@ -35,7 +35,7 @@ cmd = "npm install -D @types/<pkg>"
 
 [[group.section]]
 title = "Compile & Type-Check"
-aliases = []
+aliases = ["compile typescript", "type check", "tsc build"]
 
 [[group.section.command]]
 note = "Compiles the project"
@@ -59,7 +59,7 @@ cmd = "npx tsc --ignoreConfig <file.ts>"
 
 [[group.section]]
 title = "Run TypeScript Directly"
-aliases = []
+aliases = ["run typescript", "tsx command", "execute ts file"]
 
 [[group.section.command]]
 note = "Runs a TypeScript file with tsx"
@@ -79,7 +79,7 @@ cmd = "bun run <file.ts>"
 
 [[group.section]]
 title = "Inspect the Setup"
-aliases = []
+aliases = ["typescript version", "show tsconfig", "inspect typescript config"]
 
 [[group.section.command]]
 note = "Prints the resolved tsconfig"

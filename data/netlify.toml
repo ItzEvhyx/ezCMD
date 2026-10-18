@@ -3,14 +3,14 @@ name = "Netlify CLI"
 category = "JavaScript & Web"
 order = 10
 aliases = ["netlify-cli"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Netlify"
 
 [[group.section]]
 title = "Log In & Link"
-aliases = []
+aliases = ["netlify login", "link netlify site", "connect netlify project"]
 
 [[group.section.command]]
 note = "Installs the Netlify CLI"
@@ -34,7 +34,7 @@ cmd = "netlify status"
 
 [[group.section]]
 title = "Develop & Deploy"
-aliases = []
+aliases = ["netlify dev", "deploy netlify site", "publish netlify app"]
 
 [[group.section.command]]
 note = "Runs the site locally with Netlify features"
@@ -58,7 +58,7 @@ cmd = "netlify open"
 
 [[group.section]]
 title = "Environment & Functions"
-aliases = []
+aliases = ["netlify env", "netlify functions", "set netlify variable"]
 
 [[group.section.command]]
 note = "Lists environment variables"
