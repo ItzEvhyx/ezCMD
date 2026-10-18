@@ -93,6 +93,25 @@ fn test_containers_devops_v8c_tools_are_complete() {
 }
 
 #[test]
+fn test_cloud_backend_v8d_tools_are_complete() {
+    let category = CATEGORIES
+        .iter()
+        .find(|category| category.name == "Cloud & Backend Services")
+        .expect("Cloud & Backend Services category present");
+    let expected = ["firebase", "supabase", "aws", "gcloud", "az"];
+    let actual: Vec<&str> = category.tools.iter().map(|tool| tool.slug).collect();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        category
+            .tools
+            .iter()
+            .map(|tool| tool.sections().count())
+            .sum::<usize>(),
+        20
+    );
+}
+
+#[test]
 fn test_minimum_section_counts() {
     let git = all_tools()
         .find(|tool| tool.slug == "git")

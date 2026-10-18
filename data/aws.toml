@@ -3,14 +3,14 @@ name = "AWS CLI"
 category = "Cloud & Backend Services"
 order = 3
 aliases = ["amazon", "s3", "ec2", "lambda"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything AWS"
 
 [[group.section]]
 title = "Log In & Profiles"
-aliases = []
+aliases = ["aws login", "configure aws profile", "aws credentials"]
 
 [[group.section.command]]
 note = "Sets up access keys and a default region"
@@ -42,7 +42,7 @@ cmd = "aws --profile <name> <command>"
 
 [[group.section]]
 title = "S3 Storage"
-aliases = []
+aliases = ["aws s3", "upload to s3", "manage s3 bucket"]
 
 [[group.section.command]]
 note = "Lists your buckets"
@@ -78,7 +78,7 @@ cmd = "aws s3 presign s3://<bucket>/<key>"
 
 [[group.section]]
 title = "EC2 Servers"
-aliases = []
+aliases = ["aws ec2", "launch ec2 server", "manage ec2 instance"]
 
 [[group.section.command]]
 note = "Lists your EC2 instances"
@@ -102,7 +102,7 @@ cmd = "aws ec2 terminate-instances --instance-ids <id>"
 
 [[group.section]]
 title = "Lambda & Logs"
-aliases = []
+aliases = ["aws lambda", "lambda logs", "deploy lambda function"]
 
 [[group.section.command]]
 note = "Lists your Lambda functions"

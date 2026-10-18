@@ -3,14 +3,14 @@ name = "Supabase CLI"
 category = "Cloud & Backend Services"
 order = 2
 aliases = ["supabase-cli", "postgres-backend"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Supabase"
 
 [[group.section]]
 title = "Set Up & Link"
-aliases = []
+aliases = ["supabase login", "link supabase project", "setup supabase cli"]
 
 [[group.section.command]]
 note = "Logs in to Supabase"
@@ -30,7 +30,7 @@ cmd = "npx supabase link --project-ref <ref>"
 
 [[group.section]]
 title = "Local Development"
-aliases = []
+aliases = ["start supabase locally", "supabase local development", "run supabase services"]
 
 [[group.section.command]]
 note = "Starts the local stack in Docker"
@@ -50,7 +50,7 @@ cmd = "npx supabase db reset"
 
 [[group.section]]
 title = "Migrations"
-aliases = []
+aliases = ["supabase migration", "create database migration", "apply supabase migration"]
 
 [[group.section.command]]
 note = "Creates a new migration file"
@@ -78,7 +78,7 @@ cmd = "npx supabase db dump --linked -f <file.sql>"
 
 [[group.section]]
 title = "Generate Types"
-aliases = []
+aliases = ["generate supabase types", "supabase typescript types", "database type generation"]
 
 [[group.section.command]]
 note = "Generates types from the local database"
@@ -94,7 +94,7 @@ cmd = "npx supabase gen types --lang typescript --project-id <ref> > <types.ts>"
 
 [[group.section]]
 title = "Edge Functions & Secrets"
-aliases = []
+aliases = ["supabase edge function", "supabase secrets", "deploy supabase function"]
 
 [[group.section.command]]
 note = "Creates an edge function"

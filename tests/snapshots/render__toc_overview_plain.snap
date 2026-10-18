@@ -33,5 +33,12 @@ Containers & DevOps
   -terraform   Terraform                      5 sections
   -nginx       Nginx & Certbot                3 sections
 
+Cloud & Backend Services
+  -firebase    Firebase CLI                   5 sections
+  -supabase    Supabase CLI                   5 sections
+  -aws         AWS CLI                        4 sections
+  -gcloud      Google Cloud CLI (gcloud)      3 sections
+  -az          Azure CLI                      3 sections
+
 Linux & System Tools
   -shell       Shell Basics (CMD & Terminal)  10 sections

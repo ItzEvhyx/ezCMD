@@ -3,14 +3,14 @@ name = "Azure CLI"
 category = "Cloud & Backend Services"
 order = 5
 aliases = ["azure", "microsoft-azure"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Azure"
 
 [[group.section]]
 title = "Log In & Subscriptions"
-aliases = []
+aliases = ["azure login", "az subscription", "configure azure cli"]
 
 [[group.section.command]]
 note = "Logs in to Azure"
@@ -34,7 +34,7 @@ cmd = "az logout"
 
 [[group.section]]
 title = "Resource Groups"
-aliases = []
+aliases = ["azure resource group", "create resource group", "manage azure resources"]
 
 [[group.section.command]]
 note = "Lists resource groups"
@@ -54,7 +54,7 @@ cmd = "az resource list"
 
 [[group.section]]
 title = "Web Apps & VMs"
-aliases = []
+aliases = ["azure web app", "azure virtual machine", "deploy azure app"]
 
 [[group.section.command]]
 note = "Lists web apps"

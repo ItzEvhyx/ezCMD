@@ -3,14 +3,14 @@ name = "Firebase CLI"
 category = "Cloud & Backend Services"
 order = 1
 aliases = ["firebase-tools", "flutterfire"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Firebase"
 
 [[group.section]]
 title = "Log In & Set Up"
-aliases = []
+aliases = ["firebase login", "setup firebase project", "firebase cli auth"]
 
 [[group.section.command]]
 note = "Installs the Firebase CLI"
@@ -38,7 +38,7 @@ cmd = "firebase init"
 
 [[group.section]]
 title = "Emulators"
-aliases = []
+aliases = ["firebase emulator", "run firebase locally", "start firebase emulator"]
 
 [[group.section.command]]
 note = "Sets up the local emulators"
@@ -66,7 +66,7 @@ cmd = "firebase emulators:export <dir>"
 
 [[group.section]]
 title = "Deploy"
-aliases = []
+aliases = ["deploy firebase app", "firebase hosting deploy", "publish firebase project"]
 
 [[group.section.command]]
 note = "Deploys everything configured"
@@ -94,7 +94,7 @@ cmd = "firebase hosting:channel:deploy <channel>"
 
 [[group.section]]
 title = "Cloud Functions"
-aliases = []
+aliases = ["firebase functions", "deploy cloud function", "firebase function logs"]
 
 [[group.section.command]]
 note = "Sets up Cloud Functions"
@@ -118,7 +118,7 @@ cmd = "firebase functions:secrets:set <NAME>"
 
 [[group.section]]
 title = "FlutterFire Setup"
-aliases = []
+aliases = ["setup flutterfire", "configure firebase flutter", "generate flutterfire config"]
 
 [[group.section.command]]
 note = "Installs the FlutterFire CLI"

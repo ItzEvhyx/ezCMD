@@ -910,3 +910,153 @@ query = "nginx renew ssl"
 tool = "nginx"
 expect = "HTTPS with Certbot"
 os = "unix"
+
+[[q]]
+kind = "tool"
+query = "firebase login"
+tool = "firebase"
+expect = "Log In & Set Up"
+
+[[q]]
+kind = "tool"
+query = "firebase emulator"
+tool = "firebase"
+expect = "Emulators"
+
+[[q]]
+kind = "tool"
+query = "firebase deploy"
+tool = "firebase"
+expect = "Deploy"
+
+[[q]]
+kind = "tool"
+query = "firebase functions"
+tool = "firebase"
+expect = "Cloud Functions"
+
+[[q]]
+kind = "tool"
+query = "setup flutterfire"
+tool = "firebase"
+expect = "FlutterFire Setup"
+
+[[q]]
+kind = "tool"
+query = "supabase login"
+tool = "supabase"
+expect = "Set Up & Link"
+
+[[q]]
+kind = "tool"
+query = "start supabase locally"
+tool = "supabase"
+expect = "Local Development"
+
+[[q]]
+kind = "tool"
+query = "supabase migration"
+tool = "supabase"
+expect = "Migrations"
+
+[[q]]
+kind = "tool"
+query = "generate supabase types"
+tool = "supabase"
+expect = "Generate Types"
+
+[[q]]
+kind = "tool"
+query = "supabase edge function"
+tool = "supabase"
+expect = "Edge Functions & Secrets"
+
+[[q]]
+kind = "tool"
+query = "aws configure"
+tool = "aws"
+expect = "Log In & Profiles"
+
+[[q]]
+kind = "tool"
+query = "aws s3 bucket"
+tool = "aws"
+expect = "S3 Storage"
+
+[[q]]
+kind = "tool"
+query = "aws ec2 instance"
+tool = "aws"
+expect = "EC2 Servers"
+
+[[q]]
+kind = "tool"
+query = "aws lambda function"
+tool = "aws"
+expect = "Lambda & Logs"
+
+[[q]]
+kind = "tool"
+query = "aws lambda tail logs"
+tool = "aws"
+expect = "Lambda & Logs"
+
+[[q]]
+kind = "tool"
+query = "gcloud login"
+tool = "gcloud"
+expect = "Log In & Configure"
+
+[[q]]
+kind = "tool"
+query = "gcloud compute"
+tool = "gcloud"
+expect = "Compute & Cloud Run"
+
+[[q]]
+kind = "tool"
+query = "deploy cloud run"
+tool = "gcloud"
+expect = "Compute & Cloud Run"
+
+[[q]]
+kind = "tool"
+query = "gcloud storage"
+tool = "gcloud"
+expect = "Cloud Storage"
+
+[[q]]
+kind = "tool"
+query = "google cloud bucket"
+tool = "gcloud"
+expect = "Cloud Storage"
+
+[[q]]
+kind = "tool"
+query = "azure login"
+tool = "az"
+expect = "Log In & Subscriptions"
+
+[[q]]
+kind = "tool"
+query = "azure resource group"
+tool = "az"
+expect = "Resource Groups"
+
+[[q]]
+kind = "tool"
+query = "azure web app"
+tool = "az"
+expect = "Web Apps & VMs"
+
+[[q]]
+kind = "tool"
+query = "azure virtual machine"
+tool = "az"
+expect = "Web Apps & VMs"
+
+[[q]]
+kind = "tool"
+query = "deploy azure app"
+tool = "az"
+expect = "Web Apps & VMs"

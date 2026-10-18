@@ -3,14 +3,14 @@ name = "Google Cloud CLI (gcloud)"
 category = "Cloud & Backend Services"
 order = 4
 aliases = ["google-cloud", "gcp", "cloud-run"]
-draft = true
+draft = false
 
 [[group]]
 title = "Everything Google Cloud"
 
 [[group.section]]
 title = "Log In & Configure"
-aliases = []
+aliases = ["gcloud login", "configure google cloud", "set gcloud project"]
 
 [[group.section.command]]
 note = "Sets up gcloud interactively"
@@ -42,7 +42,7 @@ cmd = "gcloud projects list"
 
 [[group.section]]
 title = "Compute & Cloud Run"
-aliases = []
+aliases = ["gcloud compute", "deploy cloud run", "manage google cloud server"]
 
 [[group.section.command]]
 note = "Lists virtual machines"
@@ -66,7 +66,7 @@ cmd = "gcloud app deploy"
 
 [[group.section]]
 title = "Cloud Storage"
-aliases = []
+aliases = ["gcloud storage", "google cloud bucket", "upload cloud storage file"]
 
 [[group.section.command]]
 note = "Lists your buckets"
