@@ -6,6 +6,8 @@ use std::fmt;
 #[derive(Debug, PartialEq, Eq)]
 pub struct Invocation {
     pub plain: bool,
+    pub brief: bool,
+    pub explain: bool,
     pub shell: Option<Shell>,
     pub action: Action,
 }
@@ -47,6 +49,7 @@ pub enum Action {
     Welcome,                 // --welcome
     Install,                 // --install
     Update,                  // update / --update
+    Forget,                  // --forget
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -93,10 +96,38 @@ fn find_tool_name(candidate: &str) -> Option<&'static str> {
 
 /// Parse command-line arguments (excluding program name).
 pub fn parse<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError> {
-    let (shell, remaining) = take_shell_flag(args)?;
+    let (brief, explain, query_args) = take_query_flags(args);
+    let (shell, remaining) = take_shell_flag(&query_args)?;
     let mut invocation = parse_without_shell(&remaining)?;
     invocation.shell = shell;
+    invocation.brief = brief;
+    invocation.explain = explain;
     Ok(invocation)
+}
+
+fn take_query_flags<S: AsRef<str>>(args: &[S]) -> (bool, bool, Vec<String>) {
+    let mut brief = false;
+    let mut explain = false;
+    let mut remaining = Vec::with_capacity(args.len());
+    let mut literal = false;
+    for arg in args {
+        let value = arg.as_ref();
+        if value == "--" {
+            literal = true;
+            remaining.push(value.to_string());
+            continue;
+        }
+        if !literal && value == "--brief" {
+            brief = true;
+            continue;
+        }
+        if !literal && value == "--explain" {
+            explain = true;
+            continue;
+        }
+        remaining.push(value.to_string());
+    }
+    (brief, explain, remaining)
 }
 
 /// Extract `--shell <cmd|powershell>` before normal parsing. Anything after a
@@ -131,6 +162,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
     if args.is_empty() {
         return Ok(Invocation {
             plain: false,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Usage,
         });
@@ -153,6 +186,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
         if arg.as_ref() == "--version" {
             return Ok(Invocation {
                 plain,
+                brief: false,
+                explain: false,
                 shell: None,
                 action: Action::Version,
             });
@@ -170,6 +205,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
             .any(|a| a.as_ref() == "-y" || a.as_ref() == "--yes");
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Uninstall { yes },
         });
@@ -182,6 +219,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
     if has_welcome {
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Welcome,
         });
@@ -194,6 +233,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
     if has_install {
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Install,
         });
@@ -206,8 +247,23 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
     if has_update {
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Update,
+        });
+    }
+
+    let has_forget = args[..pre_dash_limit]
+        .iter()
+        .any(|arg| arg.as_ref() == "--forget");
+    if has_forget {
+        return Ok(Invocation {
+            plain,
+            brief: false,
+            explain: false,
+            shell: None,
+            action: Action::Forget,
         });
     }
 
@@ -245,6 +301,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
         if query_parts.is_empty() {
             return Ok(Invocation {
                 plain,
+                brief: false,
+                explain: false,
                 shell: None,
                 action: Action::Usage,
             });
@@ -252,6 +310,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
 
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Query(query_parts.join(" ")),
         });
@@ -273,6 +333,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
     if query_parts.is_empty() {
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Usage,
         });
@@ -283,6 +345,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
     if query_parts.len() == 1 && query_parts[0].eq_ignore_ascii_case("update") {
         return Ok(Invocation {
             plain,
+            brief: false,
+            explain: false,
             shell: None,
             action: Action::Update,
         });
@@ -290,6 +354,8 @@ fn parse_without_shell<S: AsRef<str>>(args: &[S]) -> Result<Invocation, CliError
 
     Ok(Invocation {
         plain,
+        brief: false,
+        explain: false,
         shell: None,
         action: Action::Query(query_parts.join(" ")),
     })
@@ -373,6 +439,8 @@ fn parse_help<S: AsRef<str>>(args: &[S], mut plain: bool) -> Result<Invocation, 
     }
     Ok(Invocation {
         plain,
+        brief: false,
+        explain: false,
         shell: None,
         action: Action::Help(HelpRequest {
             os,
@@ -451,6 +519,12 @@ mod tests {
         let inv = parse(&["--plain", "--update"]).expect("parse update flag");
         assert!(inv.plain);
         assert_eq!(inv.action, Action::Update);
+    }
+
+    #[test]
+    fn test_forget_flag() {
+        let inv = parse(&["--forget"]).expect("parse forget");
+        assert_eq!(inv.action, Action::Forget);
     }
 
     #[test]

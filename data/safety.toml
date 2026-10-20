@@ -1,0 +1,14 @@
+# Safety policy is compiled into the binary. Patterns are intentionally plain
+# substrings except `dd `, which is recognized only at command start.
+dangerous_patterns = [
+  "rm -r", "rm -rf", "rm -fr", "shred", "dd ", "mkfs", "chmod -r", "chown -r", "> /dev/",
+  "del /s", "del /q", "rmdir /s", "rd /s", "format ", "diskpart", "reset --hard",
+  "clean -f", "push --force", "push -f", "branch -d", "checkout -- .", "restore .",
+  "stash drop", "stash clear", "reflog expire", "filter-branch", "remove-item -recurse",
+]
+
+path_denylist = [
+  "/", "/*", "~", "~/", "~/*", "$HOME", "*", ".", "..", "/etc",
+  "/usr", "/bin", "/var", "/home", "/boot", "/lib", "C:\\", "C:\\*",
+  "%USERPROFILE%", "%SystemRoot%", "%windir%",
+]

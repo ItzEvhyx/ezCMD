@@ -1,8 +1,11 @@
 use ezcmd::cli::{self, Action};
 use ezcmd::content::{all_tools, CATEGORIES};
+use ezcmd::context::Context;
+use ezcmd::history::History;
 use ezcmd::matcher::{self, SearchResult};
 use ezcmd::os::Os;
 use ezcmd::prompt;
+use ezcmd::recommend::{self, Candidate, Decision, ScoredCandidate};
 use ezcmd::render::{self, RenderCtx};
 use ezcmd::shell::Shell;
 use ezcmd::term;
@@ -10,6 +13,37 @@ use std::io::{self, IsTerminal, Write};
 
 fn print_usage_header<W: Write>(w: &mut W, ctx: &RenderCtx) -> io::Result<()> {
     render::usage_guide(w, ctx)
+}
+
+fn render_candidate<W: Write>(
+    out: &mut W,
+    candidate: ScoredCandidate,
+    frame: &ezcmd::recommend::Frame,
+    context: &Context,
+    os: Os,
+    render_ctx: &RenderCtx,
+    brief: bool,
+) -> io::Result<i32> {
+    match candidate.candidate {
+        Candidate::Recipe(recipe) => {
+            render::render_recipe(out, recipe, frame, context, os, render_ctx, brief)?
+        }
+        Candidate::LegacyCommand {
+            tool,
+            section,
+            command,
+        } => render::render_legacy_command(
+            out, tool, section, command, frame, context, os, render_ctx,
+        )?,
+        Candidate::Workflow { tool, section } => {
+            render::render_workflow(out, tool, section, frame, context, os, render_ctx)?
+        }
+    }
+    Ok(0)
+}
+
+fn selected_history_id(candidate: &ScoredCandidate) -> String {
+    candidate.candidate.id()
 }
 
 fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
@@ -58,79 +92,144 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
             Ok(0)
         }
         Action::Update => ezcmd::update::run(out),
+        Action::Forget => {
+            if History::forget() {
+                writeln!(out, "ezcmd history cleared.")?;
+                Ok(0)
+            } else {
+                writeln!(out, "ezcmd history is disabled or unavailable.")?;
+                Ok(1)
+            }
+        }
         Action::Query(query) => {
             let os = Os::current();
-            let search_res = matcher::search(
-                all_tools(),
-                os,
-                &query,
-                matcher::SearchOpts {
-                    tool_tokens: true,
-                    shell,
-                    ..Default::default()
-                },
-            );
-
-            match search_res {
-                SearchResult::ToolOnly(tool) => {
+            let words = matcher::tokenize(&query);
+            if words.len() == 1 {
+                if let Some(tool) = all_tools().find(|tool| tool.matches_flag(&words[0])) {
                     render::toc_tool(out, tool, os, &render_ctx)?;
-                    Ok(0)
+                    return Ok(0);
                 }
-                SearchResult::Single(hit) => {
-                    render::render_section(out, hit.tool, hit.section, os, &render_ctx)?;
-                    Ok(0)
+            }
+            let cwd = std::env::current_dir().unwrap_or_else(|_| std::path::PathBuf::from("."));
+            let context = Context::detect(&cwd);
+            let mut history = History::load();
+            let (frame, decision) =
+                recommend::decide_with_history(&query, os, shell, &context, &history);
+            if invocation.explain {
+                write!(out, "{}", recommend::explain(&frame, &decision))?;
+            }
+            match decision {
+                Decision::Clear(candidate) => {
+                    let history_id = selected_history_id(&candidate);
+                    let result = render_candidate(
+                        out,
+                        candidate,
+                        &frame,
+                        &context,
+                        os,
+                        &render_ctx,
+                        invocation.brief,
+                    );
+                    if result.as_ref().is_ok_and(|code| *code == 0) {
+                        history.record(&history_id);
+                    }
+                    result
                 }
-                SearchResult::Ambiguous(hits) => {
-                    let is_interactive = io::stdin().is_terminal()
+                Decision::Ambiguous(candidates) => {
+                    write_multiple_matches_heading(out, &query, render_ctx.color)?;
+                    for (index, candidate) in candidates.iter().enumerate() {
+                        write_recommendation_choice(out, index + 1, candidate, render_ctx.color)?;
+                    }
+                    let interactive = io::stdin().is_terminal()
                         && io::stdout().is_terminal()
                         && !render_ctx.plain;
-
-                    if is_interactive {
-                        writeln!(out, "Multiple matches for \"{}\":", query)?;
-                        let mut stdin = io::stdin().lock();
-                        match prompt::choose(&mut stdin, out, &hits)? {
-                            Some(idx) => {
-                                writeln!(out)?;
-                                render::render_section(
-                                    out,
-                                    hits[idx].tool,
-                                    hits[idx].section,
-                                    os,
-                                    &render_ctx,
-                                )?;
-                                Ok(0)
-                            }
-                            None => Ok(1), // User aborted or invalid input
+                    let selected = if interactive {
+                        if render_ctx.color {
+                            write!(
+                                out,
+                                "{}Choose{} {}1-{}{}: ",
+                                term::GREEN_BOLD,
+                                term::RESET,
+                                term::YELLOW,
+                                candidates.len(),
+                                term::RESET
+                            )?;
+                        } else {
+                            write!(out, "Choose 1-{}: ", candidates.len())?;
                         }
+                        out.flush()?;
+                        let mut answer = String::new();
+                        let _ = io::stdin().read_line(&mut answer);
+                        answer
+                            .trim()
+                            .parse::<usize>()
+                            .ok()
+                            .and_then(|index| candidates.get(index.saturating_sub(1)))
+                            .cloned()
+                            .unwrap_or_else(|| candidates[0].clone())
                     } else {
-                        // Non-interactive or piped: output best match and exit 0
-                        render::render_section(
-                            out,
-                            hits[0].tool,
-                            hits[0].section,
-                            os,
-                            &render_ctx,
-                        )?;
-                        Ok(0)
+                        candidates
+                            .iter()
+                            .find(|candidate| !candidate.candidate.danger_primary())
+                            .cloned()
+                            .unwrap_or_else(|| candidates[0].clone())
+                    };
+                    let history_id = selected_history_id(&selected);
+                    let result = render_candidate(
+                        out,
+                        selected,
+                        &frame,
+                        &context,
+                        os,
+                        &render_ctx,
+                        invocation.brief,
+                    );
+                    if result.as_ref().is_ok_and(|code| *code == 0) {
+                        history.record(&history_id);
                     }
+                    result
                 }
-                SearchResult::NoMatch(closest) => {
+                Decision::NoMatch(closest) => {
+                    writeln!(out, "No match for \"{}\".", query)?;
+                    if !closest.is_empty() {
+                        writeln!(out, "Closest sections:")?;
+                        for (index, candidate) in closest.iter().enumerate() {
+                            writeln!(out, "  {}. {}", index + 1, candidate.candidate.title())?;
+                        }
+                    }
+                    writeln!(out, "Try: ezcmd --help")?;
+                    Ok(1)
+                }
+                Decision::Blocked(reason) => {
                     if render_ctx.color {
                         writeln!(
                             out,
-                            "{}No match for \"{}\"{}",
-                            term::RED_BOLD,
-                            query,
+                            "{}[!!] WARNING: Request blocked:{} {reason}",
+                            term::WARNING_RED,
+                            term::RESET
+                        )?;
+                        writeln!(
+                            out,
+                            "{}ezcmd never fills in system or home paths for deleting commands.{}",
+                            term::WARNING_RED,
+                            term::RESET
+                        )?;
+                        writeln!(
+                            out,
+                            "{}Use a precise, non-system project path if you meant a specific file or folder.{}",
+                            term::WARNING_RED,
                             term::RESET
                         )?;
                     } else {
-                        writeln!(out, "No match for \"{}\"", query)?;
-                    }
-                    if !closest.is_empty() {
-                        writeln!(out, "\nClosest matches:")?;
-                        for h in closest {
-                            writeln!(out, "  - {}: {}", h.tool.name, h.section.title)?;
-                        }
+                        writeln!(out, "Request blocked: {reason}")?;
+                        writeln!(
+                            out,
+                            "ezcmd never fills in system or home paths for deleting commands."
+                        )?;
+                        writeln!(
+                            out,
+                            "Use a precise, non-system project path if you meant a specific file or folder."
+                        )?;
                     }
                     Ok(1)
                 }
@@ -193,9 +292,9 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
                             && !render_ctx.plain;
 
                         if is_interactive {
-                            writeln!(out, "Multiple matches for \"{}\":", sec_query)?;
+                            write_multiple_matches_heading(out, &sec_query, render_ctx.color)?;
                             let mut stdin = io::stdin().lock();
-                            match prompt::choose(&mut stdin, out, &hits)? {
+                            match prompt::choose(&mut stdin, out, &hits, render_ctx.color)? {
                                 Some(idx) => {
                                     writeln!(out)?;
                                     render::render_section(
@@ -257,6 +356,49 @@ fn run<W: Write>(args: &[String], out: &mut W) -> io::Result<i32> {
             }
         }
     }
+}
+
+fn write_multiple_matches_heading<W: Write>(
+    out: &mut W,
+    query: &str,
+    color: bool,
+) -> io::Result<()> {
+    if color {
+        writeln!(
+            out,
+            "{}Multiple matches{} for {}\"{}\"{}:",
+            term::CYAN_BOLD,
+            term::RESET,
+            term::YELLOW,
+            query,
+            term::RESET
+        )
+    } else {
+        writeln!(out, "Multiple matches for \"{query}\":")
+    }
+}
+
+/// Make an ambiguity menu scannable at a glance: every candidate row receives
+/// a different color. Plain output deliberately keeps the stable textual form
+/// for scripts and terminals without ANSI support.
+fn write_recommendation_choice<W: Write>(
+    out: &mut W,
+    index: usize,
+    candidate: &ScoredCandidate,
+    color: bool,
+) -> io::Result<()> {
+    let title = candidate.candidate.title();
+    if !color {
+        return writeln!(out, "  [{index}] {title}");
+    }
+    writeln!(
+        out,
+        "  {}[{}] {}{}",
+        term::choice_color(index - 1),
+        index,
+        title,
+        term::RESET
+    )
 }
 
 fn main() {

@@ -131,6 +131,10 @@ pub fn run_install<W: Write>(w: &mut W, color: bool) -> io::Result<i32> {
 
 pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
     if color {
+        const C_CYAN: &str = "\x1b[1;36m";
+        const C_YELLOW: &str = "\x1b[1;33m";
+        const C_MAGENTA: &str = "\x1b[1;38;2;215;135;255m";
+
         for (i, line) in ASCII_LINES.iter().enumerate() {
             writeln!(w, "{}{}{}", GRADIENT[i], line, term::RESET)?;
         }
@@ -150,9 +154,44 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
             term::RESET
         )?;
 
-        const C_CYAN: &str = "\x1b[1;36m";
-        const C_YELLOW: &str = "\x1b[1;33m";
-        const C_MAGENTA: &str = "\x1b[1;38;2;215;135;255m";
+        writeln!(
+            w,
+            "  {}+-- [ UPDATE ] ----------------------------------------------------------+{}",
+            C_MAGENTA,
+            term::RESET
+        )?;
+        writeln!(
+            w,
+            "  {}|{}  {}Focused answers:{} specific queries return only what you need.          {}|{}",
+            C_MAGENTA,
+            term::RESET,
+            term::CMD_COLOR,
+            term::RESET,
+            C_MAGENTA,
+            term::RESET
+        )?;
+        writeln!(
+            w,
+            "  {}|{}  Broad searches show a primary command with clear alternatives.        {}|{}",
+            C_MAGENTA,
+            term::RESET,
+            C_MAGENTA,
+            term::RESET
+        )?;
+        writeln!(
+            w,
+            "  {}|{}  Workflows stay complete; warnings and choices are color-coded.        {}|{}",
+            C_MAGENTA,
+            term::RESET,
+            C_MAGENTA,
+            term::RESET
+        )?;
+        writeln!(
+            w,
+            "  {}+------------------------------------------------------------------------+{}\n",
+            C_MAGENTA,
+            term::RESET
+        )?;
 
         writeln!(
             w,
@@ -258,6 +297,27 @@ pub fn print_welcome<W: Write>(w: &mut W, color: bool) -> io::Result<()> {
         writeln!(
             w,
             "  Fast, offline terminal cheatsheet with zero telemetry — commands in < 20ms.\n"
+        )?;
+
+        writeln!(
+            w,
+            "  +-- [ UPDATE ] ----------------------------------------------------------+"
+        )?;
+        writeln!(
+            w,
+            "  |  Focused answers: specific queries return only what you need.          |"
+        )?;
+        writeln!(
+            w,
+            "  |  Broad searches show a primary command with clear alternatives.        |"
+        )?;
+        writeln!(
+            w,
+            "  |  Workflows stay complete; warnings and choices are color-coded.        |"
+        )?;
+        writeln!(
+            w,
+            "  +------------------------------------------------------------------------+\n"
         )?;
 
         writeln!(

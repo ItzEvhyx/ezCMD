@@ -1,0 +1,708 @@
+# Focused answers used by normal `ezcmd <query>` searches.  The existing tool
+# sections are retained as workflow recipes by the recommender, which keeps the
+# help browser and multi-step guides intact.
+
+[[recipe]]
+id = "next.create"
+tool = "nextjs"
+kind = "compose"
+title = "Create a Next.js Project"
+action = "create"
+object = "project"
+triggers = ["create next app", "make nextjs app", "new nextjs project", "make next project", "start nextjs project", "start next app"]
+tags = ["scaffold", "react", "web"]
+checked = "2026-10"
+base = "{pkg.exec} create-next-app@latest <project-name>"
+note = "Scaffolds a new Next.js project"
+next = ["cd <project-name>", "{pkg.run} dev"]
+
+[[recipe.option]]
+id = "typescript"
+match = ["typescript", "ts"]
+add = "--typescript"
+group = "language"
+
+[[recipe.option]]
+id = "javascript"
+match = ["javascript", "js"]
+add = "--javascript"
+group = "language"
+
+[[recipe.option]]
+id = "tailwind"
+match = ["tailwind", "tailwindcss", "tailwind css"]
+add = "--tailwind"
+
+[[recipe.option]]
+id = "eslint"
+match = ["eslint", "lint"]
+add = "--eslint"
+suggest = true
+
+[[recipe.option]]
+id = "src"
+match = ["src dir", "src folder"]
+add = "--src-dir"
+suggest = true
+
+[[recipe]]
+id = "git.undo-last-commit"
+tool = "git"
+kind = "single"
+title = "Undo the Last Commit"
+action = "undo"
+object = "commit"
+triggers = ["undo last commit", "revert last commit", "remove last commit", "uncommit"]
+tags = ["rollback", "history"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git reset --soft HEAD~1"
+note = "Undoes the commit and keeps changes staged"
+
+[[recipe.variant]]
+cmd = "git reset HEAD~1"
+when = "Keep your changes but unstage them"
+note = "Undoes the last commit"
+
+[[recipe.variant]]
+cmd = "git revert HEAD"
+when = "Already pushed? Adds a new commit that cancels it"
+note = "Reverts the latest commit safely"
+
+[[recipe.variant]]
+cmd = "git reset --hard HEAD~1"
+when = "Undo the commit and throw away your changes"
+match = ["discard", "hard", "delete changes", "throw away"]
+note = "Discards the commit and working changes"
+risk = "danger"
+warn = "Uncommitted and undone work is lost and usually cannot be recovered."
+
+[[recipe]]
+id = "git.push-commit"
+tool = "git"
+kind = "single"
+title = "Push Committed Changes"
+action = "push"
+object = "commit"
+triggers = ["push commit", "push a commit", "push changes", "push code"]
+tags = ["remote", "publish", "branch"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git push"
+note = "Uploads commits on the current branch to its remote"
+
+[[recipe]]
+id = "git.commit-message"
+tool = "git"
+kind = "single"
+title = "Commit Staged Changes"
+action = "commit"
+object = "commit"
+triggers = ["commit message", "commit with message", "commit changes", "make a commit"]
+tags = ["history", "staged", "save"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git commit -m \"<message>\""
+note = "Records staged changes with a descriptive message"
+
+[[recipe]]
+id = "git.create-branch"
+tool = "git"
+kind = "single"
+title = "Create and Switch to a Branch"
+action = "create"
+object = "branch"
+triggers = ["create branch", "new branch", "start branch"]
+tags = ["branch", "switch"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git switch -c <branch>"
+note = "Creates the branch and switches to it"
+
+[[recipe]]
+id = "git.switch-branch"
+tool = "git"
+kind = "single"
+title = "Switch Branch"
+action = "move"
+object = "branch"
+triggers = ["switch branch", "change branch", "checkout branch"]
+tags = ["branch"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git switch <branch>"
+note = "Switches to an existing branch"
+
+[[recipe]]
+id = "git.restore-file"
+tool = "git"
+kind = "single"
+title = "Restore a File"
+action = "restore"
+object = "file"
+triggers = ["restore file", "discard file changes", "revert file changes"]
+tags = ["undo", "working tree"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git restore <file>"
+note = "Discards uncommitted changes in one file"
+risk = "caution"
+
+[[recipe.variant]]
+cmd = "git restore --staged <file>"
+when = "Keep its changes but unstage the file"
+note = "Unstages a file"
+
+[[recipe]]
+id = "git.stash-save"
+tool = "git"
+kind = "single"
+title = "Stash Changes"
+action = "stash"
+object = "stash"
+triggers = ["stash changes", "save work stash", "shelve changes"]
+tags = ["temporary", "work in progress"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git stash"
+note = "Saves uncommitted changes temporarily"
+
+[[recipe.variant]]
+cmd = "git stash pop"
+when = "Restore and remove the most recent stash"
+note = "Restores the latest stash"
+
+[[recipe.variant]]
+cmd = "git stash apply"
+when = "Restore it but keep the stash saved"
+note = "Applies the latest stash"
+
+[[recipe]]
+id = "git.stash-pop"
+tool = "git"
+kind = "single"
+title = "Restore a Stash"
+action = "restore"
+object = "stash"
+triggers = ["pop stash", "restore stash", "apply stash"]
+tags = ["temporary", "work in progress"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "git stash pop"
+note = "Restores and removes the latest stash"
+
+[[recipe.variant]]
+cmd = "git stash apply"
+when = "Keep the stash after restoring it"
+note = "Applies the latest stash"
+
+[[recipe]]
+id = "shell.create-folder"
+tool = "shell"
+kind = "single"
+title = "Create a Folder"
+action = "create"
+object = "file"
+triggers = ["create folder", "make folder", "new directory"]
+tags = ["filesystem"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "mkdir <folder>"
+note = "Creates a new folder"
+
+[[recipe]]
+id = "shell.change-directory"
+tool = "shell"
+kind = "single"
+title = "Change Directory"
+action = "move"
+triggers = ["change directory", "switch directory", "move directory to", "move to directory", "go to directory", "navigate to directory", "enter directory", "cd path"]
+tags = ["filesystem", "navigation", "terminal"]
+checked = "2026-10"
+
+[recipe.primary]
+unix = "cd <path>"
+windows = "cd <path>"
+powershell = "Set-Location <path>"
+note = "Changes the current directory to the specified path"
+
+[[recipe]]
+id = "shell.current-directory"
+tool = "shell"
+kind = "single"
+title = "Show the Current Directory"
+triggers = ["current directory", "which directory", "what directory", "where am i", "print current directory", "show current directory", "working directory", "current path"]
+tags = ["filesystem", "navigation", "terminal"]
+checked = "2026-10"
+
+[recipe.primary]
+unix = "pwd"
+windows = "cd"
+powershell = "Get-Location"
+note = "Prints the current working directory"
+
+[[recipe]]
+id = "shell.create-file"
+tool = "shell"
+kind = "single"
+title = "Create an Empty File"
+action = "create"
+object = "file"
+triggers = ["create file", "make file", "new empty file"]
+tags = ["filesystem"]
+checked = "2026-10"
+
+[recipe.primary]
+unix = "touch <file>"
+windows = "type nul > <file>"
+powershell = "New-Item -ItemType File <file>"
+note = "Creates an empty file"
+
+[[recipe]]
+id = "shell.delete-folder"
+tool = "shell"
+kind = "single"
+title = "Remove an Empty Folder"
+action = "delete"
+object = "file"
+triggers = ["delete folder", "remove empty folder", "remove directory"]
+tags = ["filesystem", "safe delete"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "rmdir <folder>"
+note = "Removes an empty folder; refuses non-empty folders"
+
+[[recipe.variant]]
+unix = "rm -r <folder>"
+windows = "rmdir /s <folder>"
+powershell = "Remove-Item -Recurse <folder>"
+when = "Delete a folder and everything inside it"
+match = ["recursive", "everything inside", "all contents"]
+note = "Removes a folder recursively"
+risk = "danger"
+warn = "This permanently deletes the folder contents; check the target first."
+pre = "ls <folder>"
+
+[[recipe]]
+id = "shell.delete-file"
+tool = "shell"
+kind = "single"
+title = "Delete a File"
+action = "delete"
+object = "file"
+triggers = ["delete file", "remove file", "rm file"]
+tags = ["filesystem"]
+checked = "2026-10"
+
+[recipe.primary]
+unix = "rm <file>"
+windows = "del <file>"
+powershell = "Remove-Item <file>"
+note = "Deletes a file"
+risk = "caution"
+
+[[recipe]]
+id = "shell.copy-file"
+tool = "shell"
+kind = "single"
+title = "Copy a File"
+action = "copy"
+object = "file"
+triggers = ["copy file", "duplicate file", "copy document"]
+tags = ["filesystem"]
+checked = "2026-10"
+
+[recipe.primary]
+unix = "cp <src> <dest>"
+windows = "copy <src> <dest>"
+powershell = "Copy-Item <src> <dest>"
+note = "Copies a file to a new destination"
+
+[[recipe]]
+id = "shell.move-file"
+tool = "shell"
+kind = "single"
+title = "Move or Rename a File or Directory"
+action = "move"
+object = "file"
+triggers = ["move file", "move directory", "move folder", "rename file", "rename folder"]
+tags = ["filesystem"]
+checked = "2026-10"
+
+[recipe.primary]
+unix = "mv <src> <dest>"
+windows = "move <src> <dest>"
+powershell = "Move-Item <src> <dest>"
+note = "Moves a file or directory to a new destination"
+
+[[recipe]]
+id = "npm.install-dependencies"
+tool = "npm"
+kind = "single"
+title = "Install npm Dependencies"
+action = "install"
+object = "package"
+triggers = ["npm install dependencies", "npm install packages", "install npm dependencies", "npm install"]
+tags = ["node", "dependencies"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "npm install"
+note = "Installs packages listed in package.json"
+
+[[recipe.variant]]
+cmd = "npm ci"
+when = "Use the exact versions in package-lock.json"
+note = "Performs a clean lockfile install"
+
+[[recipe]]
+id = "npm.add-package"
+tool = "npm"
+kind = "single"
+title = "Add an npm Package"
+action = "install"
+object = "package"
+triggers = ["add npm package", "install npm package", "npm install package"]
+tags = ["node", "dependencies"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "npm install <pkg>"
+note = "Adds a package to dependencies"
+
+[[recipe.variant]]
+cmd = "npm install -D <pkg>"
+when = "Add a development-only dependency"
+match = ["dev", "development", "devdependency"]
+note = "Adds a dev dependency"
+
+[[recipe]]
+id = "npm.remove-package"
+tool = "npm"
+kind = "single"
+title = "Remove an npm Package"
+action = "delete"
+object = "package"
+triggers = ["remove npm package", "uninstall npm package", "npm uninstall"]
+tags = ["node", "dependencies"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "npm uninstall <pkg>"
+note = "Removes a package from dependencies"
+
+[[recipe]]
+id = "pnpm.install-dependencies"
+tool = "pnpm"
+kind = "single"
+title = "Install pnpm Dependencies"
+action = "install"
+object = "package"
+triggers = ["pnpm install dependencies", "install pnpm dependencies", "pnpm install"]
+tags = ["node", "dependencies"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "pnpm install"
+note = "Installs packages listed in package.json"
+
+[[recipe.variant]]
+cmd = "pnpm install --frozen-lockfile"
+when = "Fail instead of changing the lockfile"
+note = "Performs a frozen lockfile install"
+
+[[recipe]]
+id = "pnpm.add-package"
+tool = "pnpm"
+kind = "single"
+title = "Add a pnpm Package"
+action = "install"
+object = "package"
+triggers = ["add pnpm package", "install pnpm package", "pnpm add package"]
+tags = ["node", "dependencies"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "pnpm add <pkg>"
+note = "Adds a package to dependencies"
+
+[[recipe.variant]]
+cmd = "pnpm add -D <pkg>"
+when = "Add a development-only dependency"
+match = ["dev", "development", "devdependency"]
+note = "Adds a dev dependency"
+
+[[recipe]]
+id = "pnpm.remove-package"
+tool = "pnpm"
+kind = "single"
+title = "Remove a pnpm Package"
+action = "delete"
+object = "package"
+triggers = ["remove pnpm package", "uninstall pnpm package", "pnpm remove"]
+tags = ["node", "dependencies"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "pnpm remove <pkg>"
+note = "Removes a package from dependencies"
+
+[[recipe]]
+id = "vite.create-react"
+tool = "vite"
+kind = "single"
+title = "Create a React Vite Project"
+action = "create"
+object = "project"
+triggers = ["create vite project", "new vite project", "create react vite project", "new react app"]
+tags = ["scaffold", "react", "web"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "npm create vite@latest <project-name> -- --template react"
+note = "Creates a React project with Vite"
+
+[[recipe.variant]]
+cmd = "npm create vite@latest <project-name> -- --template react-ts"
+when = "Create a React project with TypeScript"
+match = ["typescript", "ts"]
+note = "Creates a React and TypeScript project with Vite"
+
+[[recipe]]
+id = "flutter.create-project"
+tool = "flutter"
+kind = "single"
+title = "Create a Flutter App"
+action = "create"
+object = "project"
+triggers = ["create flutter app", "make flutter app", "new flutter project", "scaffold flutter app"]
+tags = ["mobile", "dart", "scaffold"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "flutter create <name>"
+note = "Creates a new Flutter app"
+
+[[recipe.variant]]
+cmd = "flutter create --template=package <name>"
+when = "Create a reusable Flutter package"
+match = ["package", "library"]
+note = "Creates a reusable Flutter package"
+
+[[recipe.variant]]
+cmd = "flutter create --platforms=android,ios <name>"
+when = "Choose Android and iOS platforms"
+match = ["android ios", "platforms"]
+note = "Creates an app for selected platforms"
+
+[[recipe]]
+id = "flutter.run-app"
+tool = "flutter"
+kind = "single"
+title = "Run a Flutter App"
+action = "run"
+object = "project"
+triggers = ["run flutter app", "start flutter app", "launch flutter app"]
+tags = ["mobile", "dart", "debug"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "flutter run"
+note = "Runs the Flutter app in debug mode"
+
+[[recipe.variant]]
+cmd = "flutter run --release"
+when = "Run the app in release mode"
+match = ["release", "production"]
+note = "Runs the app in release mode"
+
+[[recipe]]
+id = "cargo.create-project"
+tool = "cargo"
+kind = "single"
+title = "Create a Rust Project"
+action = "create"
+object = "project"
+triggers = ["create rust project", "new rust project", "cargo new project"]
+tags = ["rust", "scaffold", "crate"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "cargo new <name>"
+note = "Creates a new Rust binary project"
+
+[[recipe.variant]]
+cmd = "cargo new <name> --lib"
+when = "Create a reusable library instead of a binary"
+match = ["library", "lib"]
+note = "Creates a new Rust library project"
+
+[[recipe]]
+id = "cargo.add-dependency"
+tool = "cargo"
+kind = "single"
+title = "Add a Cargo Dependency"
+action = "install"
+object = "package"
+triggers = ["add cargo crate", "add rust dependency", "cargo add crate"]
+tags = ["rust", "dependencies", "crate"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "cargo add <crate>"
+note = "Adds a dependency to Cargo.toml"
+
+[[recipe.variant]]
+cmd = "cargo add --dev <crate>"
+when = "Add a development-only dependency"
+match = ["dev", "development", "devdependency"]
+note = "Adds a development dependency"
+
+[[recipe.variant]]
+cmd = "cargo add <crate> --features <list>"
+when = "Enable one or more crate features"
+match = ["feature", "features"]
+note = "Adds a dependency with selected features"
+
+[[recipe]]
+id = "cargo.test"
+tool = "cargo"
+kind = "single"
+title = "Run Rust Tests"
+action = "run"
+triggers = ["run cargo tests", "cargo test", "test rust project"]
+tags = ["rust", "test", "quality"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "cargo test"
+note = "Runs all tests in the Rust project"
+
+[[recipe.variant]]
+cmd = "cargo test -- --nocapture"
+when = "Show println output from tests"
+match = ["nocapture", "print output", "show output"]
+note = "Runs tests while showing captured output"
+
+[[recipe]]
+id = "docker.run-container"
+tool = "docker"
+kind = "single"
+title = "Run a Docker Container"
+action = "run"
+triggers = ["run docker container", "start docker container", "run docker image"]
+tags = ["container", "image"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "docker run <image>"
+note = "Runs a container from an image"
+
+[[recipe.variant]]
+cmd = "docker run -d <image>"
+when = "Run it in the background"
+match = ["background", "detached", "detach"]
+note = "Runs a container in detached mode"
+
+[[recipe.variant]]
+cmd = "docker run -p <host-port>:<container-port> <image>"
+when = "Publish a container port on the host"
+match = ["port", "publish", "expose"]
+note = "Runs a container with a published port"
+
+[[recipe.variant]]
+cmd = "docker run -it <image> sh"
+when = "Open an interactive shell in the container"
+match = ["shell", "interactive", "terminal"]
+note = "Runs a container with an interactive shell"
+
+[[recipe]]
+id = "docker.list-containers"
+tool = "docker"
+kind = "single"
+title = "List Running Docker Containers"
+action = "list"
+triggers = ["list running docker containers", "show running docker containers", "view running docker containers", "list docker containers", "show docker containers", "docker ps"]
+tags = ["container", "status", "inspect"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "docker ps"
+note = "Lists running containers"
+
+[[recipe.variant]]
+cmd = "docker ps -a"
+when = "Include stopped containers too"
+match = ["all", "stopped", "including stopped"]
+note = "Lists all containers"
+
+[[recipe]]
+id = "docker.build-image"
+tool = "docker"
+kind = "single"
+title = "Build a Docker Image"
+action = "create"
+triggers = ["build docker image", "docker build", "create container image"]
+tags = ["container", "image", "dockerfile"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "docker build -t <name> ."
+note = "Builds an image from the current folder"
+
+[[recipe.variant]]
+cmd = "docker build -t <name>:<tag> ."
+when = "Build the image with a specific tag"
+match = ["tag", "version"]
+note = "Builds an image with a tag"
+
+[[recipe]]
+id = "gh.create-repository"
+tool = "gh"
+kind = "single"
+title = "Create a GitHub Repository"
+action = "create"
+object = "repo"
+triggers = ["create github repository", "create github repo", "gh repo create"]
+tags = ["github", "repository", "remote"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "gh repo create <name> --public"
+note = "Creates a public repository on GitHub"
+
+[[recipe.variant]]
+cmd = "gh repo create <name> --private --source=. --push"
+when = "Create a private repository from this folder and push it"
+match = ["private", "push current", "current folder"]
+note = "Creates a private repository and pushes this folder"
+
+[[recipe]]
+id = "gh.create-pull-request"
+tool = "gh"
+kind = "single"
+title = "Create a GitHub Pull Request"
+action = "create"
+triggers = ["create github pr", "create pull request", "gh pr create"]
+tags = ["github", "pull request", "review"]
+checked = "2026-10"
+
+[recipe.primary]
+cmd = "gh pr create"
+note = "Creates a pull request interactively"
+
+[[recipe.variant]]
+cmd = "gh pr create --fill"
+when = "Use commit messages to fill the pull request"
+match = ["fill", "commit message", "commits"]
+note = "Creates a pull request using commit messages"

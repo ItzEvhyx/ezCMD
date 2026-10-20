@@ -43,6 +43,110 @@ pub struct Command {
     pub macos: Option<&'static str>,
 }
 
+/// The safety classification attached to a recipe command.  Commands are only
+/// displayed by ezcmd; this is presentation and selection metadata, never an
+/// instruction to execute anything.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Risk {
+    Safe,
+    Caution,
+    Danger,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RecipeKind {
+    Single,
+    Compose,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct RecipeOption {
+    pub id: &'static str,
+    pub matches: &'static [&'static str],
+    pub add: &'static str,
+    pub group: Option<&'static str>,
+    pub required_default: bool,
+    pub suggest: bool,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct RecipeCommand {
+    pub note: &'static str,
+    pub when: Option<&'static str>,
+    pub matches: &'static [&'static str],
+    pub risk: Risk,
+    pub warn: Option<&'static str>,
+    pub pre: Option<&'static str>,
+    pub cmd: Option<&'static str>,
+    pub unix: Option<&'static str>,
+    pub windows: Option<&'static str>,
+    pub powershell: Option<&'static str>,
+    pub linux: Option<&'static str>,
+    pub macos: Option<&'static str>,
+}
+
+impl RecipeCommand {
+    pub fn resolve_for(&self, os: Os, shell: Shell) -> Option<&'static str> {
+        match os {
+            Os::Windows => match shell {
+                Shell::Cmd => self.windows.or(self.cmd),
+                Shell::PowerShell => self.powershell.or(self.windows).or(self.cmd),
+            },
+            Os::Linux => self.linux.or(self.unix).or(self.cmd),
+            Os::Macos => self.macos.or(self.unix).or(self.cmd),
+        }
+    }
+}
+
+/// A focused, data-defined answer.  Existing sections remain workflows and
+/// are adapted by the recommender, so help output stays byte-for-byte stable.
+#[derive(Debug, PartialEq, Eq)]
+pub struct Recipe {
+    pub id: &'static str,
+    pub tool: &'static str,
+    pub kind: RecipeKind,
+    pub title: &'static str,
+    pub action: Option<&'static str>,
+    pub object: Option<&'static str>,
+    pub triggers: &'static [&'static str],
+    pub tags: &'static [&'static str],
+    pub checked: Option<&'static str>,
+    pub base: Option<RecipeCommand>,
+    pub options: &'static [RecipeOption],
+    pub primary: Option<RecipeCommand>,
+    pub variants: &'static [RecipeCommand],
+    pub next: &'static [&'static str],
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct SafetyPolicy {
+    pub dangerous_patterns: &'static [&'static str],
+    pub path_denylist: &'static [&'static str],
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct PackageManager {
+    pub id: &'static str,
+    pub markers: &'static [&'static str],
+    pub exec: &'static str,
+    pub run: &'static str,
+    pub install: &'static str,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct ContextSkipRule {
+    pub command: &'static str,
+    pub signal: &'static str,
+    pub note: &'static str,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct ContextPolicy {
+    pub default_package_manager: &'static str,
+    pub package_managers: &'static [PackageManager],
+    pub skip_rules: &'static [ContextSkipRule],
+}
+
 impl Command {
     /// Precedence: exact OS key > unix (linux/macos only) > cmd.
     pub fn resolve(&self, os: Os) -> Option<&'static str> {

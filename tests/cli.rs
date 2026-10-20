@@ -47,6 +47,45 @@ fn test_query_initializing_repo() {
 }
 
 #[test]
+fn test_catalog_query_renders_one_command_not_a_whole_section() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args(["--plain", "how do i view docker logs"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("docker logs <container>"))
+        .stdout(predicate::str::contains("docker exec").not())
+        .stdout(predicate::str::contains("Multiple matches").not());
+}
+
+#[test]
+fn test_human_current_directory_question_returns_pwd_without_empty_alternatives() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args(["how do i print my current directory"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("pwd"))
+        .stdout(predicate::str::contains("printenv").not())
+        .stdout(predicate::str::contains("Alternatives").not());
+}
+
+#[test]
+fn test_explain_shows_the_focused_decision_before_its_answer() {
+    let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
+    cmd.args([
+        "--plain",
+        "--explain",
+        "how do i make a nextjs project with typescript and tailwindcss",
+    ])
+    .assert()
+    .success()
+    .stdout(predicate::str::contains("frame: tool=Some(\"nextjs\")"))
+    .stdout(predicate::str::contains("next.create:"))
+    .stdout(predicate::str::contains(
+        "create-next-app@latest <project-name> --typescript --tailwind",
+    ));
+}
+
+#[test]
 fn test_plain_output_no_ansi() {
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.args(["--plain", "initializing", "repo"])
@@ -54,7 +93,7 @@ fn test_plain_output_no_ansi() {
         .success()
         .stdout(predicate::str::contains("# ---Git: Initializing a Repo---"))
         .stdout(predicate::str::contains(
-            "git init --- Initializes a repo in the current folder",
+            "skipped: git init (already a git repo)",
         ))
         .stdout(predicate::str::contains("\x1b[").not());
 }

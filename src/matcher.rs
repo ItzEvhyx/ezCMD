@@ -23,7 +23,9 @@ pub struct SearchOpts<'a> {
 }
 
 const STOPWORDS: &[&str] = &[
-    "a", "an", "the", "to", "how", "do", "i", "my", "in", "on", "of", "for", "with", "and",
+    "a", "an", "the", "to", "how", "do", "i", "my", "me", "in", "on", "of", "for", "with", "and",
+    "can", "could", "would", "should", "will", "you", "your", "please", "tell", "what", "is",
+    "are", "am", "was", "were", "be", "been", "being", "if", "use", "using", "need", "want",
 ];
 
 #[derive(Debug, Clone)]
@@ -83,7 +85,11 @@ pub fn tokenize_query(query: &str) -> Vec<String> {
     let all_tokens = tokenize(query);
     let filtered: Vec<String> = all_tokens
         .iter()
-        .filter(|t| !STOPWORDS.contains(&t.as_str()))
+        .enumerate()
+        .filter(|(index, token)| {
+            !STOPWORDS.contains(&token.as_str()) && !is_conversational_help(&all_tokens, *index)
+        })
+        .map(|(_, token)| token)
         .cloned()
         .collect();
 
@@ -92,6 +98,18 @@ pub fn tokenize_query(query: &str) -> Vec<String> {
     } else {
         all_tokens
     }
+}
+
+/// `help` usually carries intent (`bash command help`), but it is merely
+/// conversational filler in phrases such as `please help me list files`.
+fn is_conversational_help(tokens: &[String], index: usize) -> bool {
+    tokens[index] == "help"
+        && (tokens
+            .get(index.saturating_sub(1))
+            .is_some_and(|previous| previous == "please")
+            || tokens
+                .get(index + 1)
+                .is_some_and(|next| matches!(next.as_str(), "me" | "us" | "with")))
 }
 
 /// Token match score between query token `q` and content token `t`.
@@ -144,7 +162,7 @@ pub fn token_match_score(q: &str, t: &str) -> f32 {
 }
 
 /// Field score = (sum over query tokens of best tm against any field token) / (num query tokens).
-fn field_score(query_tokens: &[String], field_tokens: &[String]) -> f32 {
+pub fn field_score(query_tokens: &[String], field_tokens: &[String]) -> f32 {
     if query_tokens.is_empty() || field_tokens.is_empty() {
         return 0.0;
     }
@@ -164,7 +182,7 @@ fn field_score(query_tokens: &[String], field_tokens: &[String]) -> f32 {
     sum / query_tokens.len() as f32
 }
 
-fn score_section(section: &Section, os: Os, shell: Shell, query_tokens: &[String]) -> f32 {
+pub fn score_section(section: &Section, os: Os, shell: Shell, query_tokens: &[String]) -> f32 {
     let title_tokens = tokenize(section.title);
     let title_score = field_score(query_tokens, &title_tokens);
 
@@ -442,6 +460,13 @@ mod tests {
 
         let fallback_tokens = tokenize_query("how to");
         assert_eq!(fallback_tokens, vec!["how", "to"]);
+
+        let conversational_tokens =
+            tokenize_query("could you tell me what command to use to initialize a git repo");
+        assert_eq!(
+            conversational_tokens,
+            vec!["command", "initialize", "git", "repo"]
+        );
     }
 
     #[test]

@@ -17,6 +17,7 @@
 
 <p align="center">
   <a href="#preview"><b>Preview</b></a> &nbsp;|&nbsp;
+  <a href="#whats-new"><b>What's New</b></a> &nbsp;|&nbsp;
   <a href="#features"><b>Features</b></a> &nbsp;|&nbsp;
   <a href="#platforms"><b>Platforms</b></a> &nbsp;|&nbsp;
   <a href="#updating"><b>Updating</b></a> &nbsp;|&nbsp;
@@ -32,50 +33,74 @@
 
 <a id="preview"></a>
 
-## <img src="https://api.iconify.design/lucide/terminal.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Preview
+## Preview
 
 ```text
-$ ezcmd initializing repo
+$ ezcmd "how do I make a nextjs app with typescript and tailwindcss"
 
- ___[ Initializing a Repo ]_________________________________________________________| 
+ ___[ Create a Next.js Project ]___________________________________________________|
 |                                                                                   |
-|  git init                          --- Initializes a repo in the current folder   |
-|  git add .                         --- Stages all new and changed files           |
-|  git commit -m "Initial commit"    --- Saves the staged files as the first commit |
-|  git branch -M main                --- Renames the current branch to main         |
-|  git remote add origin <repo-url>  --- Links the repo to a remote on GitHub       |
-|  git push -u origin main           --- Uploads main and sets it as the upstream   |
+|  npx create-next-app@latest <project-name> --typescript --tailwind               |
+|    --- Scaffolds a new Next.js project with TypeScript and Tailwind CSS           |
 |___________________________________________________________________________________|
 ```
 
 > [!NOTE]
-> **Aesthetic Terminal Box:** In modern terminals, borders and notes are styled with subtle dimming, commands are rendered in **bold `#96d0fb`**, and `<placeholders>` are highlighted in **yellow**. Color automatically switches off in pipes or when `NO_COLOR` is detected.
+> **Aesthetic Terminal Box:** In modern terminals, borders and notes are styled with subtle dimming, commands are rendered in **bold `#96d0fb`**, and `<placeholders>` are highlighted in **yellow**. Specific queries return only the needed command; broad queries show alternatives. Color automatically switches off in pipes or when `NO_COLOR` is detected.
+
+---
+
+<a id="whats-new"></a>
+
+## What's New: Precise Recommendations
+
+> [!IMPORTANT]
+> This recommendation overhaul ships in ezcmd 2.2.1.
+
+ezCMD now answers the task in the query instead of routinely printing an entire command section. It remains a read-only guide: it never runs, copies, or changes commands on your behalf.
+
+| Query style | What ezCMD returns |
+|:---|:---|
+| Broad task | The primary command plus labeled common alternatives and useful next steps. For example, `ezcmd "how to start a nextjs project"` shows the base create command and the TypeScript, JavaScript, and Tailwind choices. |
+| Specific task | One resolved command with only the requested flags. For example, `ezcmd "how do I make a nextjs app with typescript and tailwindcss"` returns the combined TypeScript and Tailwind command without unrelated choices. |
+| Multi-step task | The complete ordered workflow. For example, `ezcmd "initialize a repo"` retains every necessary Git step and skips steps already satisfied by the current folder when it can safely detect that context. |
+| Unclear task | A short, interactive list of close matches instead of a guessed command. |
+
+Safety and readability were improved alongside the matcher:
+
+- Requests that target protected system, home, or whole-device locations are refused without printing a delete command; the warning is bright red in color-capable terminals.
+- Destructive command flags such as `[!]` and `[!!]` are bright red, and dangerous alternatives include a plain-language warning.
+- Each row in a multiple-match chooser uses a distinct color cycle, while `Alternatives` has its own accent color. This makes options easier to scan without changing the no-color or `--plain` output.
+- Exact command queries, fuzzy matching, OS-aware syntax, and the existing `--help` browser remain available.
 
 ---
 
 <a id="features"></a>
 
-## <img src="https://api.iconify.design/lucide/layers.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Features
+## Features
 
-| | Feature | Description |
-|:---:|:---|:---|
-| <img src="https://api.iconify.design/lucide/target.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Task-Oriented Search** | Search for what you intend to accomplish (`initializing repo`, `undo last commit`, `delete files`) rather than trying to remember syntax. |
-| <img src="https://api.iconify.design/lucide/search.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Intelligent Fuzzy Matcher** | Handles typos, transposed words, and natural phrasing using custom token-stemming and Damerau-Levenshtein distance. |
-| <img src="https://api.iconify.design/lucide/library.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Browsable Command Library** | Browse categories, tool tables of contents, and focused sections without dumping every command at once. |
-| <img src="https://api.iconify.design/lucide/tags.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Tool Aliases** | Reach tools by their short flag or a non-shadowed alternate name, such as `-rebase` for Git. |
-| <img src="https://api.iconify.design/lucide/monitor.svg?color=%2300b0ff" width="22" height="22" alt=""> | **OS-Aware Resolution** | Automatically detects whether you are on Linux, macOS, or Windows CMD and presents commands that work for your operating system. |
-| <img src="https://api.iconify.design/lucide/package.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Offline by Default** | Cheatsheet data is compiled directly into the binary. Lookups make zero network requests, collect no telemetry, and run no background daemons. |
-| <img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Verified Self-Update** | `ezcmd update` fetches only a user-requested GitHub Release, verifies its SHA-256 file, and replaces the installed global binary. |
-| <img src="https://api.iconify.design/lucide/zap.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Fast Search** | Launches, matches, formats, and terminates in **under 20 milliseconds** with less than 1.2 MB footprint. |
-| <img src="https://api.iconify.design/lucide/square.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Fully Enclosed Box Frame** | Retro-modern ASCII borders enclose every output neatly on all sides. |
-| <img src="https://api.iconify.design/lucide/flag.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Welcome Banner & Quickstart** | Beautiful gradient ASCII art greeting on first install with a built-in how-to guide. |
-| <img src="https://api.iconify.design/lucide/trash-2.svg?color=%2300b0ff" width="22" height="22" alt=""> | **Built-in Uninstaller** | Clean removal with `ezcmd --uninstall`, no leftover files. |
+| Feature | Description |
+|:---|:---|
+| **Task-Oriented Search** | Search for what you intend to accomplish (`initializing repo`, `undo last commit`, `delete files`) rather than trying to remember syntax. |
+| **Focused Recommendations** | Broad requests show a primary command with helpful choices; specific requests resolve to only the matching command and requested flags. Multi-step tasks keep their complete ordered workflow. |
+| **Safety-First Alternatives** | Reversible commands lead, destructive choices carry red warnings, and protected system, home, and whole-device delete targets are refused. |
+| **Clearer Choices** | Ambiguous-match rows use distinct colors, `Alternatives` is visually separated, and command-risk flags are immediately recognizable. |
+| **Intelligent Fuzzy Matcher** | Handles typos, transposed words, and natural phrasing using custom token-stemming and Damerau-Levenshtein distance. |
+| **Browsable Command Library** | Browse categories, tool tables of contents, and focused sections without dumping every command at once. |
+| **Tool Aliases** | Reach tools by their short flag or a non-shadowed alternate name, such as `-rebase` for Git. |
+| **OS-Aware Resolution** | Automatically detects whether you are on Linux, macOS, or Windows CMD and presents commands that work for your operating system. |
+| **Offline by Default** | Cheatsheet data is compiled directly into the binary. Lookups make zero network requests, collect no telemetry, and run no background daemons. |
+| **Verified Self-Update** | `ezcmd update` fetches only a user-requested GitHub Release, verifies its SHA-256 file, and replaces the installed global binary. |
+| **Fast Search** | Launches, matches, formats, and terminates in **under 20 milliseconds** with less than 1.2 MB footprint. |
+| **Fully Enclosed Box Frame** | Retro-modern ASCII borders enclose every output neatly on all sides. |
+| **Welcome Banner & Quickstart** | Beautiful gradient ASCII art greeting on first install with a built-in how-to guide. |
+| **Built-in Uninstaller** | Clean removal with `ezcmd --uninstall`, no leftover files. |
 
 ---
 
 <a id="platforms"></a>
 
-## <img src="https://api.iconify.design/lucide/monitor.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Supported Platforms
+## Supported Platforms
 
 | Operating System | Architecture | Status |
 |:---|:---|:---:|
@@ -87,7 +112,7 @@ $ ezcmd initializing repo
 
 <a id="updating"></a>
 
-## <img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Updating
+## Updating
 
 If you already have **ezcmd 2.1.0 or later**, future releases do not require uninstalling or rerunning the installer. Update the global binary with:
 
@@ -97,13 +122,13 @@ ezcmd --update
 
 `ezcmd update` works too. The updater downloads the matching GitHub Release for your OS and CPU, verifies its published SHA-256 checksum, and replaces the installed executable. Regular searches remain offline.
 
-If you are on v1 or v2.0.0, run the installer below once to get v2.1.1. After that, use `ezcmd --update` for later releases.
+If you are on v1 or v2.0.0, run the installer below once to get v2.2.1. After that, use `ezcmd --update` for later releases.
 
 ---
 
 <a id="installation"></a>
 
-## <img src="https://api.iconify.design/lucide/download.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Installation
+## Installation
 
 <details open>
 <summary><b>Quick Automated Install (Recommended)</b></summary>
@@ -230,18 +255,18 @@ setx PATH "%PATH%;%USERPROFILE%\.local\bin"
 
 ```bash
 ezcmd --version
-# → ezcmd 2.1.1
+# → ezcmd 2.2.1
 ```
 
 ---
 
 <a id="usage"></a>
 
-## <img src="https://api.iconify.design/lucide/book-open.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Usage & Cheatsheet
+## Usage & Cheatsheet
 
 | Command | Description |
 |:---|:---|
-| `ezcmd <query>` | Find a workflow or command |
+| `ezcmd <query>` | Find the focused command or complete workflow for a task |
 | `ezcmd --help` | Browse OS-filtered categories and tools |
 | `ezcmd --help -<tool>` | Show a tool's groups and section titles (e.g. `-git`, `-docker`) |
 | `ezcmd --help -<tool> -<section>` | Show the matching section's commands |
@@ -249,6 +274,9 @@ ezcmd --version
 | `ezcmd --help -<os>` | Browse as Linux, macOS, or Windows |
 | `ezcmd --shell <cmd\|powershell> <query>` | Choose Windows command syntax explicitly |
 | `ezcmd --plain <query>` | Raw plain output (no ANSI, no box frames) |
+| `ezcmd --brief <query>` | Hide alternatives, option hints, and next steps |
+| `ezcmd --explain <query>` | Show the parsed query and recommendation score breakdown |
+| `ezcmd --forget` | Clear local recipe-ID history used only to break close ranking ties |
 | `ezcmd --install` | Install ezcmd to PATH + show welcome |
 | `ezcmd update` / `ezcmd --update` | Download and install the latest published release |
 | `ezcmd --welcome` | Display ASCII welcome banner & quickstart |
@@ -264,6 +292,11 @@ ezcmd undo last commit
 ezcmd how to branch
 ezcmd stash changes
 ezcmd delete folder
+
+# Broad versus exact recommendations
+ezcmd "how to start a nextjs project"
+ezcmd "how do I make a nextjs app with typescript and tailwindcss"
+ezcmd "how do I run a docker container"
 
 # Search by exact command syntax
 ezcmd -- reset --hard
@@ -294,19 +327,19 @@ When multiple sections match your query equally well, ezCMD provides an interact
 $ ezcmd undo
 
 Multiple matches for "undo":
-  1. Undo & Rollback
-  2. Undoing the Last Commit
-  3. Restoring a Deleted File
-Choose [1/2/3]: 2
+  [1] Undo & Rollback
+  [2] Undoing the Last Commit
+  [3] Restoring a Deleted File
+Choose 1-3: 2
 ```
 
-*(In scripts or non-interactive pipes, ezCMD automatically selects the top match without blocking).*
+With color enabled, each candidate row has a different color so adjacent choices are easy to distinguish. In scripts, non-interactive pipes, `NO_COLOR`, or `--plain` mode, the same numbered list remains readable without ANSI styling. Non-interactive searches choose the highest-ranked safe match without blocking.
 
 ---
 
 <a id="uninstalling"></a>
 
-## <img src="https://api.iconify.design/lucide/trash-2.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Uninstalling
+## Uninstalling
 
 Uninstall ezCMD cleanly with the built-in command:
 
@@ -333,7 +366,7 @@ This removes the binary from `~/.local/bin`, symlinks, and any configuration fil
 
 <a id="releases"></a>
 
-## <img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Release Automation
+## Release Automation
 
 Every tagged push (`v*`) triggers a [GitHub Actions workflow](.github/workflows/release.yml) that:
 
@@ -342,13 +375,13 @@ Every tagged push (`v*`) triggers a [GitHub Actions workflow](.github/workflows/
 3. Generates SHA-256 checksums
 4. Creates a GitHub Release with all artifacts
 
-Published release archives are also the update channel for `ezcmd update`. Tag a new semantic version such as `v2.1.1`, let the workflow finish, then existing 2.1.0+ installations can update themselves globally with that command.
+Published release archives are also the update channel for `ezcmd update`. Tag a new semantic version such as `v2.2.1`, let the workflow finish, then existing 2.1.0+ installations can update themselves globally with that command.
 
 ---
 
 <a id="author"></a>
 
-## <img src="https://api.iconify.design/lucide/user.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; Author & Credits
+## Author & Credits
 
 <p align="center">
   <img src="assets/logos/ezcmd_logo_typography.png" alt="ezCMD Typography" width="300">
@@ -363,6 +396,6 @@ Created by **ItzEvhyx**
 
 <a id="license"></a>
 
-## <img src="https://api.iconify.design/lucide/file-text.svg?color=%2300b0ff" width="26" height="26" align="middle" alt="">&nbsp; License
+## License
 
 MIT License. See [LICENSE](LICENSE) for details.

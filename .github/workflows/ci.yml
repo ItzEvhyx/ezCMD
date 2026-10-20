@@ -32,6 +32,9 @@ jobs:
       - name: Test
         run: cargo test --all-targets
 
+      - name: Focused recommendation performance gate
+        run: cargo test --release --test recommend_accuracy recommendation_decision_p95_is_under_budget_in_release -- --exact
+
       - name: Build release
         run: cargo build --release
 

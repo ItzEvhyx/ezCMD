@@ -1,0 +1,39 @@
+default_package_manager = "npm"
+
+[[package_manager]]
+id = "pnpm"
+markers = ["pnpm-lock.yaml"]
+exec = "pnpm dlx"
+run = "pnpm"
+install = "pnpm add"
+
+[[package_manager]]
+id = "yarn"
+markers = ["yarn.lock"]
+exec = "npx"
+run = "yarn"
+install = "yarn add"
+
+[[package_manager]]
+id = "bun"
+markers = ["bun.lockb", "bun.lock"]
+exec = "bunx"
+run = "bun run"
+install = "bun add"
+
+[[package_manager]]
+id = "npm"
+markers = ["package-lock.json"]
+exec = "npx"
+run = "npm run"
+install = "npm install"
+
+[[skip_rule]]
+command = "git init"
+signal = "git_repo"
+note = "skipped: git init (already a git repo)"
+
+[[skip_rule]]
+command = "git remote add origin"
+signal = "has_remote_origin"
+note = "skipped: git remote add origin (origin already exists)"

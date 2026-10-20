@@ -1,13 +1,17 @@
 pub mod cli;
 pub mod content;
 pub mod content_validation;
+pub mod context;
+pub mod history;
 pub mod matcher;
 pub mod model;
 pub mod os;
 pub mod prompt;
+pub mod recommend;
 pub mod render;
 pub mod shell;
 pub mod term;
+pub mod tuning;
 pub mod uninstall;
 pub mod update;
 pub mod welcome;

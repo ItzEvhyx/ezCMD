@@ -1,4 +1,5 @@
 use crate::matcher::Hit;
+use crate::term;
 use std::io::{self, BufRead, Write};
 
 /// Interactive chooser when a query produces ambiguous matches.
@@ -8,20 +9,50 @@ pub fn choose<R: BufRead, W: Write>(
     input: &mut R,
     out: &mut W,
     hits: &[Hit],
+    color: bool,
 ) -> io::Result<Option<usize>> {
     if hits.is_empty() {
         return Ok(None);
     }
 
     for (i, hit) in hits.iter().enumerate() {
-        writeln!(out, "  {}. {}: {}", i + 1, hit.tool.name, hit.section.title)?;
+        if color {
+            writeln!(
+                out,
+                "  {}[{}] {}: {}{}",
+                term::choice_color(i),
+                i + 1,
+                hit.tool.name,
+                hit.section.title,
+                term::RESET
+            )?;
+        } else {
+            writeln!(
+                out,
+                "  [{}] {}: {}",
+                i + 1,
+                hit.tool.name,
+                hit.section.title
+            )?;
+        }
     }
 
     let range_str = (1..=hits.len())
         .map(|i| i.to_string())
         .collect::<Vec<_>>()
         .join("/");
-    let prompt_str = format!("Choose [{}]: ", range_str);
+    let prompt_str = if color {
+        format!(
+            "{}Choose{} {}[{}]{}: ",
+            term::GREEN_BOLD,
+            term::RESET,
+            term::YELLOW,
+            range_str,
+            term::RESET
+        )
+    } else {
+        format!("Choose [{range_str}]: ")
+    };
 
     let mut attempts = 0;
     while attempts < 3 {
@@ -87,12 +118,12 @@ mod tests {
         let mut input = Cursor::new(b"1\n");
         let mut output = Vec::new();
 
-        let choice = choose(&mut input, &mut output, &hits).expect("choose");
+        let choice = choose(&mut input, &mut output, &hits, false).expect("choose");
         assert_eq!(choice, Some(0));
 
         let out_str = String::from_utf8(output).expect("utf8");
-        assert!(out_str.contains("  1. "));
-        assert!(out_str.contains("  2. "));
+        assert!(out_str.contains("  [1] "));
+        assert!(out_str.contains("  [2] "));
         assert!(out_str.contains("Git: Setup & Config"));
         assert!(out_str.contains("Choose [1/2]: "));
     }
@@ -103,7 +134,7 @@ mod tests {
         let mut input = Cursor::new(b"invalid\n2\n");
         let mut output = Vec::new();
 
-        let choice = choose(&mut input, &mut output, &hits).expect("choose");
+        let choice = choose(&mut input, &mut output, &hits, false).expect("choose");
         assert_eq!(choice, Some(1));
     }
 
@@ -113,7 +144,7 @@ mod tests {
         let mut input = Cursor::new(b"foo\nbar\nbaz\n");
         let mut output = Vec::new();
 
-        let choice = choose(&mut input, &mut output, &hits).expect("choose");
+        let choice = choose(&mut input, &mut output, &hits, false).expect("choose");
         assert_eq!(choice, None);
     }
 
@@ -123,7 +154,7 @@ mod tests {
         let mut input = Cursor::new(b"\n\n\n");
         let mut output = Vec::new();
 
-        let choice = choose(&mut input, &mut output, &hits).expect("choose");
+        let choice = choose(&mut input, &mut output, &hits, false).expect("choose");
         assert_eq!(choice, None);
     }
 
@@ -133,7 +164,7 @@ mod tests {
         let mut input = Cursor::new(b"");
         let mut output = Vec::new();
 
-        let choice = choose(&mut input, &mut output, &hits).expect("choose");
+        let choice = choose(&mut input, &mut output, &hits, false).expect("choose");
         assert_eq!(choice, None);
     }
 }

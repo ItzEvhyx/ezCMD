@@ -43,7 +43,7 @@ cmd = "sudo systemctl disable <service>"
 
 [[group.section]]
 title = "List & Debug Services"
-aliases = ["debug systemd service", "list linux services", "failed systemd service"]
+aliases = ["debug systemd service", "list linux services", "failed systemd service", "check systemd service running", "check service running", "is systemd service running", "is service running"]
 
 [[group.section.command]]
 note = "Lists running services"
@@ -62,7 +62,7 @@ note = "Shows a service's unit file"
 cmd = "systemctl cat <service>"
 
 [[group.section.command]]
-note = "Prints whether a service is running"
+note = "Checks whether a service is running"
 cmd = "systemctl is-active <service>"
 
 [[group.section.command]]

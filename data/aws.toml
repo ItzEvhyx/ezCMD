@@ -85,6 +85,10 @@ note = "Lists your EC2 instances"
 cmd = "aws ec2 describe-instances"
 
 [[group.section.command]]
+note = "Launches a new EC2 instance"
+cmd = "aws ec2 run-instances --image-id <ami-id> --instance-type <type>"
+
+[[group.section.command]]
 note = "Starts an instance"
 cmd = "aws ec2 start-instances --instance-ids <id>"
 

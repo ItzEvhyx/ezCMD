@@ -1,0 +1,302 @@
+[[case]]
+query = "how do i make a nextjs project with typescript and tailwindcss"
+os = "linux"
+expect_recipe = "next.create"
+expect_contains = ["--typescript", "--tailwind"]
+expect_absent = ["--javascript", "Alternatives", "You can also add:", "next:"]
+
+[[case]]
+query = "how to start a nextjs project"
+os = "linux"
+expect_recipe = "next.create"
+expect_contains = [
+  "npx create-next-app@latest <project-name>",
+  "npx create-next-app@latest <project-name> --typescript",
+  "npx create-next-app@latest <project-name> --javascript",
+  "npx create-next-app@latest <project-name> --tailwind",
+  "You can also add:  --eslint  --src-dir",
+]
+expect_absent = []
+
+[[case]]
+query = "how do i make a nextjs project with typescript and javascript"
+os = "linux"
+expect_recipe = "next.create"
+expect_contains = ["--javascript", "conflicting language choices requested; using --javascript."]
+expect_absent = ["--typescript --javascript"]
+
+[[case]]
+query = "undo last commit"
+os = "linux"
+expect_recipe = "git.undo-last-commit"
+expect_contains = ["git reset --soft HEAD~1"]
+expect_absent = []
+
+[[case]]
+query = "how do i push a commit"
+os = "linux"
+expect_recipe = "git.push-commit"
+expect_contains = ["git push"]
+expect_absent = ["git reset"]
+
+[[case]]
+query = "how do i do a commit message"
+os = "linux"
+expect_recipe = "git.commit-message"
+expect_contains = ["git commit -m \"<message>\""]
+expect_absent = ["--amend"]
+
+[[case]]
+query = "how do i make a flutter app"
+os = "linux"
+expect_recipe = "flutter.create-project"
+expect_contains = ["flutter create <name>"]
+expect_absent = ["create-next-app", "create-vite"]
+
+[[case]]
+query = "create folder"
+os = "linux"
+expect_recipe = "shell.create-folder"
+expect_contains = ["mkdir <folder>"]
+expect_absent = ["touch <file>"]
+
+[[case]]
+query = "how do i change directory"
+os = "linux"
+expect_recipe = "shell.change-directory"
+expect_contains = ["cd <path>"]
+expect_absent = ["pwd", "cd /"]
+
+[[case]]
+query = "how do i move directory to my ezcmd project"
+os = "linux"
+expect_recipe = "shell.change-directory"
+expect_ambiguous = true
+expect_contains = []
+expect_absent = []
+
+[[case]]
+query = "how do i move a directory"
+os = "linux"
+expect_recipe = "shell.move-file"
+expect_contains = ["mv <src> <dest>"]
+expect_absent = ["cd <path>"]
+
+[[case]]
+query = "how to know which directory i am"
+os = "linux"
+expect_recipe = "shell.current-directory"
+expect_contains = ["pwd"]
+expect_absent = ["printenv", "cd <path>"]
+
+[[case]]
+query = "how to know which directory"
+os = "linux"
+expect_recipe = "shell.current-directory"
+expect_contains = ["pwd"]
+expect_absent = ["printenv", "cd <path>"]
+
+[[case]]
+query = "how do i print my current directory"
+os = "linux"
+expect_recipe = "shell.current-directory"
+expect_contains = ["pwd"]
+expect_absent = ["printenv", "cd <path>"]
+
+[[case]]
+query = "what directory am i in"
+os = "windows"
+shell = "powershell"
+expect_recipe = "shell.current-directory"
+expect_contains = ["Get-Location"]
+expect_absent = ["printenv", "pwd"]
+
+[[case]]
+query = "how do i check if a systemd service is running"
+os = "linux"
+expect_recipe = "command.systemd.list-debug-services.systemctl-is-active-service"
+expect_contains = ["systemctl is-active <service>"]
+expect_absent = ["systemctl list-units", "systemctl status <service>"]
+
+[[case]]
+query = "how do i change directory to a project"
+os = "windows"
+expect_recipe = "shell.change-directory"
+expect_contains = ["cd <path>"]
+expect_absent = ["pwd", "Set-Location"]
+
+[[case]]
+query = "how do i change directory"
+os = "windows"
+shell = "powershell"
+expect_recipe = "shell.change-directory"
+expect_contains = ["Set-Location <path>"]
+expect_absent = ["pwd", "cd <path>"]
+
+[[case]]
+query = "delete folder"
+os = "linux"
+expect_recipe = "shell.delete-folder"
+expect_contains = ["rmdir <folder>", "DANGER: rm -r <folder>"]
+expect_absent = []
+
+[[case]]
+query = "create branch"
+os = "linux"
+expect_recipe = "git.create-branch"
+expect_contains = ["git switch -c <branch>"]
+expect_absent = ["git switch <branch>"]
+
+[[case]]
+query = "pop stash"
+os = "linux"
+expect_recipe = "git.stash-pop"
+expect_contains = ["git stash pop"]
+expect_absent = ["git stash clear"]
+
+[[case]]
+query = "restore file"
+os = "linux"
+expect_recipe = "git.restore-file"
+expect_contains = ["CAUTION: git restore <file>"]
+expect_absent = ["git reset --hard"]
+
+[[case]]
+query = "install npm package"
+os = "linux"
+expect_recipe = "npm.add-package"
+expect_contains = ["npm install <pkg>"]
+expect_absent = ["npm ci"]
+
+[[case]]
+query = "remove npm package"
+os = "linux"
+expect_recipe = "npm.remove-package"
+expect_contains = ["npm uninstall <pkg>"]
+expect_absent = []
+
+[[case]]
+query = "pnpm add package"
+os = "linux"
+expect_recipe = "pnpm.add-package"
+expect_contains = ["pnpm add <pkg>"]
+expect_absent = []
+
+[[case]]
+query = "remove pnpm package"
+os = "linux"
+expect_recipe = "pnpm.remove-package"
+expect_contains = ["pnpm remove <pkg>"]
+expect_absent = []
+
+[[case]]
+query = "initialize repo"
+os = "linux"
+expect_recipe = "workflow.git.initializing-a-repo"
+expect_contains = ["git init", "git push -u origin main"]
+expect_absent = []
+
+[[case]]
+query = "what command do i use to initialize a git repo"
+os = "linux"
+expect_recipe = "workflow.git.initializing-a-repo"
+expect_contains = ["git init", "git push -u origin main"]
+expect_absent = []
+
+[[case]]
+query = "create vite project with typescript"
+os = "linux"
+expect_recipe = "vite.create-react"
+expect_contains = ["npm create vite@latest <project-name> -- --template react-ts"]
+expect_absent = ["--template react ---"]
+
+[[case]]
+query = "create rust project named ferris"
+os = "linux"
+expect_recipe = "cargo.create-project"
+expect_contains = ["cargo new ferris"]
+expect_absent = []
+
+[[case]]
+query = "create rust library named toolkit"
+os = "linux"
+expect_recipe = "cargo.create-project"
+expect_contains = ["cargo new toolkit --lib"]
+expect_absent = []
+
+[[case]]
+query = "add rust dependency"
+os = "linux"
+expect_recipe = "cargo.add-dependency"
+expect_contains = ["cargo add <crate>"]
+expect_absent = []
+
+[[case]]
+query = "run cargo tests"
+os = "linux"
+expect_recipe = "cargo.test"
+expect_contains = ["cargo test"]
+expect_absent = []
+
+[[case]]
+query = "run docker container in background"
+os = "linux"
+expect_recipe = "docker.run-container"
+expect_contains = ["docker run -d <image>"]
+expect_absent = ["docker build"]
+
+[[case]]
+query = "what is the command to run a docker container"
+os = "linux"
+expect_recipe = "docker.run-container"
+expect_contains = ["docker run <image>"]
+expect_absent = ["docker build"]
+
+[[case]]
+query = "could you show me how to list running docker containers"
+os = "linux"
+expect_recipe = "docker.list-containers"
+expect_contains = ["docker ps"]
+expect_absent = ["docker logs", "docker exec"]
+
+[[case]]
+query = "how do i view docker logs"
+os = "linux"
+expect_recipe = "command.docker.inspect-debug.docker-logs-container"
+expect_contains = ["docker logs <container>"]
+expect_absent = ["docker exec", "docker stats"]
+
+[[case]]
+query = "how do i run an aws ec2 instance"
+os = "linux"
+expect_recipe = "command.aws.ec2-servers.aws-ec2-run-instances-image-id-ami-id-instance-type-type"
+expect_contains = ["aws ec2 run-instances --image-id <ami-id> --instance-type <type>"]
+expect_absent = ["describe-instances"]
+
+[[case]]
+query = "how do i start a nextjs dev server"
+os = "linux"
+expect_recipe = "command.nextjs.dev-build-start.npm-run-dev"
+expect_contains = ["npm run dev"]
+expect_absent = ["create-next-app"]
+
+[[case]]
+query = "build docker image"
+os = "linux"
+expect_recipe = "docker.build-image"
+expect_contains = ["docker build -t <name> ."]
+expect_absent = ["docker run"]
+
+[[case]]
+query = "create github repo named ezcmd-docs"
+os = "linux"
+expect_recipe = "gh.create-repository"
+expect_contains = ["gh repo create ezcmd-docs --public"]
+expect_absent = []
+
+[[case]]
+query = "create github pr using commit messages"
+os = "linux"
+expect_recipe = "gh.create-pull-request"
+expect_contains = ["gh pr create --fill"]
+expect_absent = []
