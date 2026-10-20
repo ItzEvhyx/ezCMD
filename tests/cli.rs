@@ -1,4 +1,6 @@
 use assert_cmd::Command;
+use ezcmd::os::Os;
+use ezcmd::shell::Shell;
 use predicates::prelude::*;
 
 #[test]
@@ -58,12 +60,17 @@ fn test_catalog_query_renders_one_command_not_a_whole_section() {
 }
 
 #[test]
-fn test_human_current_directory_question_returns_pwd_without_empty_alternatives() {
+fn test_human_current_directory_question_returns_the_native_command_without_empty_alternatives() {
+    let expected = match (Os::current(), Shell::detect()) {
+        (Os::Windows, Shell::PowerShell) => "Get-Location",
+        (Os::Windows, Shell::Cmd) => "cd",
+        (Os::Linux | Os::Macos, _) => "pwd",
+    };
     let mut cmd = Command::cargo_bin("ezcmd").expect("binary exists");
     cmd.args(["how do i print my current directory"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("pwd"))
+        .stdout(predicate::str::contains(expected))
         .stdout(predicate::str::contains("printenv").not())
         .stdout(predicate::str::contains("Alternatives").not());
 }
