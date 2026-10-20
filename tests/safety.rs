@@ -1,8 +1,23 @@
 use assert_cmd::Command;
+use ezcmd::os::Os;
+use ezcmd::shell::Shell;
 use predicates::prelude::*;
+
+/// Safety messaging must exercise the command syntax the spawned CLI uses on
+/// the host. Windows PowerShell, Windows CMD, and Unix deliberately use
+/// different recursive-delete commands; all must retain the same `DANGER:`
+/// label and placeholder-only safety contract.
+fn recursive_delete_template() -> &'static str {
+    match (Os::current(), Shell::detect()) {
+        (Os::Windows, Shell::PowerShell) => "Remove-Item -Recurse <folder>",
+        (Os::Windows, Shell::Cmd) => "rmdir /s <folder>",
+        (Os::Linux | Os::Macos, _) => "rm -r <folder>",
+    }
+}
 
 #[test]
 fn recursive_delete_is_never_the_default() {
+    let recursive = recursive_delete_template();
     let mut command = Command::cargo_bin("ezcmd").expect("binary exists");
     command
         .args(["--plain", "delete", "folder"])
@@ -11,17 +26,18 @@ fn recursive_delete_is_never_the_default() {
         .stdout(predicate::str::contains(
             "rmdir <folder> --- Removes an empty folder",
         ))
-        .stdout(predicate::str::contains("DANGER: rm -r <folder>"));
+        .stdout(predicate::str::contains(format!("DANGER: {recursive}")));
 }
 
 #[test]
 fn explicit_recursive_delete_is_labeled_and_previews_first() {
+    let recursive = recursive_delete_template();
     let mut command = Command::cargo_bin("ezcmd").expect("binary exists");
     command
         .args(["--plain", "delete", "folder", "recursively"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("DANGER: rm -r <folder>"))
+        .stdout(predicate::str::contains(format!("DANGER: {recursive}")))
         .stdout(predicate::str::contains("DANGER: This permanently deletes"))
         .stdout(predicate::str::contains("preview first: ls <folder>"));
 }
@@ -41,13 +57,14 @@ fn shell_injection_is_not_substituted_into_a_command() {
 
 #[test]
 fn system_paths_are_not_filled_into_the_delete_template() {
+    let recursive = recursive_delete_template();
     let mut command = Command::cargo_bin("ezcmd").expect("binary exists");
     command
         .args(["--plain", "delete", "folder", "named", "/"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("rm -r <folder>"))
-        .stdout(predicate::str::contains("rm -r /").not());
+        .stdout(predicate::str::contains(recursive))
+        .stdout(predicate::str::contains(recursive.replace("<folder>", "/")).not());
 }
 
 #[test]
